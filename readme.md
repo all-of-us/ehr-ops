@@ -100,7 +100,7 @@ FROM `{{project_id}}.{{dataset_id}}.table_1`
 ```
 executing
 ```bash
-python compile.sql query_1.sql --project_id 'drc-prod' --dataset_id 'ehr-ops'  
+python compile.py query_1.sql --project_id 'drc-prod' --dataset_id 'ehr-ops'  
 ```
 stores the compiled file at `.compiled/query_1.sql`
 ```sql
@@ -118,7 +118,7 @@ metrics/query_2.sql
 ```
 executing the command
 ```bash
-python compile.sql **/*.sql --project_id 'drc-prod' --dataset_id 'ehr-ops'   
+python compile.py **/*.sql --project_id 'drc-prod' --dataset_id 'ehr-ops'   
 ```
 compiles them and saves the results at: 
 ```
