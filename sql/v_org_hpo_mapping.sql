@@ -19,13 +19,13 @@ SELECT
   m.Display_Order,
   b.bucket_created_timestamp AS On_Boarding_Time
 FROM
-  `{{pdr_prject}}.{{rdr_ops_dataset}}.v_organization` o
+  `{{pdr_project}}.{{rdr_ops_dataset}}.v_organization` o
 JOIN
-  `{{curation_prject}}.{{lookup_dataset}}.hpo_site_id_mappings` m
+  `{{curation_project}}.{{lookup_dataset}}.hpo_site_id_mappings` m
 ON
   o.external_id = m.Org_ID
 JOIN
-  `{{curation_prject}}.{{lookup_dataset}}.hpo_id_bucket_name` h
+  `{{curation_project}}.{{lookup_dataset}}.hpo_id_bucket_name` h
 ON
   m.HPO_ID = h.hpo_id
 JOIN
