@@ -111,7 +111,7 @@ FROM `drc-prod.ehr-ops.table_1`
 ```
 
 ### Example 2: Compiling multiple files
-Assuming these template files exist:
+Assuming these template files exist: 
 ```
 query_1.sql
 metrics/query_2.sql
