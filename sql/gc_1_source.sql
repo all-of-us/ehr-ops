@@ -264,8 +264,6 @@ WITH
       `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.observation_source_concept_id
-    WHERE
-      t3.domain_id="Observation"
     GROUP BY
       1 ),
     observation_total_zero_missing AS (
