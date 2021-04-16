@@ -16,8 +16,8 @@ WITH
             LOWER(c.standard_concept) = 's'
           AND
             LOWER(c.domain_id) LIKE '%unit%'
-          AND safe_cast(replace(replace(replace(value_source_value, "<", ""), ">", ""), "=", "") as float64) is not null 
-          AND safe_cast(value_as_number AS float64) is not null
+          AND (safe_cast(replace(replace(replace(value_source_value, "<", ""), ">", ""), "=", "") as float64) is not null 
+            OR safe_cast(value_as_number AS float64) is not null)
         GROUP BY 1
         ORDER BY number_successful_units DESC
     ),
@@ -42,7 +42,7 @@ WITH
           ON m.measurement_id = mm.measurement_id
         WHERE
           safe_cast(replace(replace(replace(value_source_value, "<", ""), ">", ""), "=", "") as float64) is not null 
-          AND safe_cast(value_as_number AS float64) is not null
+          OR safe_cast(value_as_number AS float64) is not null
         GROUP BY 1
         ORDER BY rows_w_units DESC
     )
