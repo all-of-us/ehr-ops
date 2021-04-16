@@ -268,7 +268,6 @@ WITH
     t3.concept_id = t1.observation_concept_id
   WHERE
     t3.standard_concept="S"
-    AND t3.domain_id="Observation"
 
   GROUP BY
     1 ),
