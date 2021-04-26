@@ -3,7 +3,7 @@
 with
 person as (
    select distinct mp.src_hpo_id, mp.person_id
-   from (select DISTINCT *  from `aou-pdr-data-prod.curation_data_view._mapping_person`) mp
+   from (select DISTINCT *  from `{{pdr_project}}.{{curation_dataset}}._mapping_person`) mp
    join `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` p using(person_id)
    ),
 visit as (
