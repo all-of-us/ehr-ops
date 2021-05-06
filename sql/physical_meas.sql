@@ -1,5 +1,5 @@
 -- This query checks against the physical measurement coverage in the measurement table
--- This doesn't include physical measurement from enrollment
+-- This doesn't include physical measurement from enrollment (confirmed)
 with
 person as (
    select distinct mp.src_hpo_id, mp.person_id
