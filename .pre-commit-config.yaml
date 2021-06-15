@@ -1,0 +1,19 @@
+repos:
+  - repo: local
+    hooks:
+      - id: strip workbook
+        name: Stripping workbook
+        entry: bash -c 'python strip_workbook.py; git add -u'
+        additional_dependencies: [python-dotenv, lxml]
+        language: python
+        always_run: true
+        pass_filenames: false
+        stages: [commit]
+      - id: restore workbook
+        name: Restoring workbook
+        entry: bash -c 'python restore_workbook.py; git add -u'
+        additional_dependencies: [python-dotenv, jinja2]
+        language: python
+        always_run: true
+        pass_filenames: false
+        stages: [post-commit, post-merge]

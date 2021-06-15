@@ -1,3 +1,4 @@
 /.idea
 .compiled
 .DS_Store
+.cipher

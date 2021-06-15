@@ -1,1 +1,4 @@
 Jinja2
+python-dotenv
+lxml
+pre-commit
