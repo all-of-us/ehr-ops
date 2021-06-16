@@ -226,3 +226,7 @@ If a pull request indicates a merge conflict:
 1. In local repo, merge the destination branch into the source branch.
 1. If conflicts are within the `EHR Ops Dashboard.twb` file, accept all **current** changes via a conflict resolution tool (essentially overwriting the workbook).
 1. Commit and push to conclude conflict resolution.
+
+## Developer Guide
+
+Please reference [this guide](https://docs.google.com/document/d/1n7dbJSpIyyC0LDjKEJkKbgAz_GBpgwqwf0u5_yJBf6M/edit?usp=sharing) for development setup.

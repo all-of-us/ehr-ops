@@ -1,3 +1,5 @@
+-- This query returns number of participants with at least one EHR record in visit_occurrence, measurement,
+-- procedure_occurrence, drug_exposure, observation and visit_occurrence tables.
 SELECT
 src_hpo_id,
 count(distinct(person_id)) as Participants_With_EHR_Data

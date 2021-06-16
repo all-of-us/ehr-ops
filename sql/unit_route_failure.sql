@@ -1,3 +1,4 @@
+-- This query checks against the coverage of unit_concept_id in measurement table and route_concept_id in drug_exposure table.
 WITH
     sites AS (
         SELECT DISTINCT mp.src_hpo_id

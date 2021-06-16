@@ -1,4 +1,4 @@
--- this view has been built in curation dataset and copied as a table in PDR
+-- This query returns the org_id linkage between CDR and PDR
 WITH
   bucket_create AS (
   SELECT
