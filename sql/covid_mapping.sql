@@ -1,6 +1,6 @@
 -- This query checks on the mapping of COVID-19 measurement results
 
-WITH
+with
     covid as (
         select distinct mm.src_hpo_id, count(*) as total_covid_measurements
         from `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` as m   

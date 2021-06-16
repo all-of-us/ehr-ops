@@ -1,4 +1,5 @@
-WITH 
+-- This query evaluates the visit_id failure rate in condition_occurrence and procedure_occurrence tables.
+WITH
     visit AS (
         SELECT DISTINCT mvo.src_hpo_id, vo.visit_occurrence_id
         FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` vo

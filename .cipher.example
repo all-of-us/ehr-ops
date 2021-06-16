@@ -1,0 +1,5 @@
+# Contains values (right) to mask with keys (left) in the workbook file
+
+pdr_project="name-of-project"
+curation_dataset="name-of-dataset"
+rdr_dataset="name-of-dataset"
