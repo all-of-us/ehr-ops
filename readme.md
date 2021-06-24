@@ -2,6 +2,8 @@
 
 This repository is to guide you through EHR Ops Dashboard. EHR Ops Dashboard is a tableau dashboard provided by AllofUs analytics team to reflect the data quality across over HPOs.
 
+⚠ NO PHI entry in this repo.
+
 ### High Level Summary
 
 1. Definition of metrics and related queries
