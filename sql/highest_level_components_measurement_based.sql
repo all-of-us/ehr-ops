@@ -5,14 +5,20 @@ with highest_level_components as (
     ON csd1.ancestor_concept_name = csd2.descendant_concept_name
     WHERE csd2.ancestor_concept_id IS NULL
 ),
+hpo_list as (
+    SELECT
+        LOWER(hpo.HPO_ID) hpo_id
+    FROM `aou-pdr-data-prod.curation_data_view.v_org_hpo_mapping` hpo
+),
 wide_net as (
     SELECT
-        hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
+        hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
+        csd.descendant_concept_id
     FROM highest_level_components hlc
     JOIN `aou-pdr-data-prod.curation_data_view.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
     JOIN `aou-pdr-data-prod.curation_data_view.concept` c
-        ON c.concept_id = csd.descendant_concept_id 
+        ON c.concept_id = csd.descendant_concept_id
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id = 'Lab Test'
 ),
@@ -295,7 +301,8 @@ recommended_codes as (
 ),
 recommended_concept_ids as (
     select
-        hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
+        hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
+        c.concept_id descendant_concept_id
     from
         `aou-pdr-data-prod.curation_data_view.concept` c
     JOIN `aou-pdr-data-prod.curation_data_view.measurement_concept_sets_descendants` csd
@@ -312,11 +319,12 @@ recommended_concept_ids as (
 ),
 recommended_measurement_counts as (
     select
-        mm.src_hpo_id,
+        mm.src_hpo_id, rci.ancestor_concept_id, rci.ancestor_concept_name,
         count(distinct m.measurement_id) as measurement_recommended
     from
         `aou-pdr-data-prod.curation_data_view.unioned_ehr_measurement` m
         join `aou-pdr-data-prod.curation_data_view._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join recommended_concept_ids rci on rci.descendant_concept_id = m.measurement_concept_id
     where
         m.measurement_concept_id in (
             select
@@ -325,15 +333,16 @@ recommended_measurement_counts as (
                 recommended_concept_ids
         )
     group by
-        1
+        1, 2, 3
 ),
 wide_measurement_counts as (
     select
-        mm.src_hpo_id,
+        mm.src_hpo_id, wn.ancestor_concept_id, wn.ancestor_concept_name,
         count(distinct m.measurement_id) as measurement_wide
     from
         `aou-pdr-data-prod.curation_data_view.unioned_ehr_measurement` m
         join `aou-pdr-data-prod.curation_data_view._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join wide_net wn on wn.descendant_concept_id = m.measurement_concept_id
     where
         m.measurement_concept_id in (
             select
@@ -342,12 +351,18 @@ wide_measurement_counts as (
                 wide_net
         )
     group by
-        1
+        1, 2, 3
 )
 select
-    w.src_hpo_id,
-    measurement_recommended,
-    measurement_wide
-from
-    recommended_measurement_counts r
-    left join wide_measurement_counts w on r.src_hpo_id = w.src_hpo_id
+    hpo.hpo_id src_hpo_id, hlc.concept_id ancestor_concept_id, hlc.concept_name
+    ancestor_concept_name,
+    IFNULL(measurement_wide, 0) measurement_wide,
+    IFNULL(measurement_recommended, 0) measurement_recommended
+from hpo_list hpo
+cross join highest_level_components hlc
+left join wide_measurement_counts wmc 
+    on wmc.src_hpo_id = hpo.hpo_id
+        and wmc.ancestor_concept_id = hlc.concept_id
+left join recommended_measurement_counts r
+    on r.src_hpo_id = hpo.hpo_id
+        and r.ancestor_concept_id = hlc.concept_id
