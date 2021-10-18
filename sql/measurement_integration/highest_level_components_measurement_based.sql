@@ -11,7 +11,7 @@ hpo_list as (
     FROM `aou-pdr-data-prod.curation_data_view.v_org_hpo_mapping` hpo
 ),
 wide_net as (
-    SELECT
+    SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
         csd.descendant_concept_id
     FROM highest_level_components hlc

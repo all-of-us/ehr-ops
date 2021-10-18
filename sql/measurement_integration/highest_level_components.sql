@@ -1,17 +1,17 @@
 with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `aou-pdr-data-prod.curation_data_view.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `aou-pdr-data-prod.curation_data_view.measurement_concept_sets_descendants` csd2
+    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_name = csd2.descendant_concept_name
     WHERE csd2.ancestor_concept_id IS NULL
 ),
 wide_net as (
-    SELECT
+    SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `aou-pdr-data-prod.curation_data_view.measurement_concept_sets_descendants` csd
+    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `aou-pdr-data-prod.curation_data_view.concept` c
+    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id = 'Lab Test'
@@ -297,8 +297,8 @@ recommended_concept_ids as (
     select
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
-        `aou-pdr-data-prod.curation_data_view.concept` c
-    JOIN `aou-pdr-data-prod.curation_data_view.measurement_concept_sets_descendants` csd
+        `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -315,9 +315,9 @@ non_recommended_codes as (
         mm.src_hpo_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
-        `aou-pdr-data-prod.curation_data_view.unioned_ehr_measurement` m
-        join `aou-pdr-data-prod.curation_data_view._mapping_measurement` mm on m.measurement_id = mm.measurement_id
-        join `aou-pdr-data-prod.curation_data_view.concept` c on c.concept_id = m.measurement_concept_id
+        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join `{{pdr_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
         join wide_net wn on wn.descendant_concept_id = c.concept_id
     where
         m.measurement_concept_id in (
@@ -339,55 +339,9 @@ aggregate_non_recommended_codes as (
         c.concept_name ancestor_concept_name,
         COUNT(*) lab_count
     from non_recommended_codes nrc
-    join `aou-pdr-data-prod.curation_data_view.concept` c
+    join `{{pdr_project}}.{{curation_dataset}}.concept` c
         on c.concept_id = nrc.ancestor_concept_id
     group by src_hpo_id, ancestor_concept_id, ancestor_concept_name
 )
 select * from aggregate_non_recommended_codes
 order by src_hpo_id, lab_count desc
-
-
---below this is for the aggregates
-
--- recommended_measurement_counts as (
---     select
---         mm.src_hpo_id,
---         count(distinct m.measurement_id) as measurement_recommended
---     from
---         `aou-pdr-data-prod.curation_data_view.unioned_ehr_measurement` m
---         join `aou-pdr-data-prod.curation_data_view._mapping_measurement` mm on m.measurement_id = mm.measurement_id
---     where
---         m.measurement_concept_id in (
---             select
---                 descendant_concept_id
---             from
---                 recommended_concept_ids
---         )
---     group by
---         1
--- ),
--- wide as (
---     select
---         mm.src_hpo_id,
---         count(distinct m.measurement_id) as measurement_wide
---     from
---         `aou-pdr-data-prod.curation_data_view.unioned_ehr_measurement` m
---         join `aou-pdr-data-prod.curation_data_view._mapping_measurement` mm on m.measurement_id = mm.measurement_id
---     where
---         m.measurement_concept_id in (
---             select
---                 descendant_concept_id
---             from
---                 wide_net
---         )
---     group by
---         1
--- )
--- select
---     w.src_hpo_id,
---     measurement_recommended,
---     measurement_wide
--- from
---     recommend r
---     left join wide w on r.src_hpo_id = w.src_hpo_id
-
