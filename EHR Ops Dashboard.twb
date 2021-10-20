@@ -32136,8 +32136,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="900" minheight="900" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="720" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="719" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="722" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="721" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="280" h="98546" id="13" is-fixed="true" name="COVID mapping" w="98400" x="800" y="727">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -32247,8 +32247,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="700" minheight="700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="222" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="221" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="224" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="223" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="48" h="7250" id="108" is-fixed="true" name="COVID Trending Title" show-title="false" w="98400" x="800" y="1000">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -32398,8 +32398,8 @@ Patient Status Trending Chart
           </layout-options>
           <size maxheight="750" minheight="750" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="120" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="119" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="122" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="121" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="130" h="11500" id="16" type-v2="title" w="98400" x="800" y="667">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -32556,8 +32556,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="1700" minheight="1700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="234" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="233" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="236" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="235" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="51" h="5083" id="109" is-fixed="true" name="DC Trending Title" show-title="false" w="98546" x="727" y="667">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -32732,8 +32732,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="850" minheight="850" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="224" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="223" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="226" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="225" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="37" h="5625" id="108" is-fixed="true" name="DQ Trending Title" show-title="false" w="98400" x="800" y="1000">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -32852,8 +32852,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="700" minheight="700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="221" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="220" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="223" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="222" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="61" h="8625" id="111" is-fixed="true" name="Dup Trending Title" show-title="false" w="98400" x="800" y="1000">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -32937,8 +32937,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="750" minheight="750" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="715" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="714" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="717" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="716" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="280" h="98770" id="3" is-fixed="true" name="Duplicates" w="98666" x="667" y="615">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -33068,8 +33068,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="800" minheight="800" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="225" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="224" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="227" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="226" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="48" h="4833" id="94" is-fixed="true" name="GC Trending Title" show-title="false" w="98400" x="800" y="667">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -33240,8 +33240,8 @@ Patient Status Trending Chart
           </layout-options>
           <size maxheight="1350" minheight="1350" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="755" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="98770" id="754" param="vert" type-v2="layout-flow" w="98400" x="800" y="615">
+            <zone h="100000" id="757" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="98770" id="756" param="vert" type-v2="layout-flow" w="98400" x="800" y="615">
                 <zone fixed-size="59" h="5153" id="54" type-v2="title" w="98400" x="800" y="615">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -33392,8 +33392,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="700" minheight="700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="62" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="98000" id="61" param="vert" type-v2="layout-flow" w="98666" x="667" y="1000">
+            <zone h="100000" id="64" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="98000" id="63" param="vert" type-v2="layout-flow" w="98666" x="667" y="1000">
                 <zone h="4375" id="14" type-v2="title" w="98666" x="667" y="1000">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -33483,8 +33483,8 @@ Patient Status Trending Chart
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="700" minheight="700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="81" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="98546" id="80" param="vert" type-v2="layout-flow" w="98858" x="571" y="727">
+            <zone h="100000" id="83" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="98546" id="82" param="vert" type-v2="layout-flow" w="98858" x="571" y="727">
                 <zone fixed-size="40" h="3636" id="73" is-fixed="true" name="info - measurement integration" show-title="false" w="3429" x="47071" y="545">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -33887,8 +33887,8 @@ The number of participants with EHR data per HPO divided by the number of partic
           </layout-options>
           <size maxheight="3250" minheight="3250" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="1024" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="99542" id="1023" param="vert" type-v2="layout-flow" w="98666" x="667" y="229">
+            <zone h="100000" id="1026" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="99542" id="1025" param="vert" type-v2="layout-flow" w="98666" x="667" y="229">
                 <zone fixed-size="78" h="2229" id="19" type-v2="title" w="93501" x="3083" y="1143">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -34245,8 +34245,8 @@ The number of participants with EHR data per HPO divided by the number of partic
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="700" minheight="700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="265" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="264" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="267" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="266" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="280" h="98400" id="3" is-fixed="true" name="participant_count_breakdown" w="98770" x="615" y="800">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -34329,8 +34329,8 @@ The number of participants with EHR data per HPO divided by the number of partic
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="700" minheight="700" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="222" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="98000" id="221" param="vert" type-v2="layout-flow" w="98400" x="800" y="1000">
+            <zone h="100000" id="224" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="98000" id="223" param="vert" type-v2="layout-flow" w="98400" x="800" y="1000">
                 <zone fixed-size="41" h="6375" id="112" is-fixed="true" name="Physical Measurement Trending Title" show-title="false" w="98400" x="800" y="1000">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
@@ -34418,8 +34418,8 @@ The number of participants with EHR data per HPO divided by the number of partic
         <devicelayout auto-generated="true" name="Phone">
           <size maxheight="1200" minheight="1200" sizing-mode="vscroll"/>
           <zones>
-            <zone h="100000" id="704" type-v2="layout-basic" w="100000" x="0" y="0">
-              <zone h="84000" id="703" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
+            <zone h="100000" id="706" type-v2="layout-basic" w="100000" x="0" y="0">
+              <zone h="84000" id="705" param="vert" type-v2="layout-flow" w="84000" x="8000" y="8000">
                 <zone fixed-size="280" h="98770" id="3" is-fixed="true" name="Physical Measurements" w="98666" x="667" y="615">
                   <zone-style>
                     <format attr="border-color" value="#000000"/>
