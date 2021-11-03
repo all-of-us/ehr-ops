@@ -12,7 +12,8 @@ from dotenv import dotenv_values
 from pathlib import Path
 
 CIPHER_FILE = '.cipher'
-WORKBOOK = Path(__file__).parent / 'EHR Ops Dashboard.twb'
+WORKBOOKS = [Path(__file__).parent / 'EHR Ops Dashboard.twb',
+                Path(__file__).parent / 'Data_Transfer_Rate.twb']
 
 CONNECTION_TAG = 'connection'
 EXTRACT_TAG = 'extract'
@@ -21,7 +22,7 @@ RELATION_TAG = 'relation'
 
 def strip_connections(xml):
     nullable_attributes = [
-        'CATALOG', 'EXECCATALOG', 'project', 'schema', 'username'
+        'CATALOG', 'EXECCATALOG', 'project', 'schema', 'username', 'dbname'
     ]
     connections = xml.findall(f'.//{CONNECTION_TAG}')
 
@@ -76,18 +77,20 @@ def strip_relations(xml):
 
 
 def main():
-    with open(WORKBOOK, 'rb') as f:
-        xml = etree.XML(f.read())
+    for workbook in WORKBOOKS:
+        print(f"Processing {workbook}...")
+        with open(workbook, 'rb') as f:
+            xml = etree.XML(f.read())
 
-    print('Stripping connections')
-    strip_connections(xml)
-    print('Stripping extract')
-    strip_extract(xml)
-    print('Stripping relations')
-    strip_relations(xml)
+        print('Stripping connections')
+        strip_connections(xml)
+        print('Stripping extract')
+        strip_extract(xml)
+        print('Stripping relations')
+        strip_relations(xml)
 
-    with open(WORKBOOK, 'wb') as f:
-        f.write(etree.tostring(xml, pretty_print=True))
+        with open(workbook, 'wb') as f:
+            f.write(etree.tostring(xml, pretty_print=True))
 
 
 if __name__ == '__main__':
