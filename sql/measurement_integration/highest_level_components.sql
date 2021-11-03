@@ -6,7 +6,7 @@ with highest_level_components as (
     WHERE csd2.ancestor_concept_id IS NULL
 ),
 wide_net as (
-    SELECT DISTINCT
+    SELECT DISTINCT 
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
     JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
@@ -294,7 +294,7 @@ recommended_codes as (
         ) as code
 ),
 recommended_concept_ids as (
-    select
+    select DISTINCT
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
         `{{pdr_project}}.{{curation_dataset}}.concept` c
@@ -312,7 +312,7 @@ recommended_concept_ids as (
 ),
 non_recommended_codes as (
   select
-        mm.src_hpo_id, wn.ancestor_concept_id,
+        mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
         `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m

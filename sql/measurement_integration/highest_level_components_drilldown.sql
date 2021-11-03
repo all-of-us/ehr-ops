@@ -312,7 +312,7 @@ recommended_concept_ids as (
 ),
 non_recommended_codes as (
   select
-        mm.src_hpo_id, wn.ancestor_concept_id,
+        mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
         `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
