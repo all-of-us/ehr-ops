@@ -7,7 +7,8 @@ from pathlib import Path
 from dotenv import dotenv_values
 
 CIPHER_FILE = '.cipher'
-WORKBOOK = Path(__file__).parent / 'EHR Ops Dashboard.twb'
+WORKBOOKS = [Path(__file__).parent / 'EHR Ops Dashboard.twb',
+                Path(__file__).parent / 'Data_Transfer_Rate.twb']
 
 
 def load_template(filepath):
@@ -20,14 +21,15 @@ def load_template(filepath):
 
 
 def main():
-    cipher_dict = dotenv_values(CIPHER_FILE)
-    template = load_template(WORKBOOK)
+    for workbook in WORKBOOKS:
+        cipher_dict = dotenv_values(CIPHER_FILE)
+        template = load_template(workbook)
 
-    print('Filling workbook template...')
-    filled_template = template.render(**cipher_dict)
+        print(f'Filling workbook {workbook} template...')
+        filled_template = template.render(**cipher_dict)
 
-    with open(WORKBOOK, 'w') as f:
-        f.write(filled_template)
+        with open(workbook, 'w') as f:
+            f.write(filled_template)
 
 
 if __name__ == '__main__':
