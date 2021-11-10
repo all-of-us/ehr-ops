@@ -2,7 +2,7 @@ with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
     FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
     LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
-    ON csd1.ancestor_concept_name = csd2.descendant_concept_name
+    ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
 hpo_list as (
@@ -20,7 +20,7 @@ wide_net as (
     JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id
     WHERE c.vocabulary_id = 'LOINC'
-        AND c.concept_class_id = 'Lab Test'
+        AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
 ),
 recommended_codes as (
     select
