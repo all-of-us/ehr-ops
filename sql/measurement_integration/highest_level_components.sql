@@ -5,17 +5,6 @@ with highest_level_components as (
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
-wide_net as (
-    SELECT DISTINCT 
-        hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
-    FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
-        ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
-        ON c.concept_id = csd.descendant_concept_id 
-    WHERE c.vocabulary_id = 'LOINC'
-        AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
-),
 recommended_codes as (
     select
         *
@@ -438,6 +427,18 @@ recommended_concept_ids as (
             from
                 recommended_codes
         )
+),
+wide_net as (
+    SELECT DISTINCT
+        hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
+    FROM highest_level_components hlc
+    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        ON csd.ancestor_concept_id = hlc.concept_id
+    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+        ON c.concept_id = csd.descendant_concept_id 
+    WHERE c.vocabulary_id = 'LOINC'
+        AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
+        AND hlc.concept_id IN (SELECT ancestor_concept_id FROM recommended_concept_ids)
 ),
 non_recommended_codes as (
   select

@@ -10,18 +10,6 @@ hpo_list as (
         LOWER(hpo.HPO_ID) hpo_id
     FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping` hpo
 ),
-wide_net as (
-    SELECT DISTINCT
-        hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
-        csd.descendant_concept_id
-    FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
-        ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
-        ON c.concept_id = csd.descendant_concept_id
-    WHERE c.vocabulary_id = 'LOINC'
-        AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
-),
 recommended_codes as (
     select
         *
@@ -446,6 +434,19 @@ recommended_concept_ids as (
                 recommended_codes
         )
 ),
+wide_net as (
+    SELECT DISTINCT
+        hlc.concept_id ancestor_concept_id, csd.descendant_concept_id,
+        hlc.concept_name ancestor_concept_name
+    FROM highest_level_components hlc
+    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        ON csd.ancestor_concept_id = hlc.concept_id
+    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+        ON c.concept_id = csd.descendant_concept_id 
+    WHERE c.vocabulary_id = 'LOINC'
+        AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
+        AND hlc.concept_id IN (SELECT ancestor_concept_id FROM recommended_concept_ids)
+),
 recommended_measurement_counts as (
     select
         mm.src_hpo_id, rci.ancestor_concept_id, rci.ancestor_concept_name,
@@ -495,3 +496,4 @@ left join wide_measurement_counts wmc
 left join recommended_measurement_counts r
     on r.src_hpo_id = hpo.hpo_id
         and r.ancestor_concept_id = hlc.concept_id
+WHERE hlc.concept_id IN (SELECT ancestor_concept_id FROM recommended_concept_ids)
