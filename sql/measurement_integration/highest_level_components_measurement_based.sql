@@ -2,25 +2,13 @@ with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
     FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
     LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
-    ON csd1.ancestor_concept_name = csd2.descendant_concept_name
+    ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
 hpo_list as (
     SELECT
         LOWER(hpo.HPO_ID) hpo_id
     FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping` hpo
-),
-wide_net as (
-    SELECT DISTINCT
-        hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
-        csd.descendant_concept_id
-    FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
-        ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
-        ON c.concept_id = csd.descendant_concept_id
-    WHERE c.vocabulary_id = 'LOINC'
-        AND c.concept_class_id = 'Lab Test'
 ),
 recommended_codes as (
     select
@@ -296,7 +284,136 @@ recommended_codes as (
 "66142-1",
 "704-7",
 "705-4",
-"74406-0"]
+"74406-0",
+"8308-9",
+"8303-0",
+"91370-7",
+"8302-2",
+"8307-1",
+"92999-2",
+"8306-3",
+"8301-4",
+"3138-5",
+"8305-5",
+"89269-5",
+"3137-7",
+"56092-0",
+"8347-7",
+"75292-3",
+"8335-2",
+"8339-4",
+"79348-9",
+"8338-6",
+"89087-1",
+"57067-1",
+"8346-9",
+"8345-1",
+"69461-2",
+"56093-8",
+"3142-7",
+"11753-1",
+"11759-8",
+"8343-6",
+"11741-6",
+"33143-9",
+"11730-9",
+"11746-5",
+"33139-7",
+"3141-9",
+"11755-6",
+"11745-7",
+"11757-2",
+"11749-9",
+"11739-0",
+"11751-5",
+"11747-3",
+"11756-4",
+"11727-5",
+"8341-0",
+"11758-0",
+"33140-5",
+"11760-6",
+"11763-0",
+"11754-9",
+"33162-9",
+"11737-4",
+"11744-0",
+"8336-0",
+"8351-9",
+"8349-3",
+"8344-4",
+"8350-1",
+"56056-5",
+"58229-6",
+"69460-4",
+"8348-5",
+"73965-6",
+"11738-2",
+"11734-1",
+"11752-3",
+"11740-8",
+"11762-2",
+"11736-6",
+"8340-2",
+"33142-1",
+"11765-5",
+"11764-8",
+"33144-7",
+"33141-3",
+"33163-7",
+"11742-4",
+"11729-1",
+"11735-8",
+"11728-3",
+"11733-3",
+"8342-8",
+"11731-7",
+"11750-7",
+"11743-2",
+"11761-4",
+"29463-7",
+"11748-1",
+"11732-5",
+"11125-2",
+"10466-1",
+"1863-0",
+"73576-1",
+"73577-9",
+"73578-7",
+"73579-5",
+"73580-3",
+"73581-1",
+"73582-9",
+"77341-6",
+"18225-3",
+"76476-1",
+"8889-8",
+"8892-2",
+"8890-6",
+"8891-4",
+"8893-0",
+"1996-8",
+"2000-8",
+"17861-6",
+"49765-1",
+"27182-5",
+"15154-8",
+"44017-2",
+"30376-8",
+"708-8",
+"11557-6",
+"20565-8",
+"34728-6",
+"61012-1",
+"76170-0",
+"76171-8",
+"76172-6",
+"76173-4",
+"76174-2",
+"76270-8",
+"9279-1",
+"11156-7",
+"8310-5"]
         ) as code
 ),
 recommended_concept_ids as (
@@ -316,6 +433,19 @@ recommended_concept_ids as (
             from
                 recommended_codes
         )
+),
+wide_net as (
+    SELECT DISTINCT
+        hlc.concept_id ancestor_concept_id, csd.descendant_concept_id,
+        hlc.concept_name ancestor_concept_name
+    FROM highest_level_components hlc
+    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        ON csd.ancestor_concept_id = hlc.concept_id
+    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+        ON c.concept_id = csd.descendant_concept_id 
+    WHERE c.vocabulary_id = 'LOINC'
+        AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
+        AND hlc.concept_id IN (SELECT ancestor_concept_id FROM recommended_concept_ids)
 ),
 recommended_measurement_counts as (
     select
@@ -366,3 +496,4 @@ left join wide_measurement_counts wmc
 left join recommended_measurement_counts r
     on r.src_hpo_id = hpo.hpo_id
         and r.ancestor_concept_id = hlc.concept_id
+WHERE hlc.concept_id IN (SELECT ancestor_concept_id FROM recommended_concept_ids)
