@@ -204,7 +204,7 @@
                               </clause>
                               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_eligible_participants_ehr" type="text">WITH ep AS (
 SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, Participants_With_EHR_Data
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
 
 org_hpo AS (
 SELECT 
@@ -213,7 +213,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.*,
@@ -222,34 +222,34 @@ SELECT DISTINCT
 FROM ep
 JOIN org_hpo
 ON ep.src_hpo_id = org_hpo.src_hpo_id
-JOIN `{{pdr_project}}.{{rdr_dataset}}.organization` o
+JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.organization` o
     ON o.external_id = org_hpo.Org_ID</relation>
                               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_covid_mapping" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, covid_mapping_issue_count, total_covid_measurements
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_covid_mapping`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_covid_mapping`</relation>
                             </relation>
                             <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_1" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
  visit_total_rows, visit_wrong_date_rows, condition_total_rows, condition_wrong_date_rows,
  drug_total_rows, drug_wrong_date_rows, device_total_rows, device_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_1`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_1`</relation>
                           </relation>
                           <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_unit_route_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   number_successful_units, rows_w_units, number_valid_routes
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_unit_route_failure`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_unit_route_failure`</relation>
                         </relation>
                         <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_physical_meas" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   num_of_participants, participants_with_EHR, participants_with_measurement, 
   participants_with_ehr_height, height_rate, participants_with_ehr_weight, weight_rate,
   participants_with_ehr_bmi, bmi_rate, participants_with_ehr_heart_rate, heart_rate
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_physical_meas`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_physical_meas`</relation>
                       </relation>
                       <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_visit_id_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_rows_w_no_valid_vo, procedure_rows_w_no_valid_vo
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
                     </relation>
                     <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_duplicates" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
     condition_dup_cnt, procedure_dup_cnt, visit_dup_cnt, observation_dup_cnt, 
     measurement_dup_cnt, drug_dup_cnt, total_dup_cnt
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
                   </relation>
                   <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_gc1_standard" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_total_row, condition_well_defined_row, condition_total_zero_missing, condition_total_missing,
@@ -258,7 +258,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
   observation_total_row, observation_well_defined_row, observation_total_zero_missing, observation_total_missing,
   procedure_total_row, procedure_well_defined_row, procedure_total_zero_missing, procedure_total_missing,
   visit_total_row, visit_well_defined_row, visit_total_zero_missing, visit_total_missing 
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
                 </relation>
                 <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_2" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
  visit_total_rows, wrong_visit_start_death_date, wrong_visit_end_death_date,
@@ -268,7 +268,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
  measurement_total_rows, wrong_measurement_death_date, 
  observation_total_rows, wrong_observation_death_date, 
  procedure_total_rows, wrong_procedure_death_date	
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
               </relation>
               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_3" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     visit_start_total_rows, visit_start_wrong_date_rows, visit_end_total_rows, visit_end_wrong_date_rows,
@@ -278,7 +278,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
     observation_total_rows, observation_wrong_date_rows, 
     procedure_total_rows, procedure_wrong_date_rows,
     device_start_total_rows, device_start_wrong_date_rows, device_end_total_rows, device_end_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
             </relation>
             <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_4" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     visit_start_total_rows, visit_start_not_match, visit_end_total_rows, visit_end_not_match,
@@ -288,14 +288,14 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
     observation_total_rows, observation_not_match, 
     procedure_total_rows, procedure_not_match, 
     device_start_total_rows, device_start_not_match, device_end_total_rows, device_end_not_match	
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_4`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_4`</relation>
           </relation>
           <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_table_counts_with_upload_timestamp" type="text">SELECT distinct lower(hpo_id) as src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     cast(person_upload_time as date) as person_upload_dt,
     person, condition_occurrence, procedure_occurrence, drug_exposure, visit_occurrencence as visit_occurrence,
     measurement, observation, device_exposure, death, provider, specimen, location, care_site, note, 
     pii_address, pii_email, pii_mrn, pii_name, pii_phone, participant_match
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_timestamp_for_hpo_sites`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_timestamp_for_hpo_sites`</relation>
         </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
         <_.fcp.ObjectModelEncapsulateLegacy.true...relation join="left" type="join">
           <clause type="join">
@@ -442,7 +442,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_tim
                               </clause>
                               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_eligible_participants_ehr" type="text">WITH ep AS (
 SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, Participants_With_EHR_Data
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
 
 org_hpo AS (
 SELECT 
@@ -451,7 +451,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.*,
@@ -460,34 +460,34 @@ SELECT DISTINCT
 FROM ep
 JOIN org_hpo
 ON ep.src_hpo_id = org_hpo.src_hpo_id
-JOIN `{{pdr_project}}.{{rdr_dataset}}.organization` o
+JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.organization` o
     ON o.external_id = org_hpo.Org_ID</relation>
                               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_covid_mapping" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, covid_mapping_issue_count, total_covid_measurements
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_covid_mapping`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_covid_mapping`</relation>
                             </relation>
                             <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_1" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
  visit_total_rows, visit_wrong_date_rows, condition_total_rows, condition_wrong_date_rows,
  drug_total_rows, drug_wrong_date_rows, device_total_rows, device_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_1`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_1`</relation>
                           </relation>
                           <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_unit_route_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   number_successful_units, rows_w_units, number_valid_routes
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_unit_route_failure`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_unit_route_failure`</relation>
                         </relation>
                         <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_physical_meas" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   num_of_participants, participants_with_EHR, participants_with_measurement, 
   participants_with_ehr_height, height_rate, participants_with_ehr_weight, weight_rate,
   participants_with_ehr_bmi, bmi_rate, participants_with_ehr_heart_rate, heart_rate
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_physical_meas`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_physical_meas`</relation>
                       </relation>
                       <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_visit_id_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_rows_w_no_valid_vo, procedure_rows_w_no_valid_vo
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
                     </relation>
                     <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_duplicates" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
     condition_dup_cnt, procedure_dup_cnt, visit_dup_cnt, observation_dup_cnt, 
     measurement_dup_cnt, drug_dup_cnt, total_dup_cnt
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
                   </relation>
                   <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_gc1_standard" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_total_row, condition_well_defined_row, condition_total_zero_missing, condition_total_missing,
@@ -496,7 +496,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
   observation_total_row, observation_well_defined_row, observation_total_zero_missing, observation_total_missing,
   procedure_total_row, procedure_well_defined_row, procedure_total_zero_missing, procedure_total_missing,
   visit_total_row, visit_well_defined_row, visit_total_zero_missing, visit_total_missing 
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
                 </relation>
                 <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_2" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
  visit_total_rows, wrong_visit_start_death_date, wrong_visit_end_death_date,
@@ -506,7 +506,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
  measurement_total_rows, wrong_measurement_death_date, 
  observation_total_rows, wrong_observation_death_date, 
  procedure_total_rows, wrong_procedure_death_date	
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
               </relation>
               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_3" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     visit_start_total_rows, visit_start_wrong_date_rows, visit_end_total_rows, visit_end_wrong_date_rows,
@@ -516,7 +516,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
     observation_total_rows, observation_wrong_date_rows, 
     procedure_total_rows, procedure_wrong_date_rows,
     device_start_total_rows, device_start_wrong_date_rows, device_end_total_rows, device_end_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
             </relation>
             <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_4" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     visit_start_total_rows, visit_start_not_match, visit_end_total_rows, visit_end_not_match,
@@ -526,14 +526,14 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
     observation_total_rows, observation_not_match, 
     procedure_total_rows, procedure_not_match, 
     device_start_total_rows, device_start_not_match, device_end_total_rows, device_end_not_match	
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_4`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_4`</relation>
           </relation>
           <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_table_counts_with_upload_timestamp" type="text">SELECT distinct lower(hpo_id) as src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     cast(person_upload_time as date) as person_upload_dt,
     person, condition_occurrence, procedure_occurrence, drug_exposure, visit_occurrencence as visit_occurrence,
     measurement, observation, device_exposure, death, provider, specimen, location, care_site, note, 
     pii_address, pii_email, pii_mrn, pii_name, pii_phone, participant_match
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_timestamp_for_hpo_sites`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_timestamp_for_hpo_sites`</relation>
         </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
         <cols>
           <map key="[Participants_With_EHR_Data]" value="[snapshot_eligible_participants_ehr].[Participants_With_EHR_Data]"/>
@@ -3419,7 +3419,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_tim
                                     </clause>
                                     <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_eligible_participants_ehr" type="text">WITH ep AS (
 SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, Participants_With_EHR_Data
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
 
 org_hpo AS (
 SELECT 
@@ -3428,7 +3428,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.*,
@@ -3437,34 +3437,34 @@ SELECT DISTINCT
 FROM ep
 JOIN org_hpo
 ON ep.src_hpo_id = org_hpo.src_hpo_id
-JOIN `{{pdr_project}}.{{rdr_dataset}}.organization` o
+JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.organization` o
     ON o.external_id = org_hpo.Org_ID</relation>
                                     <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_covid_mapping" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, covid_mapping_issue_count, total_covid_measurements
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_covid_mapping`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_covid_mapping`</relation>
                                   </relation>
                                   <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_1" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
  visit_total_rows, visit_wrong_date_rows, condition_total_rows, condition_wrong_date_rows,
  drug_total_rows, drug_wrong_date_rows, device_total_rows, device_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_1`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_1`</relation>
                                 </relation>
                                 <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_unit_route_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   number_successful_units, rows_w_units, number_valid_routes
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_unit_route_failure`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_unit_route_failure`</relation>
                               </relation>
                               <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_physical_meas" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   num_of_participants, participants_with_EHR, participants_with_measurement, 
   participants_with_ehr_height, height_rate, participants_with_ehr_weight, weight_rate,
   participants_with_ehr_bmi, bmi_rate, participants_with_ehr_heart_rate, heart_rate
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_physical_meas`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_physical_meas`</relation>
                             </relation>
                             <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_visit_id_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_rows_w_no_valid_vo, procedure_rows_w_no_valid_vo
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
                           </relation>
                           <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_duplicates" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
     condition_dup_cnt, procedure_dup_cnt, visit_dup_cnt, observation_dup_cnt, 
     measurement_dup_cnt, drug_dup_cnt, total_dup_cnt
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
                         </relation>
                         <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_gc1_standard" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_total_row, condition_well_defined_row, condition_total_zero_missing, condition_total_missing,
@@ -3473,7 +3473,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_duplicates`</relation>
   observation_total_row, observation_well_defined_row, observation_total_zero_missing, observation_total_missing,
   procedure_total_row, procedure_well_defined_row, procedure_total_zero_missing, procedure_total_missing,
   visit_total_row, visit_well_defined_row, visit_total_zero_missing, visit_total_missing 
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
                       </relation>
                       <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_2" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
  visit_total_rows, wrong_visit_start_death_date, wrong_visit_end_death_date,
@@ -3483,7 +3483,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`</relation>
  measurement_total_rows, wrong_measurement_death_date, 
  observation_total_rows, wrong_observation_death_date, 
  procedure_total_rows, wrong_procedure_death_date	
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
                     </relation>
                     <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_3" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     visit_start_total_rows, visit_start_wrong_date_rows, visit_end_total_rows, visit_end_wrong_date_rows,
@@ -3493,7 +3493,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_2`</relation>
     observation_total_rows, observation_wrong_date_rows, 
     procedure_total_rows, procedure_wrong_date_rows,
     device_start_total_rows, device_start_wrong_date_rows, device_end_total_rows, device_end_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
                   </relation>
                   <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_dc_4" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     visit_start_total_rows, visit_start_not_match, visit_end_total_rows, visit_end_not_match,
@@ -3503,14 +3503,14 @@ FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`</relation>
     observation_total_rows, observation_not_match, 
     procedure_total_rows, procedure_not_match, 
     device_start_total_rows, device_start_not_match, device_end_total_rows, device_end_not_match	
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_4`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_dc_4`</relation>
                 </relation>
                 <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_table_counts_with_upload_timestamp" type="text">SELECT distinct lower(hpo_id) as src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt, 
     cast(person_upload_time as date) as person_upload_dt,
     person, condition_occurrence, procedure_occurrence, drug_exposure, visit_occurrencence as visit_occurrence,
     measurement, observation, device_exposure, death, provider, specimen, location, care_site, note, 
     pii_address, pii_email, pii_mrn, pii_name, pii_phone, participant_match
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_timestamp_for_hpo_sites`</relation>
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.snapshot_table_counts_with_upload_timestamp_for_hpo_sites`</relation>
               </relation>
             </properties>
             <properties context="extract">
@@ -3555,7 +3555,7 @@ WHERE vocabulary_id = 'None'</_.fcp.ObjectModelEncapsulateLegacy.true...relation
         <objects>
           <object caption="Vocab Version" id="_50B8E5B9FCDD4C98A5F32774688758F2">
             <properties context="">
-              <relation connection="bigquery.0eu5q5t1lz83xc1b23l6o0k7noam" name="vocab_version" type="text">SELECT vocabulary_version FROM `{{pdr_project}}.{{curation_dataset}}.vocabulary`
+              <relation connection="bigquery.0eu5q5t1lz83xc1b23l6o0k7noam" name="vocab_version" type="text">SELECT vocabulary_version FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.vocabulary`
 WHERE vocabulary_id = 'None'</relation>
             </properties>
             <properties context="extract">
@@ -3752,7 +3752,7 @@ WHERE vocabulary_id = 'None'</relation>
                                                           </clause>
                                                           <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="all_eligible_participants" type="text">WITH ep AS (
 SELECT * 
-FROM `{{pdr_project}}.{{curation_dataset}}.mv_all_eligible_participants`),
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.mv_all_eligible_participants`),
 
 org_hpo AS (
 SELECT 
@@ -3761,7 +3761,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.external_id,
@@ -3779,41 +3779,41 @@ ON ep.external_id = org_hpo.external_id</relation>
 lower(hpo_id) as src_hpo_id, 
 display_order, 
 person_upload_time 
-from `{{pdr_project}}.{{curation_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites`</relation>
+from `{{{{pdr_schema}}_project}}.{{curation_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites`</relation>
                                                         </relation>
-                                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_visit" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_visit]" type="table"/>
+                                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_visit" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_visit]" type="table"/>
                                                       </relation>
-                                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_procedure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_procedure]" type="table"/>
+                                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_procedure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_procedure]" type="table"/>
                                                     </relation>
-                                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_measurement" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_measurement]" type="table"/>
+                                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_measurement" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_measurement]" type="table"/>
                                                   </relation>
-                                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_condition" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_condition]" type="table"/>
+                                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_condition" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_condition]" type="table"/>
                                                 </relation>
-                                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_1_standard" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_1_standard]" type="table"/>
+                                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_1_standard" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_1_standard]" type="table"/>
                                               </relation>
-                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_eligible_participants_ehr" table="[{{pdr_project}}.{{curation_dataset}}].[mv_eligible_participants_ehr]" type="table"/>
+                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_eligible_participants_ehr" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_eligible_participants_ehr]" type="table"/>
                                             </relation>
-                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_4" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_4]" type="table"/>
+                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_4" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_4]" type="table"/>
                                           </relation>
-                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_3" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_3]" type="table"/>
+                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_3" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_3]" type="table"/>
                                         </relation>
-                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_2" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_2]" type="table"/>
+                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_2" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_2]" type="table"/>
                                       </relation>
-                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_1" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_1]" type="table"/>
+                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_1" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_1]" type="table"/>
                                     </relation>
-                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_covid_mapping" table="[{{pdr_project}}.{{curation_dataset}}].[mv_covid_mapping]" type="table"/>
+                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_covid_mapping" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_covid_mapping]" type="table"/>
                                   </relation>
-                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_unit_route_failure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_unit_route_failure]" type="table"/>
+                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_unit_route_failure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_unit_route_failure]" type="table"/>
                                 </relation>
-                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_visit_id_failure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_visit_id_failure]" type="table"/>
+                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_visit_id_failure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_visit_id_failure]" type="table"/>
                               </relation>
-                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_device" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_device]" type="table"/>
+                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_device" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_device]" type="table"/>
                             </relation>
-                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_drug" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_drug]" type="table"/>
+                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_drug" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_drug]" type="table"/>
                           </relation>
-                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_duplicates" table="[{{pdr_project}}.{{curation_dataset}}].[mv_duplicates]" type="table"/>
+                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_duplicates" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_duplicates]" type="table"/>
                         </relation>
-                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_physical_meas" table="[{{pdr_project}}.{{curation_dataset}}].[mv_physical_meas]" type="table"/>
+                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_physical_meas" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_physical_meas]" type="table"/>
                       </relation>
                       <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="patient_status_yes" type="text">SELECT 
     case when external_id like 'VA%' then 'VA_BOSTON_VAMC'
@@ -3829,9 +3829,9 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
@@ -3856,12 +3856,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant`  as ps
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on ps.participant_id = c.participant_id 
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_biospec` as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_pm` as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed &gt;&gt;= 1)
@@ -3882,8 +3882,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "NO"
@@ -3902,8 +3902,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "NO_ACCESS"
@@ -3922,8 +3922,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "UNKNOWN"
@@ -3945,12 +3945,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant`  as ps
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on ps.participant_id = c.participant_id 
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_biospec` as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_pm` as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed &gt;&gt;= 1)
@@ -3974,9 +3974,9 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
@@ -3995,7 +3995,7 @@ WHERE ipp.participant_id is not null
 AND psy.participant_id is not null
 GROUP BY 1</relation>
           </relation>
-          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_missing_ehr_consent" table="[{{pdr_project}}.{{curation_dataset}}].[v_missing_ehr_consent]" type="table"/>
+          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_missing_ehr_consent" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[v_missing_ehr_consent]" type="table"/>
         </_.fcp.ObjectModelEncapsulateLegacy.false...relation>
         <_.fcp.ObjectModelEncapsulateLegacy.true...relation type="collection">
           <relation join="left" type="join">
@@ -4175,7 +4175,7 @@ GROUP BY 1</relation>
                                                             </clause>
                                                             <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="all_eligible_participants" type="text">WITH ep AS (
 SELECT * 
-FROM `{{pdr_project}}.{{curation_dataset}}.mv_all_eligible_participants`),
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.mv_all_eligible_participants`),
 
 org_hpo AS (
 SELECT 
@@ -4184,7 +4184,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.external_id,
@@ -4202,41 +4202,41 @@ ON ep.external_id = org_hpo.external_id</relation>
 lower(hpo_id) as src_hpo_id, 
 display_order, 
 person_upload_time 
-from `{{pdr_project}}.{{curation_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites`</relation>
+from `{{{{pdr_schema}}_project}}.{{curation_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites`</relation>
                                                           </relation>
-                                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_visit" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_visit]" type="table"/>
+                                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_visit" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_visit]" type="table"/>
                                                         </relation>
-                                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_procedure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_procedure]" type="table"/>
+                                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_procedure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_procedure]" type="table"/>
                                                       </relation>
-                                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_measurement" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_measurement]" type="table"/>
+                                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_measurement" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_measurement]" type="table"/>
                                                     </relation>
-                                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_condition" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_condition]" type="table"/>
+                                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_condition" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_condition]" type="table"/>
                                                   </relation>
-                                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_1_standard" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_1_standard]" type="table"/>
+                                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_1_standard" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_1_standard]" type="table"/>
                                                 </relation>
-                                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_eligible_participants_ehr" table="[{{pdr_project}}.{{curation_dataset}}].[mv_eligible_participants_ehr]" type="table"/>
+                                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_eligible_participants_ehr" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_eligible_participants_ehr]" type="table"/>
                                               </relation>
-                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_4" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_4]" type="table"/>
+                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_4" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_4]" type="table"/>
                                             </relation>
-                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_3" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_3]" type="table"/>
+                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_3" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_3]" type="table"/>
                                           </relation>
-                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_2" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_2]" type="table"/>
+                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_2" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_2]" type="table"/>
                                         </relation>
-                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_1" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_1]" type="table"/>
+                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_1" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_1]" type="table"/>
                                       </relation>
-                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_covid_mapping" table="[{{pdr_project}}.{{curation_dataset}}].[mv_covid_mapping]" type="table"/>
+                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_covid_mapping" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_covid_mapping]" type="table"/>
                                     </relation>
-                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_unit_route_failure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_unit_route_failure]" type="table"/>
+                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_unit_route_failure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_unit_route_failure]" type="table"/>
                                   </relation>
-                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_visit_id_failure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_visit_id_failure]" type="table"/>
+                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_visit_id_failure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_visit_id_failure]" type="table"/>
                                 </relation>
-                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_device" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_device]" type="table"/>
+                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_device" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_device]" type="table"/>
                               </relation>
-                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_drug" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_drug]" type="table"/>
+                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_drug" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_drug]" type="table"/>
                             </relation>
-                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_duplicates" table="[{{pdr_project}}.{{curation_dataset}}].[mv_duplicates]" type="table"/>
+                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_duplicates" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_duplicates]" type="table"/>
                           </relation>
-                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_physical_meas" table="[{{pdr_project}}.{{curation_dataset}}].[mv_physical_meas]" type="table"/>
+                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_physical_meas" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_physical_meas]" type="table"/>
                         </relation>
                         <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="patient_status_yes" type="text">SELECT 
     case when external_id like 'VA%' then 'VA_BOSTON_VAMC'
@@ -4252,9 +4252,9 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
@@ -4279,12 +4279,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant`  as ps
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on ps.participant_id = c.participant_id 
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_biospec` as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_pm` as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed &gt;&gt;= 1)
@@ -4305,8 +4305,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "NO"
@@ -4325,8 +4325,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "NO_ACCESS"
@@ -4345,8 +4345,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "UNKNOWN"
@@ -4368,12 +4368,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant`  as ps
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on ps.participant_id = c.participant_id 
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_biospec` as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_pm` as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed &gt;&gt;= 1)
@@ -4397,9 +4397,9 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
@@ -4418,19 +4418,19 @@ WHERE ipp.participant_id is not null
 AND psy.participant_id is not null
 GROUP BY 1</relation>
             </relation>
-            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_missing_ehr_consent" table="[{{pdr_project}}.{{curation_dataset}}].[v_missing_ehr_consent]" type="table"/>
+            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_missing_ehr_consent" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[v_missing_ehr_consent]" type="table"/>
           </relation>
           <relation connection="bigquery.1o6lp9r1hmerma13zs2xf1utr0kr" name="Custom SQL Query1" type="text">with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
 hpo_list as (
     SELECT
         LOWER(hpo.HPO_ID) hpo_id
-    FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping` hpo
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping` hpo
 ),
 recommended_codes as (
     select
@@ -4843,8 +4843,8 @@ recommended_concept_ids as (
         hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
         c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -4861,9 +4861,9 @@ wide_net as (
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id,
         hlc.concept_name ancestor_concept_name
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -4874,8 +4874,8 @@ recommended_measurement_counts as (
         mm.src_hpo_id, rci.ancestor_concept_id, rci.ancestor_concept_name,
         count(distinct m.measurement_id) as measurement_recommended
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
         join recommended_concept_ids rci on rci.descendant_concept_id = m.measurement_concept_id
     where
         m.measurement_concept_id in (
@@ -4892,8 +4892,8 @@ wide_measurement_counts as (
         mm.src_hpo_id, wn.ancestor_concept_id, wn.ancestor_concept_name,
         count(distinct m.measurement_id) as measurement_wide
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
         join wide_net wn on wn.descendant_concept_id = m.measurement_concept_id
     where
         m.measurement_concept_id in (
@@ -4921,8 +4921,8 @@ left join recommended_measurement_counts r
 WHERE hlc.concept_id IN (SELECT ancestor_concept_id FROM recommended_concept_ids)</relation>
           <relation connection="bigquery.1o6lp9r1hmerma13zs2xf1utr0kr" name="highest_level_components_drilldown" type="text">with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
@@ -5336,8 +5336,8 @@ recommended_concept_ids as (
     select DISTINCT
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -5353,9 +5353,9 @@ wide_net as (
     SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -5366,9 +5366,9 @@ non_recommended_codes as (
         mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
-        join `{{pdr_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
         join wide_net wn on wn.descendant_concept_id = c.concept_id
     where
         m.measurement_concept_id in (
@@ -5391,7 +5391,7 @@ aggregate_non_recommended_codes as (
         nrc.measurement_concept_id, nrc.concept_name concept_name,
         COUNT(*) lab_count
     from non_recommended_codes nrc
-    join `{{pdr_project}}.{{curation_dataset}}.concept` c
+    join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         on c.concept_id = nrc.ancestor_concept_id
     group by src_hpo_id, ancestor_concept_id, ancestor_concept_name,
         nrc.measurement_concept_id, nrc.concept_name
@@ -5400,8 +5400,8 @@ select * from aggregate_non_recommended_codes
 order by src_hpo_id, ancestor_concept_name, lab_count desc</relation>
           <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="highest_level_components" type="text">with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
@@ -5815,8 +5815,8 @@ recommended_concept_ids as (
     select DISTINCT
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -5832,9 +5832,9 @@ wide_net as (
     SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -5845,9 +5845,9 @@ non_recommended_codes as (
         mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
-        join `{{pdr_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
         join wide_net wn on wn.descendant_concept_id = c.concept_id
     where
         m.measurement_concept_id in (
@@ -5869,7 +5869,7 @@ aggregate_non_recommended_codes as (
         c.concept_name ancestor_concept_name,
         COUNT(*) lab_count
     from non_recommended_codes nrc
-    join `{{pdr_project}}.{{curation_dataset}}.concept` c
+    join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         on c.concept_id = nrc.ancestor_concept_id
     group by src_hpo_id, ancestor_concept_id, ancestor_concept_name
 )
@@ -5886,12 +5886,12 @@ cast(ps.patient_status_authored as date) as authored_date,
 c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relation>
-          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_invalid_concept_ids" table="[{{pdr_project}}.{{curation_dataset}}].[v_invalid_concept_ids]" type="table"/>
+          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_invalid_concept_ids" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[v_invalid_concept_ids]" type="table"/>
         </_.fcp.ObjectModelEncapsulateLegacy.true...relation>
         <cols>
           <map key="[Display_Order]" value="[all_eligible_participants].[Display_Order]"/>
@@ -11320,7 +11320,7 @@ AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relat
                                                                 </clause>
                                                                 <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="all_eligible_participants" type="text">WITH ep AS (
 SELECT * 
-FROM `{{pdr_project}}.{{curation_dataset}}.mv_all_eligible_participants`),
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.mv_all_eligible_participants`),
 
 org_hpo AS (
 SELECT 
@@ -11329,7 +11329,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.external_id,
@@ -11347,41 +11347,41 @@ ON ep.external_id = org_hpo.external_id</relation>
 lower(hpo_id) as src_hpo_id, 
 display_order, 
 person_upload_time 
-from `{{pdr_project}}.{{curation_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites`</relation>
+from `{{{{pdr_schema}}_project}}.{{curation_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites`</relation>
                                                               </relation>
-                                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_visit" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_visit]" type="table"/>
+                                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_visit" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_visit]" type="table"/>
                                                             </relation>
-                                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_procedure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_procedure]" type="table"/>
+                                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_procedure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_procedure]" type="table"/>
                                                           </relation>
-                                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_measurement" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_measurement]" type="table"/>
+                                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_measurement" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_measurement]" type="table"/>
                                                         </relation>
-                                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_condition" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_condition]" type="table"/>
+                                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_condition" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_condition]" type="table"/>
                                                       </relation>
-                                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_1_standard" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_1_standard]" type="table"/>
+                                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_1_standard" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_1_standard]" type="table"/>
                                                     </relation>
-                                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_eligible_participants_ehr" table="[{{pdr_project}}.{{curation_dataset}}].[mv_eligible_participants_ehr]" type="table"/>
+                                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_eligible_participants_ehr" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_eligible_participants_ehr]" type="table"/>
                                                   </relation>
-                                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_4" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_4]" type="table"/>
+                                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_4" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_4]" type="table"/>
                                                 </relation>
-                                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_3" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_3]" type="table"/>
+                                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_3" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_3]" type="table"/>
                                               </relation>
-                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_2" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_2]" type="table"/>
+                                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_2" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_2]" type="table"/>
                                             </relation>
-                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_1" table="[{{pdr_project}}.{{curation_dataset}}].[mv_dc_1]" type="table"/>
+                                            <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_dc_1" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_dc_1]" type="table"/>
                                           </relation>
-                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_covid_mapping" table="[{{pdr_project}}.{{curation_dataset}}].[mv_covid_mapping]" type="table"/>
+                                          <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_covid_mapping" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_covid_mapping]" type="table"/>
                                         </relation>
-                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_unit_route_failure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_unit_route_failure]" type="table"/>
+                                        <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_unit_route_failure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_unit_route_failure]" type="table"/>
                                       </relation>
-                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_visit_id_failure" table="[{{pdr_project}}.{{curation_dataset}}].[mv_visit_id_failure]" type="table"/>
+                                      <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_visit_id_failure" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_visit_id_failure]" type="table"/>
                                     </relation>
-                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_device" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_device]" type="table"/>
+                                    <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_device" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_device]" type="table"/>
                                   </relation>
-                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_drug" table="[{{pdr_project}}.{{curation_dataset}}].[mv_gc_2_drug]" type="table"/>
+                                  <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_gc_2_drug" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_gc_2_drug]" type="table"/>
                                 </relation>
-                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_duplicates" table="[{{pdr_project}}.{{curation_dataset}}].[mv_duplicates]" type="table"/>
+                                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_duplicates" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_duplicates]" type="table"/>
                               </relation>
-                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_physical_meas" table="[{{pdr_project}}.{{curation_dataset}}].[mv_physical_meas]" type="table"/>
+                              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="mv_physical_meas" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[mv_physical_meas]" type="table"/>
                             </relation>
                             <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="patient_status_yes" type="text">SELECT 
     case when external_id like 'VA%' then 'VA_BOSTON_VAMC'
@@ -11397,9 +11397,9 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
@@ -11424,12 +11424,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant`  as ps
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on ps.participant_id = c.participant_id 
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_biospec` as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_pm` as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed &gt;&gt;= 1)
@@ -11450,8 +11450,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "NO"
@@ -11470,8 +11470,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "NO_ACCESS"
@@ -11490,8 +11490,8 @@ o.external_id,
 ps.patient_status, 
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 )a 
 WHERE a.patient_status_date_rank = 1
 AND patient_status = "UNKNOWN"
@@ -11513,12 +11513,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant`  as ps
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
+    INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on ps.participant_id = c.participant_id 
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_biospec` as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_pm` as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed &gt;&gt;= 1)
@@ -11542,9 +11542,9 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
@@ -11563,7 +11563,7 @@ WHERE ipp.participant_id is not null
 AND psy.participant_id is not null
 GROUP BY 1</relation>
                 </relation>
-                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_missing_ehr_consent" table="[{{pdr_project}}.{{curation_dataset}}].[v_missing_ehr_consent]" type="table"/>
+                <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_missing_ehr_consent" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[v_missing_ehr_consent]" type="table"/>
               </relation>
             </properties>
             <properties context="extract">
@@ -11574,8 +11574,8 @@ GROUP BY 1</relation>
             <properties context="">
               <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="highest_level_components" type="text">with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
@@ -11989,8 +11989,8 @@ recommended_concept_ids as (
     select DISTINCT
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -12006,9 +12006,9 @@ wide_net as (
     SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -12019,9 +12019,9 @@ non_recommended_codes as (
         mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
-        join `{{pdr_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
         join wide_net wn on wn.descendant_concept_id = c.concept_id
     where
         m.measurement_concept_id in (
@@ -12043,7 +12043,7 @@ aggregate_non_recommended_codes as (
         c.concept_name ancestor_concept_name,
         COUNT(*) lab_count
     from non_recommended_codes nrc
-    join `{{pdr_project}}.{{curation_dataset}}.concept` c
+    join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         on c.concept_id = nrc.ancestor_concept_id
     group by src_hpo_id, ancestor_concept_id, ancestor_concept_name
 )
@@ -12058,15 +12058,15 @@ order by src_hpo_id, lab_count desc</relation>
             <properties context="">
               <relation connection="bigquery.1o6lp9r1hmerma13zs2xf1utr0kr" name="Custom SQL Query1" type="text">with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
 hpo_list as (
     SELECT
         LOWER(hpo.HPO_ID) hpo_id
-    FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping` hpo
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.v_org_hpo_mapping` hpo
 ),
 recommended_codes as (
     select
@@ -12479,8 +12479,8 @@ recommended_concept_ids as (
         hlc.concept_id ancestor_concept_id, hlc.concept_name ancestor_concept_name,
         c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -12497,9 +12497,9 @@ wide_net as (
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id,
         hlc.concept_name ancestor_concept_name
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -12510,8 +12510,8 @@ recommended_measurement_counts as (
         mm.src_hpo_id, rci.ancestor_concept_id, rci.ancestor_concept_name,
         count(distinct m.measurement_id) as measurement_recommended
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
         join recommended_concept_ids rci on rci.descendant_concept_id = m.measurement_concept_id
     where
         m.measurement_concept_id in (
@@ -12528,8 +12528,8 @@ wide_measurement_counts as (
         mm.src_hpo_id, wn.ancestor_concept_id, wn.ancestor_concept_name,
         count(distinct m.measurement_id) as measurement_wide
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
         join wide_net wn on wn.descendant_concept_id = m.measurement_concept_id
     where
         m.measurement_concept_id in (
@@ -12573,9 +12573,9 @@ cast(ps.patient_status_authored as date) as authored_date,
 c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.{{pdr_schema}}_participant` p, UNNEST(patient_statuses) as ps
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
+INNER JOIN `{{{{pdr_schema}}_project}}.{{rdr_dataset}}.v_{{pdr_schema}}_participant_consent` as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relation>
             </properties>
@@ -12587,8 +12587,8 @@ AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relat
             <properties context="">
               <relation connection="bigquery.1o6lp9r1hmerma13zs2xf1utr0kr" name="highest_level_components_drilldown" type="text">with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
@@ -13002,8 +13002,8 @@ recommended_concept_ids as (
     select DISTINCT
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -13019,9 +13019,9 @@ wide_net as (
     SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -13032,9 +13032,9 @@ non_recommended_codes as (
         mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
-        join `{{pdr_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
+        `{{{{pdr_schema}}_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
         join wide_net wn on wn.descendant_concept_id = c.concept_id
     where
         m.measurement_concept_id in (
@@ -13057,7 +13057,7 @@ aggregate_non_recommended_codes as (
         nrc.measurement_concept_id, nrc.concept_name concept_name,
         COUNT(*) lab_count
     from non_recommended_codes nrc
-    join `{{pdr_project}}.{{curation_dataset}}.concept` c
+    join `{{{{pdr_schema}}_project}}.{{curation_dataset}}.concept` c
         on c.concept_id = nrc.ancestor_concept_id
     group by src_hpo_id, ancestor_concept_id, ancestor_concept_name,
         nrc.measurement_concept_id, nrc.concept_name
@@ -13071,7 +13071,7 @@ order by src_hpo_id, ancestor_concept_name, lab_count desc</relation>
           </object>
           <object caption="v_invalid_concept_ids" id="v_invalid_concept_ids_596BABD4B2B441C7B3BD7DA4906CAE09">
             <properties context="">
-              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_invalid_concept_ids" table="[{{pdr_project}}.{{curation_dataset}}].[v_invalid_concept_ids]" type="table"/>
+              <relation connection="bigquery.1q8wag71nwbqv01ary1nu1l74cye" name="v_invalid_concept_ids" table="[{{{{pdr_schema}}_project}}.{{curation_dataset}}].[v_invalid_concept_ids]" type="table"/>
             </properties>
             <properties context="extract">
               <relation name="v_invalid_concept_ids_596BABD4B2B441C7B3BD7DA4906CAE09" table="[Extract].[v_invalid_concept_ids_596BABD4B2B441C7B3BD7DA4906CAE09]" type="table"/>
