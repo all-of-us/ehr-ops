@@ -440,7 +440,7 @@
         <objects>
           <object caption="mv_ehr_data_transfer_union_daily" id="mv_ehr_data_transfer_union_daily (curation_dm.mv_ehr_data_transfer_union_daily)_8E9E2CB7010D4CD1B14ADB40FD721512">
             <properties context="">
-              <relation connection="postgres.1s6kt1y0auqntw15mqhb51si3axm" name="mv_ehr_data_transfer_union_daily" table="[{{curation_dm_schema}}].[mv_ehr_data_transfer_union_daily]" type="table"/>
+              <relation connection="postgres.1s6kt1y0auqntw15mqhb51si3axm" name="mv_ehr_data_transfer_union_daily" table="[curation_dm].[mv_ehr_data_transfer_union_daily]" type="table"/>
             </properties>
             <properties context="extract">
               <relation name="Extract" table="[Extract].[Extract]" type="table"/>
