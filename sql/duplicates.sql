@@ -15,7 +15,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
             AND person_id != 0 AND person_id IS NOT NULL
             AND src_condition_occurrence_id != person_id
         GROUP BY
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
         HAVING cnt > 1)
         GROUP BY 1),
     procedure_agg AS (
@@ -30,7 +30,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
             AND person_id != 0 AND person_id IS NOT NULL
             AND src_procedure_occurrence_id != person_id
         GROUP BY
-            1,2,3,4,5,6,7,8,9,10,11,12,13
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14
         HAVING cnt > 1)
         GROUP BY 1),
     visit_agg AS (
@@ -60,7 +60,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
             AND person_id != 0 AND person_id IS NOT NULL
             AND src_observation_id != person_id
         GROUP BY
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
         HAVING cnt > 1)
         GROUP BY 1),
     measurement_agg AS (
@@ -75,7 +75,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
             AND person_id != 0 AND person_id IS NOT NULL
             AND src_measurement_id != person_id
         GROUP BY
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
         HAVING cnt > 1)
         GROUP BY 1),
     drug_agg AS (
@@ -90,7 +90,7 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
             AND person_id != 0 AND person_id IS NOT NULL
             AND src_drug_exposure_id != person_id
         GROUP BY
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
         HAVING cnt > 1)
         GROUP BY 1)
 SELECT *,
