@@ -7,12 +7,11 @@ WITH
     src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
 
@@ -23,16 +22,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, procedure_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     t1.procedure_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -46,12 +44,11 @@ WITH
     src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   where person_id is not null
@@ -63,16 +60,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, person_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct person_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` ) AS p
+    {{curation_ops_schema}}.unioned_ehr_person ) AS p
   ON
     t1.person_id=p.person_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -86,12 +82,11 @@ WITH
     src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
 
@@ -102,16 +97,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, procedure_type_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     t1.procedure_type_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -125,12 +119,11 @@ WITH
     src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
 
@@ -141,16 +134,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, modifier_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     t1.modifier_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -164,12 +156,11 @@ WITH
     src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
 
@@ -180,16 +171,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, provider_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct provider_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_provider`) AS p
+    {{curation_ops_schema}}.unioned_ehr_provider) AS p
   ON
     t1.provider_id=p.provider_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -203,12 +193,11 @@ WITH
     src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
 
@@ -219,16 +208,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, visit_occurrence_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct visit_occurrence_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   ON
     t1.visit_occurrence_id=vo.visit_occurrence_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -242,12 +230,11 @@ WITH
     src_hpo_id,
     COUNT(t1.procedure_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence AS t1
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
 
@@ -258,16 +245,15 @@ WITH
     t2.src_hpo_id,
     COUNT(distinct t1.procedure_occurrence_id) AS valid_counts
   FROM(select distinct procedure_occurrence_id, procedure_source_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence`) AS t1
+    {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     t1.procedure_source_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      procedure_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+      procedure_occurrence_id
+      from {{curation_ops_schema}}._mapping_procedure_occurrence) AS t2
   ON
     t1.procedure_occurrence_id=t2.procedure_occurrence_id
   WHERE
@@ -303,8 +289,8 @@ WITH
   SELECT * FROM valid_counts_procedure_person)
 
 SELECT c1.src_hpo_id,
-IFNULL(c1.total_counts, 0) as total_counts,
-IFNULL(c2.valid_counts, 0) as valid_counts
+COALESCE(c1.total_counts, 0) as total_counts,
+COALESCE(c2.valid_counts, 0) as valid_counts
 FROM (
   SELECT src_hpo_id, sum(total_counts) as total_counts
   FROM combined_total_counts

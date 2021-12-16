@@ -15,11 +15,11 @@ FROM(
     c.consent_value,
     consent_module_authored,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant` as p on ps.participant_id = p.participant_id
-    INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id
+    FROM {{pdr_schema}}.mv_participant_all  as ps
+    INNER JOIN {{pdr_schema}}.mv_participant_all as p on ps.participant_id = p.participant_id
+    INNER JOIN {{pdr_schema}}.mv_organization as o on ps.organization_id = o.organization_id
+    INNER JOIN {{pdr_schema}}.mv_hpo as h on ps.hpo_id = h.hpo_id
+    INNER JOIN {{pdr_schema}}.mv_participant_consent as c on ps.participant_id = c.participant_id
     WHERE  p.is_ghost_id = 0
     AND (p.hpo_id != 21)
     AND (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')

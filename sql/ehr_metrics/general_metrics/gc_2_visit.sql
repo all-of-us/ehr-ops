@@ -6,12 +6,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -24,16 +23,15 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, visit_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     vo.visit_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -47,12 +45,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -65,16 +62,15 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, person_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct person_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person`) AS p
+    {{curation_ops_schema}}.unioned_ehr_person) AS p
   ON
     vo.person_id=p.person_id
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -89,12 +85,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
 
@@ -105,16 +100,15 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, visit_type_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     vo.visit_type_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -128,12 +122,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
 
@@ -144,16 +137,15 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, visit_source_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     vo.visit_source_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -167,12 +159,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
 
@@ -183,16 +174,15 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, admitting_source_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     vo.admitting_source_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -206,12 +196,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
 
@@ -222,16 +211,15 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, discharge_to_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    {{voc_ops_schema}}.concept) AS c
   ON
     vo.discharge_to_concept_id=c.concept_id
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -245,12 +233,11 @@ WITH
     src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
 
@@ -261,12 +248,11 @@ WITH
     mvo.src_hpo_id,
     COUNT(vo.visit_occurrence_id) AS valid_counts
   FROM(select visit_occurrence_id, preceding_visit_occurrence_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN
     (select src_hpo_id,
-      visit_occurrence_id,
-
-      from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS mvo
+      visit_occurrence_id
+      from {{curation_ops_schema}}._mapping_visit_occurrence) AS mvo
   ON
     vo.visit_occurrence_id=mvo.visit_occurrence_id
   WHERE
@@ -306,8 +292,8 @@ WITH
   SELECT * FROM valid_counts_visit_person)
 
   SELECT c1.src_hpo_id,
-IFNULL(c1.total_counts, 0) as total_counts,
-IFNULL(c2.valid_counts, 0) as valid_counts
+COALESCE(c1.total_counts, 0) as total_counts,
+COALESCE(c2.valid_counts, 0) as valid_counts
 FROM (
   SELECT src_hpo_id, sum(total_counts) as total_counts
   FROM combined_total_counts

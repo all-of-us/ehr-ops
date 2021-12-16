@@ -13,12 +13,12 @@ SELECT
     c.consent_value,
     c.consent_expired,
     rank() over(partition by ps.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-    FROM `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant`  as ps
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on ps.organization_id = o.organization_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_hpo` as h on ps.hpo_id = h.hpo_id
-    INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on ps.participant_id = c.participant_id 
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_biospec` as bio on ps.participant_id = bio.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_pm` as pm on ps.participant_id = pm.participant_id
+    FROM {{pdr_schema}}.mv_participant_all  as ps
+    INNER JOIN {{pdr_schema}}.mv_organization as o on ps.organization_id = o.organization_id
+    INNER JOIN {{pdr_schema}}.mv_hpo as h on ps.hpo_id = h.hpo_id
+    INNER JOIN {{pdr_schema}}.mv_participant_consent as c on ps.participant_id = c.participant_id
+    LEFT JOIN {{pdr_schema}}.mv_participant_biospec as bio on ps.participant_id = bio.participant_id
+    LEFT JOIN {{pdr_schema}}.mv_participant_pm as pm on ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
     AND (c.consent = 'EHRConsentPII_ConsentPermission')
     AND (pm.pm_status_id = 1 OR bio.biosp_baseline_tests_confirmed >= 1)
@@ -42,16 +42,18 @@ c.consent_value,
 p.participant_id,
 rank() over(partition by p.participant_id order by ps.patient_status_modified desc) as patient_status_date_rank,
 rank() over(partition by p.participant_id order by c.consent_module_authored desc) as most_consent_date_rank
-FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
-INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
+FROM {{pdr_schema}}.mv_participant_all p
+LEFT JOIN {{pdr_schema}}.mv_participant_patient_status as ps
+ON p.participant_id = ps.participant_id
+INNER JOIN {{pdr_schema}}.mv_organization as o on p.organization_id = o.organization_id
+INNER JOIN {{pdr_schema}}.mv_participant_consent as c on p.participant_id = c.participant_id
 WHERE c.consent = 'EHRConsentPII_ConsentPermission'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')
 )a 
 WHERE a.patient_status_date_rank = 1
 AND a.most_consent_date_rank = 1
 AND consent_value = 'ConsentPermission_Yes'
-AND patient_status = "YES")
+AND patient_status = 'YES')
 
 SELECT ipp.external_id, 
 count(distinct case when ipp.participant_id is not null and psy.participant_id is not null then ipp.participant_id end) as in_person_patient,

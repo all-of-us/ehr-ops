@@ -24,12 +24,12 @@ FROM (
     CASE WHEN withdrawal_time is NULL and consent_value != 'ConsentPermission_Yes' AND (DATE(consent_module_authored) > DATE(person_upload_time)) THEN 1 ELSE 0
     END AS removed_consent_since,
     rank() over (partition by person_id order by consent_module_authored desc) d_order
-    FROM {{pdr_project}}.{{rdr_ops_dataset}}._mapping_person as ehr
-    INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites` rsubmission
+    FROM {{curation_ops_schema}}._mapping_person as ehr
+    INNER JOIN {{curation_ops_schema}}.table_counts_with_upload_timestamp_for_hpo_sites rsubmission
         ON ehr.src_hpo_id = lower(rsubmission.hpo_id)
-    INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_all` pdr_all
+    INNER JOIN {{pdr_schema}}.mv_participant_all pdr_all
         ON ehr.person_id = pdr_all.participant_id
-    LEFT JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_consent` pdr_cons
+    LEFT JOIN {{pdr_schema}}.mv_participant_consent pdr_cons
         ON person_id = pdr_cons.participant_id AND consent_module = 'EHRConsentPII')
-WHERE d_order = 1 and (consent_value != 'ConsentPermission_Yes' or withdrawal_time is not null) 
+WHERE d_order = 1 and (consent_value != 'ConsentPermission_Yes' or withdrawal_time is not null) a
 Group by 1
