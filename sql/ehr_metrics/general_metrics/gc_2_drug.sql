@@ -25,7 +25,7 @@ WITH
   FROM(select drug_exposure_id, drug_concept_id from
     {{curation_ops_schema}}.unioned_ehr_drug_exposure) AS de
   INNER JOIN
-    {{voc_ops_schema}}.concept AS c
+    {{vocab_schema}}.concept AS c
   ON
     de.drug_concept_id=c.concept_id
   INNER JOIN
@@ -104,7 +104,7 @@ WITH
   FROM(select drug_exposure_id, drug_type_concept_id from
     {{curation_ops_schema}}.unioned_ehr_drug_exposure) AS de
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     de.drug_type_concept_id=c.concept_id
   INNER JOIN
@@ -143,7 +143,7 @@ WITH
   FROM(select drug_exposure_id, route_concept_id from
     {{curation_ops_schema}}.unioned_ehr_drug_exposure) AS de
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     de.route_concept_id=c.concept_id
   INNER JOIN
@@ -261,7 +261,7 @@ WITH
   FROM(select drug_exposure_id, drug_source_concept_id from
     {{curation_ops_schema}}.unioned_ehr_drug_exposure) AS de
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     de.drug_source_concept_id=c.concept_id
   INNER JOIN

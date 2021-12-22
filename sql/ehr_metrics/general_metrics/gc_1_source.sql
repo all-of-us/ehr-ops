@@ -33,7 +33,7 @@ WITH
     ON
       t1.condition_occurrence_id=t2.condition_occurrence_id
     INNER JOIN
-      {{voc_ops_schema}}.concept AS t3
+      {{vocab_schema}}.concept AS t3
     ON
       t3.concept_id = t1.condition_source_concept_id
     WHERE
@@ -108,7 +108,7 @@ WITH
     ON
       t1.procedure_occurrence_id=t2.procedure_occurrence_id
     INNER JOIN
-      {{voc_ops_schema}}.concept AS t3
+      {{vocab_schema}}.concept AS t3
     ON
       t3.concept_id = t1.procedure_source_concept_id
     WHERE
@@ -183,7 +183,7 @@ WITH
     ON
       t1.drug_exposure_id=t2.drug_exposure_id
     INNER JOIN
-      {{voc_ops_schema}}.concept AS t3
+      {{vocab_schema}}.concept AS t3
     ON
       t3.concept_id = t1.drug_source_concept_id
     WHERE
@@ -261,7 +261,7 @@ WITH
     ON
       t1.observation_id=t2.observation_id
     INNER JOIN
-      {{voc_ops_schema}}.concept AS t3
+      {{vocab_schema}}.concept AS t3
     ON
       t3.concept_id = t1.observation_source_concept_id
     GROUP BY
@@ -336,7 +336,7 @@ WITH
     ON
       t1.measurement_id=t2.measurement_id
     INNER JOIN
-      {{voc_ops_schema}}.concept AS t3
+      {{vocab_schema}}.concept AS t3
     ON
       t3.concept_id = t1.measurement_source_concept_id
     WHERE
@@ -411,7 +411,7 @@ WITH
     ON
       t1.visit_occurrence_id=t2.visit_occurrence_id
     INNER JOIN
-      {{voc_ops_schema}}.concept AS t3
+      {{vocab_schema}}.concept AS t3
     ON
       t3.concept_id = t1.visit_source_concept_id
     WHERE

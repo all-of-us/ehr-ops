@@ -29,7 +29,7 @@ WITH
     {{curation_ops_schema}}.unioned_ehr_condition_occurrence) AS co
   inner JOIN
     (select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     co.condition_concept_id=c.concept_id
   INNER JOIN
@@ -159,7 +159,7 @@ WITH
     {{curation_ops_schema}}.unioned_ehr_condition_occurrence) AS co
   INNER JOIN
   (select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     co.condition_type_concept_id=c.concept_id
   INNER JOIN
@@ -203,7 +203,7 @@ WITH
     {{curation_ops_schema}}.unioned_ehr_condition_occurrence) AS co
   INNER JOIN(
   select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     co.condition_source_concept_id=c.concept_id
   INNER JOIN
@@ -247,7 +247,7 @@ WITH
     {{curation_ops_schema}}.unioned_ehr_condition_occurrence) AS co
   INNER JOIN(
   select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     co.condition_status_concept_id=c.concept_id
   INNER JOIN

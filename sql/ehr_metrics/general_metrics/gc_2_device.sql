@@ -26,7 +26,7 @@ WITH
   FROM
     {{curation_ops_schema}}.unioned_ehr_device_exposure AS co
   INNER JOIN
-    {{voc_ops_schema}}.concept AS c
+    {{vocab_schema}}.concept AS c
   ON
     co.device_concept_id=c.concept_id
   INNER JOIN
@@ -150,7 +150,7 @@ WITH
   FROM(select device_exposure_id, device_type_concept_id from
     {{curation_ops_schema}}.unioned_ehr_device_exposure) AS co
   INNER JOIN
-    {{voc_ops_schema}}.concept AS c
+    {{vocab_schema}}.concept AS c
   ON
     co.device_type_concept_id=c.concept_id
   INNER JOIN
@@ -191,7 +191,7 @@ WITH
   FROM(select device_exposure_id, device_source_concept_id from
     {{curation_ops_schema}}.unioned_ehr_device_exposure) AS co
   INNER JOIN
-    {{voc_ops_schema}}.concept AS c
+    {{vocab_schema}}.concept AS c
   ON
     co.device_source_concept_id=c.concept_id
   INNER JOIN

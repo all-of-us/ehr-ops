@@ -25,7 +25,7 @@ WITH
   FROM(select distinct measurement_id, measurement_concept_id from
     {{curation_ops_schema}}.unioned_ehr_measurement) AS me
   INNER JOIN
-    {{voc_ops_schema}}.concept AS c
+    {{vocab_schema}}.concept AS c
   ON
     me.measurement_concept_id=c.concept_id
   INNER JOIN
@@ -104,7 +104,7 @@ WITH
   FROM(select distinct measurement_id, measurement_type_concept_id from
     {{curation_ops_schema}}.unioned_ehr_measurement) AS me
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     me.measurement_type_concept_id=c.concept_id
   INNER JOIN
@@ -143,7 +143,7 @@ WITH
   FROM(select distinct measurement_id, operator_concept_id from
     {{curation_ops_schema}}.unioned_ehr_measurement) AS me
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     me.operator_concept_id=c.concept_id
   INNER JOIN
@@ -182,7 +182,7 @@ WITH
   FROM(select distinct measurement_id, value_as_concept_id from
     {{curation_ops_schema}}.unioned_ehr_measurement) AS me
   INNER JOIN(select concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     me.value_as_concept_id=c.concept_id
   INNER JOIN
@@ -221,7 +221,7 @@ WITH
   FROM(select distinct measurement_id, unit_concept_id from
     {{curation_ops_schema}}.unioned_ehr_measurement) AS me
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     me.unit_concept_id=c.concept_id
   INNER JOIN
@@ -339,7 +339,7 @@ WITH
   FROM(select distinct measurement_id, measurement_source_concept_id from
     {{curation_ops_schema}}.unioned_ehr_measurement) AS me
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     me.measurement_source_concept_id=c.concept_id
   INNER JOIN

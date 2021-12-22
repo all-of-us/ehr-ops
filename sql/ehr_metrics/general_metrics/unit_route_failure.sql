@@ -27,7 +27,7 @@ WITH
         FROM {{curation_ops_schema}}.unioned_ehr_measurement m
         JOIN {{curation_ops_schema}}._mapping_measurement mm
           ON m.measurement_id = mm.measurement_id
-        JOIN {{voc_ops_schema}}.concept c
+        JOIN {{vocab_schema}}.concept c
           ON m.unit_concept_id = c.concept_id
         WHERE
             LOWER(c.standard_concept) = 's'
@@ -43,7 +43,7 @@ WITH
         FROM {{curation_ops_schema}}.unioned_ehr_drug_exposure de
         LEFT JOIN {{curation_ops_schema}}._mapping_drug_exposure mde
             ON de.drug_exposure_id = mde.drug_exposure_id 
-        LEFT JOIN {{voc_ops_schema}}.concept c
+        LEFT JOIN {{vocab_schema}}.concept c
             ON de.route_concept_id = c.concept_id
         WHERE
             LOWER(c.standard_concept) = 's'

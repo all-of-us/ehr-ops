@@ -25,7 +25,7 @@ WITH
   FROM(select visit_occurrence_id, visit_concept_id from
     {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     vo.visit_concept_id=c.concept_id
   INNER JOIN
@@ -102,7 +102,7 @@ WITH
   FROM(select visit_occurrence_id, visit_type_concept_id from
     {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     vo.visit_type_concept_id=c.concept_id
   INNER JOIN
@@ -139,7 +139,7 @@ WITH
   FROM(select visit_occurrence_id, visit_source_concept_id from
     {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     vo.visit_source_concept_id=c.concept_id
   INNER JOIN
@@ -176,7 +176,7 @@ WITH
   FROM(select visit_occurrence_id, admitting_source_concept_id from
     {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     vo.admitting_source_concept_id=c.concept_id
   INNER JOIN
@@ -213,7 +213,7 @@ WITH
   FROM(select visit_occurrence_id, discharge_to_concept_id from
     {{curation_ops_schema}}.unioned_ehr_visit_occurrence) AS vo
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     vo.discharge_to_concept_id=c.concept_id
   INNER JOIN

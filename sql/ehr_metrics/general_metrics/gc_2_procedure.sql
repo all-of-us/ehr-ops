@@ -24,7 +24,7 @@ WITH
   FROM(select distinct procedure_occurrence_id, procedure_concept_id from
     {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     t1.procedure_concept_id=c.concept_id
   INNER JOIN
@@ -99,7 +99,7 @@ WITH
   FROM(select distinct procedure_occurrence_id, procedure_type_concept_id from
     {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     t1.procedure_type_concept_id=c.concept_id
   INNER JOIN
@@ -136,7 +136,7 @@ WITH
   FROM(select distinct procedure_occurrence_id, modifier_concept_id from
     {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     t1.modifier_concept_id=c.concept_id
   INNER JOIN
@@ -247,7 +247,7 @@ WITH
   FROM(select distinct procedure_occurrence_id, procedure_source_concept_id from
     {{curation_ops_schema}}.unioned_ehr_procedure_occurrence) AS t1
   INNER JOIN(select distinct concept_id from
-    {{voc_ops_schema}}.concept) AS c
+    {{vocab_schema}}.concept) AS c
   ON
     t1.procedure_source_concept_id=c.concept_id
   INNER JOIN
