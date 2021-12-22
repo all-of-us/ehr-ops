@@ -54,22 +54,33 @@ bmi as (
    where m.measurement_concept_id in (44783982, 40762636, 3038553)
    )
 select distinct
-   site.src_hpo_id,
-   count(distinct site.person_id) as num_of_participants,
-   count(distinct visit.person_id) as participants_with_EHR,
-   count(distinct measurement.person_id) as participants_with_measurement,
-   count(distinct height.person_id) as participants_with_ehr_height,
-   round(count(distinct height.person_id)/count(distinct visit.person_id),2) as height_rate,
-   count(distinct weight.person_id) as participants_with_ehr_weight,
-   round(count(distinct weight.person_id)/count(distinct visit.person_id), 2) as weight_rate,
-   count(distinct bmi.person_id) as participants_with_ehr_bmi,
-   round(count(distinct bmi.person_id)/count(distinct visit.person_id), 2) as bmi_rate
+site.src_hpo_id,
+count(distinct site.person_id) as num_of_participants,
+count(distinct visit.person_id) as participants_with_EHR,
+count(distinct measurement.person_id) as participants_with_measurement,
+count(distinct height.person_id) as participants_with_ehr_height,
+case when count(distinct visit.person_id) = 0 then NULL
+     else round(count(distinct height.person_id)/count(distinct visit.person_id),2)
+     end as height_rate,
+count(distinct weight.person_id) as participants_with_ehr_weight,
+case when count(distinct visit.person_id) = 0 then NULL
+     else round(count(distinct weight.person_id)/count(distinct visit.person_id), 2)
+     end as weight_rate,
+count(distinct bmi.person_id) as participants_with_ehr_bmi,
+case when count(distinct visit.person_id) = 0 then NULL
+     else round(count(distinct bmi.person_id)/count(distinct visit.person_id), 2)
+     end as bmi_rate,
+count(distinct heart_rate.person_id) as participants_with_ehr_heart_rate,
+case when count(distinct visit.person_id) = 0 then NULL
+     else round(count(distinct heart_rate.person_id)/count(distinct visit.person_id), 2)
+     end as heart_rate
 from site
-   left join person on site.person_id = person.person_id and site.src_hpo_id = person.src_hpo_id
-   left join visit on person.person_id = visit.person_id and person.src_hpo_id = visit.src_hpo_id
-   left join measurement on person.person_id = measurement.person_id and person.src_hpo_id = measurement.src_hpo_id
-   left join height on person.person_id = height.person_id and person.src_hpo_id = height.src_hpo_id
-   left join weight on person.person_id = weight.person_id and person.src_hpo_id = weight.src_hpo_id
-   left join bmi on person.person_id = bmi.person_id and person.src_hpo_id = bmi.src_hpo_id
+left join person on site.person_id = person.person_id and site.src_hpo_id = person.src_hpo_id
+left join visit on person.person_id = visit.person_id and person.src_hpo_id = visit.src_hpo_id
+left join measurement on person.person_id = measurement.person_id and person.src_hpo_id = measurement.src_hpo_id
+left join height on person.person_id = height.person_id and person.src_hpo_id = height.src_hpo_id
+left join weight on person.person_id = weight.person_id and person.src_hpo_id = weight.src_hpo_id
+left join bmi on person.person_id = bmi.person_id and person.src_hpo_id = bmi.src_hpo_id
+left join heart_rate on person.person_id = heart_rate.person_id and person.src_hpo_id = heart_rate.src_hpo_id
 group by 1
 order by 1
