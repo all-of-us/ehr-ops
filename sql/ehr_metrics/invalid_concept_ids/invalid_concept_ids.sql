@@ -1,5 +1,5 @@
 SELECT
-  'visit_occurrence_id' AS table_name,
+  'visit_occurrence' AS table_name,
   'visit_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   visit_concept_id AS concept_id,
@@ -32,7 +32,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'visit_occurrence_id' AS table_name,
+  'visit_occurrence' AS table_name,
   'visit_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   visit_type_concept_id AS concept_id,
@@ -65,7 +65,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'visit_occurrence_id' AS table_name,
+  'visit_occurrence' AS table_name,
   'discharge_to_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   discharge_to_concept_id AS concept_id,
@@ -98,7 +98,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'person_id' AS table_name,
+  'person' AS table_name,
   'gender_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   gender_concept_id AS concept_id,
@@ -131,7 +131,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'person_id' AS table_name,
+  'person' AS table_name,
   'race_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   race_concept_id AS concept_id,
@@ -164,7 +164,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'person_id' AS table_name,
+  'person' AS table_name,
   'ethnicity_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   ethnicity_concept_id AS concept_id,
@@ -197,7 +197,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'device_exposure_id' AS table_name,
+  'device_exposure' AS table_name,
   'device_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   device_concept_id AS concept_id,
@@ -230,7 +230,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'device_exposure_id' AS table_name,
+  'device_exposure' AS table_name,
   'device_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   device_type_concept_id AS concept_id,
@@ -263,7 +263,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'specimen_id' AS table_name,
+  'specimen' AS table_name,
   'specimen_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   specimen_concept_id AS concept_id,
@@ -296,7 +296,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'specimen_id' AS table_name,
+  'specimen' AS table_name,
   'specimen_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   specimen_type_concept_id AS concept_id,
@@ -329,7 +329,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'specimen_id' AS table_name,
+  'specimen' AS table_name,
   'unit_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   unit_concept_id AS concept_id,
@@ -362,7 +362,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'specimen_id' AS table_name,
+  'specimen' AS table_name,
   'anatomic_site_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   anatomic_site_concept_id AS concept_id,
@@ -395,7 +395,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'specimen_id' AS table_name,
+  'specimen' AS table_name,
   'disease_status_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   disease_status_concept_id AS concept_id,
@@ -428,7 +428,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'procedure_occurrence_id' AS table_name,
+  'procedure_occurrence' AS table_name,
   'procedure_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   procedure_concept_id AS concept_id,
@@ -461,7 +461,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'procedure_occurrence_id' AS table_name,
+  'procedure_occurrence' AS table_name,
   'procedure_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   procedure_type_concept_id AS concept_id,
@@ -494,7 +494,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'procedure_occurrence_id' AS table_name,
+  'procedure_occurrence' AS table_name,
   'modifier_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   modifier_concept_id AS concept_id,
@@ -527,7 +527,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'drug_exposure_id' AS table_name,
+  'drug_exposure' AS table_name,
   'drug_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   drug_concept_id AS concept_id,
@@ -560,7 +560,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'drug_exposure_id' AS table_name,
+  'drug_exposure' AS table_name,
   'drug_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   drug_type_concept_id AS concept_id,
@@ -593,7 +593,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'drug_exposure_id' AS table_name,
+  'drug_exposure' AS table_name,
   'route_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   route_concept_id AS concept_id,
@@ -626,7 +626,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'observation_id' AS table_name,
+  'observation' AS table_name,
   'observation_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   observation_concept_id AS concept_id,
@@ -659,7 +659,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'observation_id' AS table_name,
+  'observation' AS table_name,
   'observation_type_concept' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   observation_type_concept_id AS concept_id,
@@ -692,7 +692,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'observation_id' AS table_name,
+  'observation' AS table_name,
   'value_as_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   value_as_concept_id AS concept_id,
@@ -725,7 +725,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'observation_id' AS table_name,
+  'observation' AS table_name,
   'qualifier_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   qualifier_concept_id AS concept_id,
@@ -758,7 +758,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'observation_id' AS table_name,
+  'observation' AS table_name,
   'unit_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   unit_concept_id AS concept_id,
@@ -791,7 +791,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'measurement_id' AS table_name,
+  'measurement' AS table_name,
   'measurement_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   measurement_concept_id AS concept_id,
@@ -824,7 +824,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'measurement_id' AS table_name,
+  'measurement' AS table_name,
   'measurement_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   measurement_type_concept_id AS concept_id,
@@ -857,7 +857,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'measurement_id' AS table_name,
+  'measurement' AS table_name,
   'operator_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   operator_concept_id AS concept_id,
@@ -890,7 +890,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'measurement_id' AS table_name,
+  'measurement' AS table_name,
   'value_as_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   value_as_concept_id AS concept_id,
@@ -923,7 +923,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'measurement_id' AS table_name,
+  'measurement' AS table_name,
   'unit_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   unit_concept_id AS concept_id,
@@ -956,7 +956,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'condition_occurrence_id' AS table_name,
+  'condition_occurrence' AS table_name,
   'condition_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   condition_concept_id AS concept_id,
@@ -989,7 +989,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'condition_occurrence_id' AS table_name,
+  'condition_occurrence' AS table_name,
   'condition_type_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   condition_type_concept_id AS concept_id,
@@ -1022,7 +1022,7 @@ GROUP BY
   5
 UNION ALL
 SELECT
-  'condition_occurrence_id' AS table_name,
+  'condition_occurrence' AS table_name,
   'condition_status_concept_id' AS column_name,
   m.src_hpo_id AS src_hpo_id,
   condition_status_concept_id AS concept_id,
