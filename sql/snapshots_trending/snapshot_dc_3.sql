@@ -6,4 +6,4 @@ SELECT distinct src_hpo_id, cast(snapshot_ts as date)AS snapshot_ts_dt,
     observation_total_rows, observation_wrong_date_rows, 
     procedure_total_rows, procedure_wrong_date_rows,
     device_start_total_rows, device_start_wrong_date_rows, device_end_total_rows, device_end_wrong_date_rows
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_dc_3`
+FROM {{curation_ops_schema}}.snapshot_dc_3
