@@ -3,40 +3,40 @@
 with
 person as (
    select distinct mp.src_hpo_id, mp.person_id
-   from (select DISTINCT *  from `{{pdr_project}}.{{curation_dataset}}._mapping_person`) mp
-   join `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` p using(person_id)
+   from (select DISTINCT *  from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person`) mp
+   join `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person` p using(person_id)
    ),
 visit as (
    select distinct mv.src_hpo_id, v.person_id
-   from `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` v
-   join `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence` mv using(visit_occurrence_id)
-   join `{{pdr_project}}.{{curation_dataset}}._mapping_person` p on p.person_id = v.person_id and p.src_hpo_id = mv.src_hpo_id
+   from `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` v
+   join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence` mv using(visit_occurrence_id)
+   join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` p on p.person_id = v.person_id and p.src_hpo_id = mv.src_hpo_id
    ),
 site as (
    select distinct
    mp.person_id,
    mp.src_hpo_id
-   from `{{pdr_project}}.{{curation_dataset}}._mapping_person` mp
+   from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` mp
 ),
 measurement as (
    select distinct mp.src_hpo_id, m.person_id
-   from `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-   join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mp using(measurement_id)
-   join `{{pdr_project}}.{{curation_dataset}}._mapping_person` p on p.person_id = m.person_id and p.src_hpo_id = mp.src_hpo_id
+   from `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m
+   join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mp using(measurement_id)
+   join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` p on p.person_id = m.person_id and p.src_hpo_id = mp.src_hpo_id
    ),
 height as (
    select distinct mp.src_hpo_id, m.person_id
-   from `{{pdr_project}}.{{curation_dataset}}._mapping_person` mp
-   join `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m on mp.person_id = m.person_id
-   join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on mm.src_hpo_id = mp.src_hpo_id and mm.measurement_id = m.measurement_id
+   from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` mp
+   join `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m on mp.person_id = m.person_id
+   join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mm on mm.src_hpo_id = mp.src_hpo_id and mm.measurement_id = m.measurement_id
    where m.measurement_concept_id in (3036277,1029031,3019171,3014149,3023540,37020651,3035463,
       3015514,3036798,3013842,3008989,36304231,1003304,37020737,1003232,1003850,4030731)
    ),
 weight as (
    select distinct mp.src_hpo_id, m.person_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_person` mp
-    join `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m on mp.person_id = m.person_id
-    join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on mm.src_hpo_id = mp.src_hpo_id and mm.measurement_id = m.measurement_id
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` mp
+    join `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m on mp.person_id = m.person_id
+    join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mm on mm.src_hpo_id = mp.src_hpo_id and mm.measurement_id = m.measurement_id
     where m.measurement_concept_id in (3025315,1029318,3042378,40759214,3013747,40759213,3023166,3013762,
         3011043,3026600,3022484,40759177,36305329,46234683,3013131,1004122,3003176,3013853,3010147,40771968,
         3019336,3005422,3010220,1003206,3009617,3015644,3022281,3011054,21492642,40760186,1003642,40761330,
@@ -48,9 +48,9 @@ weight as (
    ),
 bmi as (
    select distinct mp.src_hpo_id, m.person_id
-   from `{{pdr_project}}.{{curation_dataset}}._mapping_person` mp
-   join `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m on mp.person_id = m.person_id
-   join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on mm.src_hpo_id = mp.src_hpo_id and mm.measurement_id = m.measurement_id
+   from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` mp
+   join `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m on mp.person_id = m.person_id
+   join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mm on mm.src_hpo_id = mp.src_hpo_id and mm.measurement_id = m.measurement_id
    where m.measurement_concept_id in (44783982, 40762636, 3038553)
    )
 select distinct

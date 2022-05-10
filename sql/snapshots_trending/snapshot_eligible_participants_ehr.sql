@@ -1,6 +1,6 @@
 WITH ep AS (
 SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, Participants_With_EHR_Data
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_eligible_participants_ehr`),
+FROM `{{curation_project}}.{{ehr_ops_dataset}}.snapshot_eligible_participants_ehr`),
 
 org_hpo AS (
 SELECT 
@@ -9,7 +9,7 @@ SELECT
     lower(HPO_ID) AS src_hpo_id,
     Display_Order,
     On_Boarding_Time,
-FROM `{{pdr_project}}.{{curation_dataset}}.v_org_hpo_mapping`)
+FROM `{{curation_project}}.{{ehr_ops_dataset}}.v_org_hpo_mapping`)
 
 SELECT DISTINCT 
     ep.*,

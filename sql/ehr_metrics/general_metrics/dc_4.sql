@@ -9,11 +9,11 @@ with
         sum(case when (TIMESTAMP_DIFF(t1.visit_start_datetime,TIMESTAMP(visit_start_date), DAY))> 1 then 1 else 0 end) as start_not_match,
         sum(case when (TIMESTAMP_DIFF(t1.visit_end_datetime,TIMESTAMP(visit_end_date), DAY))> 1 then 1 else 0 end) as end_not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN
     (select src_hpo_id,
         visit_occurrence_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS t2
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence`) AS t2
     ON
         t1.visit_occurrence_id=t2.visit_occurrence_id
     GROUP BY 1),
@@ -24,11 +24,11 @@ with
         sum(case when (t1.procedure_datetime is not null) then 1 else 0 end) as total_rows,
         sum(case when (TIMESTAMP_DIFF(t1.procedure_datetime,TIMESTAMP(procedure_date), DAY))> 1 then 1 else 0 end) as not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` AS t1
     INNER JOIN
     (select src_hpo_id,
         procedure_occurrence_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`)  AS t2
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence`)  AS t2
     ON
         t1.procedure_occurrence_id=t2.procedure_occurrence_id
     GROUP BY 1),
@@ -39,11 +39,11 @@ with
         sum(case when (t1.observation_datetime is not null) then 1 else 0 end) as total_rows,
         sum(case when (TIMESTAMP_DIFF(t1.observation_datetime,TIMESTAMP(observation_date), DAY)) > 1 then 1 else 0 end) as not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` AS t1
     INNER JOIN
     (select src_hpo_id,
         observation_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_observation`
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation`
     where src_table_id not like '%person%')  AS t2
     ON
         t1.observation_id=t2.observation_id
@@ -55,11 +55,11 @@ with
         sum(case when (t1.measurement_datetime is not null) then 1 else 0 end) as total_rows,
         sum(case when (TIMESTAMP_DIFF(t1.measurement_datetime,TIMESTAMP(measurement_date), DAY)) > 1 then 1 else 0 end) as not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` AS t1
     INNER JOIN
     (select src_hpo_id,
         measurement_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_measurement`) AS t2
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement`) AS t2
     ON
         t1.measurement_id=t2.measurement_id
     GROUP BY 1),
@@ -72,11 +72,11 @@ with
         sum(case when (TIMESTAMP_DIFF(t1.condition_start_datetime,TIMESTAMP(condition_start_date), DAY)) > 1 then 1 else 0 end) as start_not_match,
         sum(case when (TIMESTAMP_DIFF(t1.condition_end_datetime,TIMESTAMP(condition_end_date), DAY)) > 1 then 1 else 0 end) as end_not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN
     (select src_hpo_id,
         condition_occurrence_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS t2
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS t2
     ON
         t1.condition_occurrence_id=t2.condition_occurrence_id
     GROUP BY 1),
@@ -89,11 +89,11 @@ with
         sum(case when (TIMESTAMP_DIFF(t1.drug_exposure_start_datetime,TIMESTAMP(drug_exposure_start_date), DAY)) > 1 then 1 else 0 end) as start_not_match,
         sum(case when (TIMESTAMP_DIFF(t1.drug_exposure_end_datetime,TIMESTAMP(drug_exposure_end_date), DAY)) > 1 then 1 else 0 end) as end_not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN
     (select src_hpo_id,
         drug_exposure_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure`)  AS t2
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure`)  AS t2
     ON
         t1.drug_exposure_id=t2.drug_exposure_id
     GROUP BY 1),
@@ -106,11 +106,11 @@ with
         sum(case when (TIMESTAMP_DIFF(t1.device_exposure_start_datetime,TIMESTAMP(device_exposure_start_date), DAY)) > 1 then 1 else 0 end) as start_not_match,
         sum(case when (TIMESTAMP_DIFF(t1.device_exposure_end_datetime,TIMESTAMP(device_exposure_end_date), DAY)) > 1 then 1 else 0 end) as end_not_match
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS t1
     INNER JOIN
     (select src_hpo_id,
         device_exposure_id
-    from `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS t2
+    from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS t2
     ON
         t1.device_exposure_id=t2.device_exposure_id
     GROUP BY 1)

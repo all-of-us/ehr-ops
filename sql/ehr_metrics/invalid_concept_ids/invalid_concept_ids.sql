@@ -11,13 +11,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence` m
 USING
   (visit_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   visit_concept_id = c.concept_id
 WHERE
@@ -44,13 +44,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence` m
 USING
   (visit_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   visit_type_concept_id = c.concept_id
 WHERE
@@ -77,13 +77,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence` m
 USING
   (visit_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   discharge_to_concept_id = c.concept_id
 WHERE
@@ -110,13 +110,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_person` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` m
 USING
   (person_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   gender_concept_id = c.concept_id
 WHERE
@@ -143,13 +143,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_person` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` m
 USING
   (person_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   race_concept_id = c.concept_id
 WHERE
@@ -176,13 +176,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_person` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` m
 USING
   (person_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   ethnicity_concept_id = c.concept_id
 WHERE
@@ -209,13 +209,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure` m
 USING
   (device_exposure_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   device_concept_id = c.concept_id
 WHERE
@@ -242,13 +242,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure` m
 USING
   (device_exposure_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   device_type_concept_id = c.concept_id
 WHERE
@@ -275,13 +275,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_specimen` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_specimen` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_specimen` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_specimen` m
 USING
   (specimen_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   specimen_concept_id = c.concept_id
 WHERE
@@ -308,13 +308,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_specimen` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_specimen` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_specimen` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_specimen` m
 USING
   (specimen_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   specimen_type_concept_id = c.concept_id
 WHERE
@@ -341,13 +341,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_specimen` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_specimen` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_specimen` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_specimen` m
 USING
   (specimen_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   unit_concept_id = c.concept_id
 WHERE
@@ -374,13 +374,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_specimen` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_specimen` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_specimen` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_specimen` m
 USING
   (specimen_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   anatomic_site_concept_id = c.concept_id
 WHERE
@@ -407,13 +407,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_specimen` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_specimen` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_specimen` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_specimen` m
 USING
   (specimen_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   disease_status_concept_id = c.concept_id
 WHERE
@@ -440,13 +440,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence` m
 USING
   (procedure_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   procedure_concept_id = c.concept_id
 WHERE
@@ -473,13 +473,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence` m
 USING
   (procedure_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   procedure_type_concept_id = c.concept_id
 WHERE
@@ -506,13 +506,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence` m
 USING
   (procedure_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   modifier_concept_id = c.concept_id
 WHERE
@@ -539,13 +539,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure` m
 USING
   (drug_exposure_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   drug_concept_id = c.concept_id
 WHERE
@@ -572,13 +572,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure` m
 USING
   (drug_exposure_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   drug_type_concept_id = c.concept_id
 WHERE
@@ -605,13 +605,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure` m
 USING
   (drug_exposure_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   route_concept_id = c.concept_id
 WHERE
@@ -638,13 +638,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_observation` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation` m
 USING
   (observation_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   observation_concept_id = c.concept_id
 WHERE
@@ -671,13 +671,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_observation` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation` m
 USING
   (observation_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   observation_type_concept_id = c.concept_id
 WHERE
@@ -704,13 +704,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_observation` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation` m
 USING
   (observation_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   value_as_concept_id = c.concept_id
 WHERE
@@ -737,13 +737,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_observation` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation` m
 USING
   (observation_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   qualifier_concept_id = c.concept_id
 WHERE
@@ -770,13 +770,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_observation` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation` m
 USING
   (observation_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   unit_concept_id = c.concept_id
 WHERE
@@ -803,13 +803,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` m
 USING
   (measurement_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   measurement_concept_id = c.concept_id
 WHERE
@@ -836,13 +836,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` m
 USING
   (measurement_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   measurement_type_concept_id = c.concept_id
 WHERE
@@ -869,13 +869,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` m
 USING
   (measurement_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   operator_concept_id = c.concept_id
 WHERE
@@ -902,13 +902,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` m
 USING
   (measurement_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   value_as_concept_id = c.concept_id
 WHERE
@@ -935,13 +935,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` m
 USING
   (measurement_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   unit_concept_id = c.concept_id
 WHERE
@@ -968,13 +968,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence` m
 USING
   (condition_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   condition_concept_id = c.concept_id
 WHERE
@@ -1001,13 +1001,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence` m
 USING
   (condition_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   condition_type_concept_id = c.concept_id
 WHERE
@@ -1034,13 +1034,13 @@ END
   AS invalid_reason,
   COUNT(1) AS row_count
 FROM
-  `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` t
+  `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` t
 JOIN
-  `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence` m
+  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence` m
 USING
   (condition_occurrence_id)
 LEFT JOIN
-  `{{pdr_project}}.{{curation_dataset}}.concept` c
+  `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
 ON
   condition_status_concept_id = c.concept_id
 WHERE

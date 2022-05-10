@@ -5,4 +5,4 @@ SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt,
   observation_total_row, observation_well_defined_row, observation_total_zero_missing, observation_total_missing,
   procedure_total_row, procedure_well_defined_row, procedure_total_zero_missing, procedure_total_missing,
   visit_total_row, visit_well_defined_row, visit_total_zero_missing, visit_total_missing 
-FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_gc_1_standard`
+FROM `{{curation_project}}.{{ehr_ops_dataset}}.snapshot_gc_1_standard`

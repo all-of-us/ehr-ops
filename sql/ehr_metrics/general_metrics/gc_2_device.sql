@@ -7,13 +7,13 @@ WITH
     src_hpo_id,
     COUNT(co.device_exposure_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN
     (select
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
 
@@ -24,9 +24,9 @@ WITH
     mco.src_hpo_id,
     COUNT(co.device_exposure_id) AS valid_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN
-    `{{pdr_project}}.{{curation_dataset}}.concept` AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS c
   ON
     co.device_concept_id=c.concept_id
   INNER JOIN
@@ -34,7 +34,7 @@ WITH
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
   WHERE
@@ -48,13 +48,13 @@ WITH
     src_hpo_id,
     COUNT(co.device_exposure_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN
     (select
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
 
@@ -65,9 +65,9 @@ WITH
     mco.src_hpo_id,
     COUNT(co.device_exposure_id) AS valid_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN(select distinct visit_occurrence_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence`) AS vo
   ON
     co.visit_occurrence_id=vo.visit_occurrence_id
   INNER JOIN
@@ -75,7 +75,7 @@ WITH
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
   WHERE
@@ -89,13 +89,13 @@ WITH
     src_hpo_id,
     COUNT(co.device_exposure_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN
     (select
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
   where person_id is not null
@@ -107,9 +107,9 @@ WITH
     mco.src_hpo_id,
     COUNT(co.device_exposure_id) AS valid_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN(select distinct person_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person`) AS p
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person`) AS p
   ON
     co.person_id=p.person_id
   INNER JOIN
@@ -117,7 +117,7 @@ WITH
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
   WHERE
@@ -131,13 +131,13 @@ WITH
     src_hpo_id,
     COUNT(co.device_exposure_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN
     (select
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
 
@@ -148,9 +148,9 @@ WITH
     mco.src_hpo_id,
     COUNT(co.device_exposure_id) AS valid_counts
   FROM(select device_exposure_id, device_type_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure`) AS co
   INNER JOIN
-    `{{pdr_project}}.{{curation_dataset}}.concept` AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS c
   ON
     co.device_type_concept_id=c.concept_id
   INNER JOIN
@@ -158,7 +158,7 @@ WITH
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
   WHERE
@@ -172,13 +172,13 @@ WITH
     src_hpo_id,
     COUNT(co.device_exposure_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS co
   INNER JOIN
     (select
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
 
@@ -189,9 +189,9 @@ WITH
     mco.src_hpo_id,
     COUNT(co.device_exposure_id) AS valid_counts
   FROM(select device_exposure_id, device_source_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure`) AS co
   INNER JOIN
-    `{{pdr_project}}.{{curation_dataset}}.concept` AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS c
   ON
     co.device_source_concept_id=c.concept_id
   INNER JOIN
@@ -199,7 +199,7 @@ WITH
       src_hpo_id,
       device_exposure_id
     from
-      `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS mco
   ON
     co.device_exposure_id=mco.device_exposure_id
   WHERE
