@@ -2,16 +2,16 @@
 WITH
     sites AS (
         SELECT DISTINCT mp.src_hpo_id
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person` p
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_person` mp
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person` p
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` mp
           ON p.person_id = mp.person_id
     ),
     unit_success AS (
         SELECT DISTINCT mm.src_hpo_id, COUNT(distinct m.measurement_id) AS number_successful_units
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m
+        JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mm
           ON m.measurement_id = mm.measurement_id
-        JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+        JOIN `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
           ON m.unit_concept_id = c.concept_id
         WHERE
             LOWER(c.standard_concept) = 's'
@@ -24,10 +24,10 @@ WITH
     ),
     route_success AS (
         SELECT DISTINCT mde.src_hpo_id, COUNT(de.drug_exposure_id) as number_valid_routes
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` de
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure` mde
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` de
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure` mde
             ON de.drug_exposure_id = mde.drug_exposure_id 
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
             ON de.route_concept_id = c.concept_id
         WHERE
             LOWER(c.standard_concept) = 's'
@@ -38,8 +38,8 @@ WITH
     ),
     measurement_w_unit AS (
         SELECT DISTINCT mm.src_hpo_id, COUNT(distinct m.measurement_id) AS rows_w_units
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mm
           ON m.measurement_id = mm.measurement_id
         WHERE
           safe_cast(replace(replace(replace(value_source_value, "<", ""), ">", ""), "=", "") as float64) is not null 

@@ -1,7 +1,7 @@
 with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
@@ -415,8 +415,8 @@ recommended_concept_ids as (
     select DISTINCT
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.concept` c
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+        `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
+    JOIN `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -432,9 +432,9 @@ wide_net as (
     SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `{{pdr_project}}.{{curation_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
-    JOIN `{{pdr_project}}.{{curation_dataset}}.concept` c
+    JOIN `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
     WHERE c.vocabulary_id = 'LOINC'
         AND c.concept_class_id IN ('Lab Test', 'Clinical Observation')
@@ -445,9 +445,9 @@ non_recommended_codes as (
         mm.src_hpo_id, m.measurement_id, wn.ancestor_concept_id,
         m.measurement_concept_id, c.concept_code, c.concept_name, c.vocabulary_id
     from
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` m
-        join `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
-        join `{{pdr_project}}.{{curation_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` m
+        join `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mm on m.measurement_id = mm.measurement_id
+        join `{{curation_project}}.{{ehr_ops_dataset}}.concept` c on c.concept_id = m.measurement_concept_id
         join wide_net wn on wn.descendant_concept_id = c.concept_id
     where
         m.measurement_concept_id in (
@@ -470,7 +470,7 @@ aggregate_non_recommended_codes as (
         nrc.measurement_concept_id, nrc.concept_name concept_name,
         COUNT(*) lab_count
     from non_recommended_codes nrc
-    join `{{pdr_project}}.{{curation_dataset}}.concept` c
+    join `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
         on c.concept_id = nrc.ancestor_concept_id
     group by src_hpo_id, ancestor_concept_id, ancestor_concept_name,
         nrc.measurement_concept_id, nrc.concept_name

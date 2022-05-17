@@ -1,2 +1,2 @@
-SELECT vocabulary_version FROM `{{pdr_project}}.{{curation_dataset}}.vocabulary`
+SELECT vocabulary_version FROM `{{curation_project}}.{{ehr_ops_dataset}}.vocabulary`
 WHERE vocabulary_id = 'None'

@@ -1,5 +1,9 @@
 # Contains values (right) to mask with keys (left) in the workbook file
 
+curation_project="name-of-project"
 pdr_project="name-of-project"
-curation_dataset="name-of-dataset"
-rdr_dataset="name-of-dataset"
+ehr_ops_project="name-of-project"
+ehr_ops_dataset="name-of-dataset"
+rdr_ops_dataset="name-of-dataset"
+ehr_ops_resources_dataset="name-of-dataset"
+operations_analytics_dataset="name-of-dataset"

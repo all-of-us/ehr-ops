@@ -2,13 +2,13 @@
 
 WITH sites AS (
 SELECT DISTINCT src_hpo_id
-FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
+FROM `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person`),
     condition_agg AS (
       SELECT src_hpo_id, SUM(cnt-1) as condition_dup_cnt
       FROM
         (SELECT src_hpo_id, o.* EXCEPT (condition_occurrence_id), COUNT(*) as cnt
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` o
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence` mo
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` o
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence` mo
             USING (condition_occurrence_id)
         WHERE
             condition_concept_id != 0 AND condition_concept_id IS NOT NULL
@@ -22,8 +22,8 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
       SELECT src_hpo_id, SUM(cnt-1) as procedure_dup_cnt
       FROM
         (SELECT src_hpo_id, o.* EXCEPT (procedure_occurrence_id), COUNT(*) as cnt
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` o
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence` mo
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` o
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence` mo
             USING (procedure_occurrence_id)
         WHERE
             procedure_concept_id != 0 AND procedure_concept_id IS NOT NULL
@@ -37,8 +37,8 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
       SELECT src_hpo_id, SUM(cnt-1) as visit_dup_cnt
       FROM
         (SELECT src_hpo_id, o.* EXCEPT (visit_occurrence_id), COUNT(*) as cnt
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` o
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence` mo
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` o
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence` mo
             USING (visit_occurrence_id)
         WHERE
             visit_concept_id != 0 AND visit_concept_id IS NOT NULL
@@ -52,8 +52,8 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
       SELECT src_hpo_id, SUM(cnt-1) as observation_dup_cnt
       FROM
         (SELECT src_hpo_id, o.* EXCEPT (observation_id), COUNT(*) as cnt
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` o
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_observation` mo
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` o
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation` mo
             USING (observation_id)
         WHERE
             observation_concept_id != 0 AND observation_concept_id IS NOT NULL
@@ -67,8 +67,8 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
       SELECT src_hpo_id, SUM(cnt-1) as measurement_dup_cnt
       FROM
         (SELECT src_hpo_id, o.* EXCEPT (measurement_id), COUNT(*) as cnt
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` o
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_measurement` mo
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` o
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement` mo
             USING (measurement_id)
         WHERE
             measurement_concept_id != 0 AND measurement_concept_id IS NOT NULL
@@ -82,8 +82,8 @@ FROM `{{pdr_project}}.{{curation_dataset}}._mapping_person`),
       SELECT src_hpo_id, SUM(cnt-1) as drug_dup_cnt
       FROM
         (SELECT src_hpo_id, o.* EXCEPT (drug_exposure_id), COUNT(*) as cnt
-        FROM `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` o
-        LEFT JOIN `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure` mo
+        FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` o
+        LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure` mo
             USING (drug_exposure_id)
         WHERE
             drug_concept_id != 0 AND drug_concept_id IS NOT NULL

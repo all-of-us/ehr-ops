@@ -7,13 +7,13 @@ WITH
       src_hpo_id,
       COUNT(t1.condition_occurrence_id) AS total_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          condition_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS t2
     ON
       t1.condition_occurrence_id=t2.condition_occurrence_id
     GROUP BY
@@ -23,17 +23,17 @@ WITH
       src_hpo_id,
       COUNT(t1.condition_occurrence_id) AS well_defined_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          condition_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS t2
     ON
       t1.condition_occurrence_id=t2.condition_occurrence_id
     INNER JOIN
-      `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
+      `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.condition_source_concept_id
     WHERE
@@ -45,13 +45,13 @@ WITH
       src_hpo_id,
       COUNT(t1.condition_occurrence_id) AS total_zero_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          condition_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS t2
     ON
       t1.condition_occurrence_id=t2.condition_occurrence_id
     WHERE
@@ -64,13 +64,13 @@ WITH
       src_hpo_id,
       COUNT(t1.condition_occurrence_id) AS total_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          condition_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS t2
     ON
       t1.condition_occurrence_id=t2.condition_occurrence_id
     WHERE
@@ -82,13 +82,13 @@ WITH
       src_hpo_id,
       COUNT(t1.procedure_occurrence_id) AS total_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          procedure_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence`) AS t2
     ON
       t1.procedure_occurrence_id=t2.procedure_occurrence_id
     GROUP BY
@@ -98,17 +98,17 @@ WITH
       src_hpo_id,
       COUNT(t1.procedure_occurrence_id) AS well_defined_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          procedure_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence`) AS t2
     ON
       t1.procedure_occurrence_id=t2.procedure_occurrence_id
     INNER JOIN
-      `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
+      `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.procedure_source_concept_id
     WHERE
@@ -120,13 +120,13 @@ WITH
       src_hpo_id,
       COUNT( t1.procedure_occurrence_id) AS total_zero_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          procedure_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence`) AS t2
     ON
       t1.procedure_occurrence_id=t2.procedure_occurrence_id
     WHERE
@@ -139,13 +139,13 @@ WITH
       src_hpo_id,
       COUNT( t1.procedure_occurrence_id) AS total_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_procedure_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          procedure_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_procedure_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_procedure_occurrence`) AS t2
     ON
       t1.procedure_occurrence_id=t2.procedure_occurrence_id
     WHERE
@@ -157,13 +157,13 @@ WITH
       src_hpo_id,
       COUNT( t1.drug_exposure_id) AS total_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          drug_exposure_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure`) AS t2
     ON
       t1.drug_exposure_id=t2.drug_exposure_id
     GROUP BY
@@ -173,17 +173,17 @@ WITH
       src_hpo_id,
       COUNT( t1.drug_exposure_id) AS well_defined_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          drug_exposure_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure`) AS t2
     ON
       t1.drug_exposure_id=t2.drug_exposure_id
     INNER JOIN
-      `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
+      `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.drug_source_concept_id
     WHERE
@@ -195,13 +195,13 @@ WITH
       src_hpo_id,
       COUNT( t1.drug_exposure_id) AS total_zero_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          drug_exposure_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure`) AS t2
     ON
       t1.drug_exposure_id=t2.drug_exposure_id
     WHERE
@@ -214,13 +214,13 @@ WITH
       src_hpo_id,
       COUNT( t1.drug_exposure_id) AS drug_total_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          drug_exposure_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure`) AS t2
     ON
       t1.drug_exposure_id=t2.drug_exposure_id
     WHERE
@@ -233,13 +233,13 @@ WITH
       src_hpo_id,
       COUNT( t1.observation_id) AS total_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          observation_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_observation`
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation`
       WHERE src_table_id not like '%person%') AS t2
     ON
       t1.observation_id=t2.observation_id
@@ -250,18 +250,18 @@ WITH
       src_hpo_id,
       COUNT( t1.observation_id) AS well_defined_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          observation_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_observation`
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation`
       WHERE src_table_id not like '%person%') AS t2
     ON
       t1.observation_id=t2.observation_id
     INNER JOIN
-      `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
+      `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.observation_source_concept_id
     GROUP BY
@@ -271,13 +271,13 @@ WITH
       src_hpo_id,
       COUNT( t1.observation_id) AS total_zero_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          observation_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_observation`
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation`
       WHERE src_table_id not like '%person%') AS t2
     ON
       t1.observation_id=t2.observation_id
@@ -291,13 +291,13 @@ WITH
       src_hpo_id,
       COUNT( t1.observation_id) AS total_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_observation` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          observation_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_observation`
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_observation`
       WHERE src_table_id not like '%person%') AS t2
     ON
       t1.observation_id=t2.observation_id
@@ -310,13 +310,13 @@ WITH
       src_hpo_id,
       COUNT( t1.measurement_id) AS total_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          measurement_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_measurement`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement`) AS t2
     ON
       t1.measurement_id=t2.measurement_id
     GROUP BY
@@ -326,17 +326,17 @@ WITH
       src_hpo_id,
       COUNT( t1.measurement_id) AS well_defined_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          measurement_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_measurement`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement`) AS t2
     ON
       t1.measurement_id=t2.measurement_id
     INNER JOIN
-      `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
+      `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.measurement_source_concept_id
     WHERE
@@ -348,13 +348,13 @@ WITH
       src_hpo_id,
       COUNT( t1.measurement_id) AS total_zero_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          measurement_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_measurement`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement`) AS t2
     ON
       t1.measurement_id=t2.measurement_id
     WHERE
@@ -367,13 +367,13 @@ WITH
       src_hpo_id,
       COUNT( t1.measurement_id) AS total_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_measurement` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          measurement_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_measurement`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_measurement`) AS t2
     ON
       t1.measurement_id=t2.measurement_id
     WHERE
@@ -385,13 +385,13 @@ WITH
       src_hpo_id,
       COUNT( t1.visit_occurrence_id) AS total_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          visit_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence`) AS t2
     ON
       t1.visit_occurrence_id=t2.visit_occurrence_id
     GROUP BY
@@ -401,17 +401,17 @@ WITH
       src_hpo_id,
       COUNT( t1.visit_occurrence_id) AS well_defined_row
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          visit_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence`) AS t2
     ON
       t1.visit_occurrence_id=t2.visit_occurrence_id
     INNER JOIN
-      `{{pdr_project}}.{{curation_dataset}}.concept` AS t3
+      `{{curation_project}}.{{ehr_ops_dataset}}.concept` AS t3
     ON
       t3.concept_id = t1.visit_source_concept_id
     WHERE
@@ -423,13 +423,13 @@ WITH
       src_hpo_id,
       COUNT( t1.visit_occurrence_id) AS total_zero_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          visit_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence`) AS t2
     ON
       t1.visit_occurrence_id=t2.visit_occurrence_id
     WHERE
@@ -442,13 +442,13 @@ WITH
       src_hpo_id,
       COUNT( t1.visit_occurrence_id) AS total_missing
     FROM
-      `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS t1
+      `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN (
       SELECT
          src_hpo_id,
          visit_occurrence_id
       FROM
-        `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence`) AS t2
     ON
       t1.visit_occurrence_id=t2.visit_occurrence_id
     WHERE

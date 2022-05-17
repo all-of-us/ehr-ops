@@ -7,13 +7,13 @@ WITH
     src_hpo_id,
     COUNT(co.condition_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
   (SELECT
        src_hpo_id,
        condition_occurrence_id
     FROM
-      `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+      `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id = mco.condition_occurrence_id
 
@@ -26,10 +26,10 @@ WITH
     count(co.condition_occurrence_id) AS valid_counts
   FROM
   (select condition_occurrence_id, condition_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence`) AS co
   inner JOIN
     (select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept`) AS c
   ON
     co.condition_concept_id=c.concept_id
   INNER JOIN
@@ -37,7 +37,7 @@ WITH
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   WHERE
@@ -51,14 +51,14 @@ WITH
     src_hpo_id,
     COUNT(co.condition_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
     (select
       condition_occurrence_id,
       src_hpo_id
 
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
 
@@ -71,10 +71,10 @@ WITH
     COUNT(co.condition_occurrence_id) AS valid_counts
   FROM
     (select  condition_occurrence_id, visit_occurrence_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence`) AS co
   INNER JOIN(
   select  visit_occurrence_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence`) AS vo
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence`) AS vo
   ON
     co.visit_occurrence_id=vo.visit_occurrence_id
   INNER JOIN
@@ -83,7 +83,7 @@ WITH
       src_hpo_id
 
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   WHERE
@@ -96,13 +96,13 @@ WITH
     src_hpo_id,
     COUNT(co.condition_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
     (select
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   where  (co.person_id IS NOT NULL)
@@ -114,10 +114,10 @@ WITH
     mco.src_hpo_id,
     COUNT(co.condition_occurrence_id) AS valid_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
   (select  person_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_person`) AS p
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_person`) AS p
   ON
     co.person_id=p.person_id
   INNER JOIN
@@ -125,7 +125,7 @@ WITH
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   WHERE
@@ -138,13 +138,13 @@ WITH
     src_hpo_id,
     COUNT(co.condition_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
     (select
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
 
@@ -156,10 +156,10 @@ WITH
     COUNT(co.condition_occurrence_id) AS valid_counts
   FROM
   (select  condition_occurrence_id, condition_type_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence`) AS co
   INNER JOIN
   (select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept`) AS c
   ON
     co.condition_type_concept_id=c.concept_id
   INNER JOIN
@@ -167,7 +167,7 @@ WITH
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   WHERE
@@ -181,14 +181,14 @@ WITH
     src_hpo_id,
     COUNT(co.condition_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
     (select
       condition_occurrence_id,
       src_hpo_id
 
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
 
@@ -200,10 +200,10 @@ WITH
     COUNT(co.condition_occurrence_id) AS valid_counts
   FROM(
   select  condition_occurrence_id, condition_source_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence`) AS co
   INNER JOIN(
   select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept`) AS c
   ON
     co.condition_source_concept_id=c.concept_id
   INNER JOIN
@@ -212,7 +212,7 @@ WITH
       src_hpo_id
 
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   WHERE
@@ -226,13 +226,13 @@ WITH
     src_hpo_id,
     COUNT(co.condition_occurrence_id) AS total_counts
   FROM
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS co
   INNER JOIN
     (select
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
 
@@ -244,10 +244,10 @@ WITH
     COUNT(co.condition_occurrence_id) AS valid_counts
   FROM(
   select  condition_occurrence_id, condition_status_concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence`) AS co
+    `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence`) AS co
   INNER JOIN(
   select distinct concept_id from
-    `{{pdr_project}}.{{curation_dataset}}.concept`) AS c
+    `{{curation_project}}.{{ehr_ops_dataset}}.concept`) AS c
   ON
     co.condition_status_concept_id=c.concept_id
   INNER JOIN
@@ -255,7 +255,7 @@ WITH
       condition_occurrence_id,
       src_hpo_id
     from
-    `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS mco
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS mco
   ON
     co.condition_occurrence_id=mco.condition_occurrence_id
   WHERE

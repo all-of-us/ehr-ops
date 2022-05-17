@@ -7,11 +7,11 @@ with
         sum(case when (t1.visit_end_datetime is not null) then 1 else 0 end) AS total_rows,
         sum(case when (t1.visit_start_datetime>t1.visit_end_datetime) then 1 else 0 end) as wrong_date_rows
     FROM
-       `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_visit_occurrence` AS t1
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN
         (select src_hpo_id,
             visit_occurrence_id
-        from  `{{pdr_project}}.{{curation_dataset}}._mapping_visit_occurrence`) AS t2
+        from  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_visit_occurrence`) AS t2
     ON
         t1.visit_occurrence_id=t2.visit_occurrence_id
 
@@ -24,11 +24,11 @@ with
         sum(case when (t1.condition_end_datetime is not null) then 1 else 0 end) AS total_rows,
         sum(case when (t1.condition_start_datetime>t1.condition_end_datetime) then 1 else 0 end) as wrong_date_rows
     FROM
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_condition_occurrence` AS t1
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN
         (select src_hpo_id,
             condition_occurrence_id
-        from  `{{pdr_project}}.{{curation_dataset}}._mapping_condition_occurrence`) AS t2
+        from  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_condition_occurrence`) AS t2
     ON
         t1.condition_occurrence_id=t2.condition_occurrence_id
 
@@ -41,11 +41,11 @@ with
         sum(case when (t1.drug_exposure_end_datetime is not null) then 1 else 0 end) AS total_rows,
         sum(case when (t1.drug_exposure_start_datetime>t1.drug_exposure_end_datetime) then 1 else 0 end) as wrong_date_rows
     FROM
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_drug_exposure` AS t1
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN
         (select src_hpo_id,
             drug_exposure_id
-        from  `{{pdr_project}}.{{curation_dataset}}._mapping_drug_exposure`) AS t2
+        from  `{{curation_project}}.{{ehr_ops_dataset}}._mapping_drug_exposure`) AS t2
     ON
         t1.drug_exposure_id=t2.drug_exposure_id
 
@@ -58,11 +58,11 @@ with
         sum(case when (t1.device_exposure_end_datetime is not null) then 1 else 0 end) AS total_rows,
         sum(case when (t1.device_exposure_start_datetime>t1.device_exposure_end_datetime) then 1 else 0 end) as wrong_date_rows
     FROM
-        `{{pdr_project}}.{{curation_dataset}}.unioned_ehr_device_exposure` AS t1
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS t1
     INNER JOIN
         (select src_hpo_id,
             device_exposure_id
-        from `{{pdr_project}}.{{curation_dataset}}._mapping_device_exposure`) AS t2
+        from `{{curation_project}}.{{ehr_ops_dataset}}._mapping_device_exposure`) AS t2
     ON
         t1.device_exposure_id=t2.device_exposure_id
 
