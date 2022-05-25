@@ -1,0 +1,36 @@
+#
+# Python libraries required for cron app engine micro service.
+#
+
+# Notes:
+#    - This file is used in the deploy process to create a 'requirements.txt' file.  The
+#      libraries here will be merged with the virtual environment version information
+#      during the deploy process to create a new 'requirements.txt' file for the App
+#      Engine service.
+#
+
+## Web Services
+fastapi
+fastapi_utils
+starlette
+uvicorn
+gunicorn
+supervisor
+oauth2client
+
+## Database
+psycopg[binary]
+
+## AOU Cloud Services
+-e git+ssh://git@github.com/all-of-us/python-aou-cloud-services.git#egg=aou_cloud
+# -e ../../python-aou-cloud-services
+
+## Job specific imports
+
+# Publish_qc_report
+gspread
+pandas
+sendgrid
+
+# Misc
+python-dateutil

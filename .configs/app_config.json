@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "email": "example@example.com",
+      "roles": ["admin"],
+      "whitelisted_ip_ranges": {
+        "ip6": ["::1/64"],
+        "ip4": ["127.0.0.1/32"]
+      }
+    }
+  ],
+  "pdr-postgres-db": "pdr.ehr_ops"
+}

@@ -1,0 +1,8 @@
+## Database
+psycopg[binary]
+
+## AOU Cloud Services
+-e git+ssh://git@github.com/all-of-us/python-aou-cloud-services.git#egg=aou_cloud
+
+## Misc
+python-dateutil
