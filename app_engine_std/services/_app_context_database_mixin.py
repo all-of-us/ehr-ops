@@ -113,6 +113,21 @@ class AppContextDatabaseMixin(AppEnvContextBase):
 
     def db_execute(self, sql, args=None, db_conn=None):
         """
+        Non-async: Run database query that returns no results.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        with db_conn.cursor() as cursor:
+            cursor.execute(sql, args)
+
+    def db_fetch_all(self, sql, args=None, db_conn=None):
+        """
         Non-async: Run database query and combine query results with column names.
         :param sql: SQL statement
         :param args: List of statement argument values
@@ -126,18 +141,32 @@ class AppContextDatabaseMixin(AppEnvContextBase):
 
         with db_conn.cursor() as cursor:
             cursor.execute(sql, args)
-            try:
-                data = cursor.fetchall()
-                return data
-            except psycopg.ProgrammingError as e:
-                # If there were no results returned, IE: non-select statement, we'll hit this.
-                return None
+            data = cursor.fetchall()
+            return data
+
+    def db_fetch_one(self, sql, args=None, db_conn=None):
+        """
+        Non-async: Run database query and combine query results with column names.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: list of JSONObject records
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        with db_conn.cursor() as cursor:
+            cursor.execute(sql, args)
+            data = cursor.fetchone()
+            return data
 
     def get_database_list(self):
         """ Return the list of database names for the current connection """
         sql = "SELECT datname FROM pg_database WHERE datistemplate = false and " + \
               "datname != 'cloudsqladmin' and datname != 'postgres';"
-        databases = self.db_execute(sql)
+        databases = self.db_fetch_all(sql)
         return databases
 
     def get_database_users(self):
@@ -145,7 +174,7 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         Return all the database users, always excludes 'postgres' user and any system users.
         """
         sql = "select usename from pg_user where usename not like 'cloudsql%' and usename not like 'postgres';"
-        users = self.db_execute(sql)
+        users = self.db_fetch_all(sql)
         return users
 
     def get_database_roles(self):
@@ -154,7 +183,7 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         """
         sql = "select rolname from pg_roles where rolname not like 'cloudsql%' and " + \
               "rolname not like 'pg_%' and rolname not like 'postgres';"
-        roles = self.db_execute(sql)
+        roles = self.db_fetch_all(sql)
         return roles
 
     def get_database_schemas(self):
@@ -163,5 +192,5 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         """
         sql = "SELECT schema_name FROM information_schema.schemata " + \
               "WHERE schema_name NOT IN ('pg_catalog', 'information_schema');"
-        schemas = self.db_execute(sql)
+        schemas = self.db_fetch_all(sql)
         return schemas

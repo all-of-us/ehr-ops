@@ -39,7 +39,7 @@ class ProgramTemplateClass(object):
         db_conn = self.gcp_env.db_connect_database(database='drc', user='ehr_ops')
 
         #
-        # Postgres SQL Example 1: query using the gcp_env.db_execute() function.
+        # Postgres SQL Example 1: query using the gcp_env.db_fetch_all() function.
         #
         sql = """
             select p.site_id, s.google_group, count(1) as total 
@@ -51,7 +51,7 @@ class ProgramTemplateClass(object):
         hpo_id = 1
         args = [hpo_id]
         # By default, db_execute() will use the first opened database connection.
-        results = self.gcp_env.db_execute(sql, args)
+        results = self.gcp_env.db_fetch_all(sql, args)
 
         # Prepare to use terminal colors.
         clr = self.gcp_env.terminal_colors

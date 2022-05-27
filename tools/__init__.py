@@ -229,6 +229,21 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
 
     def db_execute(self, sql, args=None, db_conn=None):
         """
+        Non-async: Run database query that returns no results.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        with db_conn.cursor() as cursor:
+            cursor.execute(sql, args)
+
+    def db_fetch_all(self, sql, args=None, db_conn=None):
+        """
         Non-async: Run database query and combine query results with column names.
         :param sql: SQL statement
         :param args: List of statement argument values
@@ -242,18 +257,32 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
 
         with db_conn.cursor() as cursor:
             cursor.execute(sql, args)
-            try:
-                data = cursor.fetchall()
-                return data
-            except psycopg.ProgrammingError as e:
-                # If there were no results returned, IE: non-select statement, we'll hit this.
-                return None
+            data = cursor.fetchall()
+            return data
+
+    def db_fetch_one(self, sql, args=None, db_conn=None):
+        """
+        Non-async: Run database query and combine query results with column names.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: list of JSONObject records
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        with db_conn.cursor() as cursor:
+            cursor.execute(sql, args)
+            data = cursor.fetchone()
+            return data
 
     def get_database_list(self):
         """ Return the list of database names for the current connection """
         sql = "SELECT datname FROM pg_database WHERE datistemplate = false and " + \
               "datname != 'cloudsqladmin' and datname != 'postgres';"
-        databases = self.db_execute(sql)
+        databases = self.db_fetch_all(sql)
         return databases
 
     def get_database_schemas(self):
@@ -262,7 +291,7 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
         """
         sql = "SELECT schema_name FROM information_schema.schemata " + \
               "WHERE schema_name NOT IN ('pg_catalog', 'information_schema');"
-        schemas = self.db_execute(sql)
+        schemas = self.db_fetch_all(sql)
         return schemas
 
     @staticmethod

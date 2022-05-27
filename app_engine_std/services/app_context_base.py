@@ -167,7 +167,29 @@ class AppEnvContextBase(GCPEnvConfigBase):
         """
         ...
 
+    # pylint: disable=unused-argument
     def db_execute(self, sql, args=None, db_conn=None):
+        """
+        Run database query that returns no results.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        """
+        ...
+
+    # pylint: disable=unused-argument
+    def db_fetch_all(self, sql, args=None, db_conn=None):
+        """
+        Run database query and fetch all results..
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: list of query results
+        """
+        ...
+
+    # pylint: disable=unused-argument
+    def db_fetch_one(self, sql, args=None, db_conn=None):
         """
         Run database query and combine query results with column names.
         :param sql: SQL statement
@@ -177,18 +199,22 @@ class AppEnvContextBase(GCPEnvConfigBase):
         """
         ...
 
+    # pylint: disable=unused-argument
     def get_database_list(self):
         """ Return the list of database names for the current connection """
         ...
 
+    # pylint: disable=unused-argument
     def get_database_users(self):
         """ Return all the database users, always excludes 'postgres' user and any system users. """
         ...
 
+    # pylint: disable=unused-argument
     def get_database_roles(self):
         """ Return all database roles, always excludes 'postgres' role and any system roles. """
         ...
 
+    # pylint: disable=unused-argument
     def get_database_schemas(self):
         """ Return all database roles, always excludes 'postgres' role and any system roles. """
         ...

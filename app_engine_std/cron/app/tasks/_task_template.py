@@ -38,7 +38,7 @@ class TemplateCloudTask(BaseCronTask):
         # self.gcp_env.connect_database('drc', replica=True, project=project)
         # sql = "select * from pdr.mv_participant where participant_id = %s limit 1"
         # args = (123456789, )
-        # results = self.gcp_env.db_execute(sql, args)
+        # results = self.gcp_env.db_fetch_all(sql, args)
         # if results:
         #     participant = results[0]
         #     _logger.info(f'Found participant id {participant.participant_id}.')

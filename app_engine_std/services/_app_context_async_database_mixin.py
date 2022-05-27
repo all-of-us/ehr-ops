@@ -121,6 +121,24 @@ class AppContextAsyncDatabase(AppEnvContextBase):
 
     async def db_execute(self, sql, args=None, db_conn=None):
         """
+        Async aware: Run database query that returns no results.
+        https://www.psycopg.org/psycopg3/docs/advanced/async.html
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: list of JSONObject records
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        async with db_conn.cursor() as cursor:
+            await cursor.execute(sql, args)
+            return await cursor.fetchall()
+
+    async def db_fetch_all(self, sql, args=None, db_conn=None):
+        """
         Async aware, run database query and combine query results with column names.
         https://www.psycopg.org/psycopg3/docs/advanced/async.html
         :param sql: SQL statement
@@ -135,35 +153,49 @@ class AppContextAsyncDatabase(AppEnvContextBase):
 
         async with db_conn.cursor() as cursor:
             await cursor.execute(sql, args)
-            try:
-                return await cursor.fetchall()
-            except psycopg.ProgrammingError:
-                # If there were no results returned, IE: non-select statement, we'll hit this.
-                return None
+            return await cursor.fetchall()
+
+    async def db_fetch_one(self, sql, args=None, db_conn=None):
+        """
+        Async aware, run database query and combine query results with column names.
+        https://www.psycopg.org/psycopg3/docs/advanced/async.html
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: list of JSONObject records
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        async with db_conn.cursor() as cursor:
+            await cursor.execute(sql, args)
+            return await cursor.fetchone()
 
     async def get_database_list(self):
         """ Return the list of database names for the current connection """
         sql = "SELECT datname FROM pg_database WHERE datistemplate = false and " + \
               "datname != 'cloudsqladmin' and datname != 'postgres';"
-        databases = await self.db_execute(sql)
+        databases = await self.db_fetch_all(sql)
         return databases
 
     async def get_database_users(self):
         """ Return all the database users, always excludes 'postgres' user and any system users. """
         sql = "select usename from pg_user where usename not like 'cloudsql%' and usename not like 'postgres';"
-        users = await self.db_execute(sql)
+        users = await self.db_fetch_all(sql)
         return users
 
     async def get_database_roles(self):
         """ Return all database roles, always excludes 'postgres' role and any system roles. """
         sql = "select rolname from pg_roles where rolname not like 'cloudsql%' and " + \
               "rolname not like 'pg_%' and rolname not like 'postgres';"
-        roles = await self.db_execute(sql)
+        roles = await self.db_fetch_all(sql)
         return roles
 
     async def get_database_schemas(self):
         """ Return all database roles, always excludes 'postgres' role and any system roles. """
         sql = "SELECT schema_name FROM information_schema.schemata " + \
               "WHERE schema_name NOT IN ('pg_catalog', 'information_schema');"
-        schemas = await self.db_execute(sql)
+        schemas = await self.db_fetch_all(sql)
         return schemas
