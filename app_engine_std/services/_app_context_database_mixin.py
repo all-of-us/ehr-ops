@@ -145,6 +145,7 @@ class AppContextDatabaseMixin(AppEnvContextBase):
             data = cursor.fetchmany(chunk_size)
             while data:
                 yield data
+                data = cursor.fetchmany(chunk_size)
             raise StopIteration
 
     def db_fetch_all(self, sql, args=None, db_conn=None):
