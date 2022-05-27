@@ -137,6 +137,28 @@ class AppContextAsyncDatabase(AppEnvContextBase):
             await cursor.execute(sql, args)
             return await cursor.fetchall()
 
+    # pylint: disable=unused-argument
+    async def db_fetch_many(self, sql, args=None, chunk_size: int = 2000, db_conn=None):
+        """
+        Async aware: Return a python generator that returns a chunk of records.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param chunk_size: Number of records to return in each chunk.
+        :param db_conn: Database connection object (optional)
+        :return: list of query results
+        """
+        if not db_conn:
+            if not self.db_connections:
+                raise IOError('No database connection available to use, please call db_connect_database() first.')
+            db_conn = self.db_connections[0]
+
+        async with db_conn.cursor() as cursor:
+            await cursor.execute(sql, args)
+            data = cursor.fetchmany(chunk_size)
+            if data:
+                yield data
+            raise StopAsyncIteration
+
     async def db_fetch_all(self, sql, args=None, db_conn=None):
         """
         Async aware, run database query and combine query results with column names.

@@ -178,6 +178,18 @@ class AppEnvContextBase(GCPEnvConfigBase):
         ...
 
     # pylint: disable=unused-argument
+    def db_fetch_many(self, sql, args=None, chunk_size: int = 2000, db_conn=None):
+        """
+        Return a python generator that returns a chunk of records.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param chunk_size: Number of records to return in each chunk.
+        :param db_conn: Database connection object (optional)
+        :return: list of query results
+        """
+        ...
+
+    # pylint: disable=unused-argument
     def db_fetch_all(self, sql, args=None, db_conn=None):
         """
         Run database query and fetch all results..
