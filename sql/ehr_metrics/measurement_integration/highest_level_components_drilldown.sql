@@ -1,7 +1,7 @@
 with highest_level_components as (
     SELECT DISTINCT csd1.ancestor_concept_id concept_id, csd1.ancestor_concept_name concept_name
-    FROM `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd1
-    LEFT JOIN `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd2
+    FROM `{{ehr_ops_project}}.{{ehr_ops_resources_dataset}}.measurement_concept_sets_descendants` csd1
+    LEFT JOIN `{{ehr_ops_project}}.{{ehr_ops_resources_dataset}}.measurement_concept_sets_descendants` csd2
     ON csd1.ancestor_concept_id = csd2.descendant_concept_id
     WHERE csd2.ancestor_concept_id IS NULL
 ),
@@ -416,7 +416,7 @@ recommended_concept_ids as (
         hlc.concept_id ancestor_concept_id, c.concept_id descendant_concept_id
     from
         `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
-    JOIN `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{ehr_ops_project}}.{{ehr_ops_resources_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.descendant_concept_id = c.concept_id
     JOIN highest_level_components hlc
         ON hlc.concept_id = csd.ancestor_concept_id
@@ -432,7 +432,7 @@ wide_net as (
     SELECT DISTINCT
         hlc.concept_id ancestor_concept_id, csd.descendant_concept_id
     FROM highest_level_components hlc
-    JOIN `{{curation_project}}.{{ehr_ops_dataset}}.measurement_concept_sets_descendants` csd
+    JOIN `{{ehr_ops_project}}.{{ehr_ops_resources_dataset}}.measurement_concept_sets_descendants` csd
         ON csd.ancestor_concept_id = hlc.concept_id
     JOIN `{{curation_project}}.{{ehr_ops_dataset}}.concept` c
         ON c.concept_id = csd.descendant_concept_id 
