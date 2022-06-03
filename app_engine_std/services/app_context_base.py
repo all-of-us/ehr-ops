@@ -4,6 +4,7 @@
 #
 import logging
 import time
+import traceback
 from typing import Any, Dict, Sequence, List
 
 import psycopg
@@ -53,6 +54,23 @@ class AppEnvContextBase(GCPEnvConfigBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.db_connections = list()
+
+    @staticmethod
+    def print_traceback(e):
+        """
+        Print the traceback of a caught exception.
+        :param e: Exception object caught in 'except' clause.
+        """
+        if not e:
+            return
+        # Print traceback if we have one.
+        tb = e.__traceback__ if hasattr(e, '__traceback__') else None
+        if tb:
+            e_error = e.__repr__().strip()
+            tb_data = ''.join(traceback.format_tb(tb)).strip()
+            _logger.error(f'Traceback (most recent call last):\n{tb_data}\n{e_error}')
+        else:
+            _logger.error(e)
 
     def override_project(self, project=None):
         """
