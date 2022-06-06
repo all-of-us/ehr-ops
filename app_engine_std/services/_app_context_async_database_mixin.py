@@ -135,7 +135,6 @@ class AppContextAsyncDatabase(AppEnvContextBase):
 
         async with db_conn.cursor() as cursor:
             await cursor.execute(sql, args)
-            return await cursor.fetchall()
 
     # pylint: disable=unused-argument
     async def db_fetch_many(self, sql, args=None, chunk_size: int = 2000, db_conn=None):
