@@ -230,6 +230,18 @@ class AppEnvContextBase(GCPEnvConfigBase):
         ...
 
     # pylint: disable=unused-argument
+    def db_fetch_scalar(self, sql, args=None, db_conn=None):
+        """
+        Run a query and return a single value from the first row and column in the result.
+        Useful for 'select count(1) from ...' statements.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: return single value result
+        """
+        ...
+
+    # pylint: disable=unused-argument
     def get_database_list(self):
         """ Return the list of database names for the current connection """
         ...

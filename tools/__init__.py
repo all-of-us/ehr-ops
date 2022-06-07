@@ -118,7 +118,7 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
             try:
                 result = func(**kwargs)
                 break
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-except
                 if count == 0:
                     _logger.error(e)
                     raise e
@@ -202,7 +202,6 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
         if not proxy_conn:
             raise ValueError('Failed to find or activate a Cloud SQL Proxy connection.')
 
-        import psycopg
         db_conn = psycopg.connect(
             user=user_info.name,
             password=user_info.password,
@@ -278,11 +277,49 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
             data = cursor.fetchone()
             return data
 
+    def db_fetch_scalar(self, sql, args=None, db_conn=None):
+        """
+        Run a query and return a single value from the first row and column in the result.
+        Useful for 'select count(1) from ...' statements.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: return single value result
+        """
+        data = self.db_fetch_one(sql, args, db_conn)
+        if data:
+            if isinstance(data, (list, tuple)):
+                return data[0]
+            if isinstance(data, JSONObject):
+                return list(data.to_dict().values())[0]
+            if isinstance(data, dict):
+                return list(data.values())[0]
+            return data
+        return None
+
+    @staticmethod
+    def _scalar_list_from_results(data):
+        """
+        Return list of scalar values from db result set.
+        :param data: result from any 'db_fetch_...' method.
+        """
+        result = list()
+        for item in data:
+            if isinstance(item, (list, tuple)):
+                result.append(item[0])
+            elif isinstance(item, JSONObject):
+                result.append(list(item.to_dict().values())[0])
+            elif isinstance(item, dict):
+                result.append(list(item.values())[0])
+            else:
+                result.append(item)
+        return result
+
     def get_database_list(self):
         """ Return the list of database names for the current connection """
         sql = "SELECT datname FROM pg_database WHERE datistemplate = false and " + \
               "datname != 'cloudsqladmin' and datname != 'postgres';"
-        databases = self.db_fetch_all(sql)
+        databases = self._scalar_list_from_results(self.db_fetch_all(sql))
         return databases
 
     def get_database_schemas(self):
@@ -291,8 +328,27 @@ class GCPEnvConfigObject(GCPEnvConfigBase):
         """
         sql = "SELECT schema_name FROM information_schema.schemata " + \
               "WHERE schema_name NOT IN ('pg_catalog', 'information_schema');"
-        schemas = self.db_fetch_all(sql)
+        schemas = self._scalar_list_from_results(self.db_fetch_all(sql))
         return schemas
+
+    def get_database_users(self):
+        """
+        Return all the database users, always excludes 'postgres' user and any system users.
+        """
+        sql = "select usename from pg_user where usename not like 'cloudsql%' and usename not like 'postgres';"
+        users = self._scalar_list_from_results(self.db_fetch_all(sql))
+        return users
+
+    def get_database_roles(self):
+        """
+        Return all database roles, always excludes 'postgres' role and any system roles.
+        """
+        sql = """
+                select rolname from pg_roles 
+                where rolname not like 'cloudsql%' and rolname not like 'pg_%' and rolname not like 'postgres';
+            """
+        roles = self._scalar_list_from_results(self.db_fetch_all(sql))
+        return roles
 
     @staticmethod
     def is_valid_db_identifier(i, name):
@@ -391,11 +447,11 @@ class GCPProcessContext(object):
         """
         # Setup program arguments.
         parser = argparse.ArgumentParser(prog=tool_cmd, description=tool_desc)
-        parser.add_argument("--debug", help="enable debug output", default=False, action="store_true")  # noqa
-        parser.add_argument("--log-file", help="write output to a log file", default=False, action="store_true")  # noqa
-        parser.add_argument("--project", help="gcp project name", default="localhost")  # noqa
-        parser.add_argument("--account", help="pmi-ops account", default=None)  # noqa
-        parser.add_argument("--service-account", help="gcp iam service account", default=None)  # noqa
+        parser.add_argument("--debug", help="enable debug output", default=False, action="store_true")
+        parser.add_argument("--log-file", help="write output to a log file", default=False, action="store_true")
+        parser.add_argument("--project", help="gcp project name", default="localhost")
+        parser.add_argument("--account", help="pmi-ops account", default=None)
+        parser.add_argument("--service-account", help="gcp iam service account", default=None)
         # Allow using an existing Cloud SQL Proxy connection instead of starting a new one.
         parser.add_argument("--port", help="port of an existing cloud sql proxy connection.", type=int, default=None)
         return parser

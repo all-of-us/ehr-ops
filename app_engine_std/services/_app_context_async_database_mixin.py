@@ -5,6 +5,7 @@
 import logging
 
 import psycopg
+from aou_cloud.services.system_utils import JSONObject
 from psycopg.rows import tuple_row
 from sqlalchemy.ext.asyncio import create_async_engine
 
@@ -194,6 +195,26 @@ class AppContextAsyncDatabase(AppEnvContextBase):
         async with db_conn.cursor() as cursor:
             await cursor.execute(sql, args)
             return await cursor.fetchone()
+
+    async def db_fetch_scalar(self, sql, args=None, db_conn=None):
+        """
+        Async aware, run a query and return a single value from the first row and column in the result.
+        Useful for 'select count(1) from ...' statements.
+        :param sql: SQL statement
+        :param args: List of statement argument values
+        :param db_conn: Database connection object (optional)
+        :return: return single value result
+        """
+        data = await self.db_fetch_one(sql, args, db_conn)
+        if data:
+            if isinstance(data, (list, tuple)):
+                return data[0]
+            elif isinstance(data, JSONObject):
+                return list(data.to_dict().values())[0]
+            elif isinstance(data, dict):
+                return list(data.values())[0]
+            return data
+        return None
 
     async def get_database_list(self):
         """ Return the list of database names for the current connection """
