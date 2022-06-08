@@ -33,6 +33,13 @@ async def app_startup():
         # Note: Un-comment Simple logger to get full and simple output of everything.
         # enable_gcp_logging(GCPLoggingHandlerEnum.Simple, logging_level, allow_stdout=True)
         enable_gcp_logging(GCPLoggingHandlerEnum.FastAPI, logging.INFO, allow_stdout=False)
+    else:
+        # Running locally, set to debug and console output.
+        enable_gcp_logging(GCPLoggingHandlerEnum.Simple, logging.DEBUG, allow_stdout=False)
+
+    # Stop uvicorn from sending random, empty uvicorn access log events.
+    logger = logging.getLogger("uvicorn.access")
+    logger.handlers.clear()
 #
 # There are two ways to execute code for every request;
 #   2a : Create middleware functions that can be chained together to validate the request.
@@ -81,6 +88,7 @@ async def check_cron_header(request: Request, call_next):
     return response
 
 
+# pylint: disable=unused-argument
 async def check_permission(req: Request):  # Step 2b: Or create router dependency checks for each request.
     # f = req.scope['endpoint']
     # HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Unknown endpoint.")
