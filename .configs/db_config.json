@@ -1,0 +1,26 @@
+{
+  "databases": [
+    "drc"
+  ],
+  "instances": [
+    {
+      "name": "primary",
+      "pool": "primary",
+      "connection_name": "localhost",
+      "is_readonly": false
+    }
+  ],
+  "users": [
+    {
+      "name": "ehr_ops",
+      "password": "ehr!pass",
+      "databases": [
+        "drc"
+      ],
+      "is_admin": true,
+      "instance_pools": [
+        "primary"
+      ]
+    }
+  ]
+}
