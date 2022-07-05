@@ -57,11 +57,8 @@ class RefreshMaterializedViewsJob(BaseCronJob):
         views = self.get_views(self.gcp_env.project, dataset)
 
         for view in views:
-            view_name = view['table_name']
-            payload = {
-                'dataset': 'aou-ehr-ops-curation-test',
-                'view': view_name
-            }
+            view_name = view.table_name
+            payload = {'dataset': dataset, 'view': view_name}
 
             GCPCloudTask().execute('/task/refresh-materialized-view',
                                    queue='cron-default',
