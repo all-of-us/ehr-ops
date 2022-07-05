@@ -43,11 +43,13 @@ class RefreshMaterializedViewTask(BaseCronTask):
 
         _logger.info(f'Refreshing materialized view {dataset}.{view}')
 
-        table_id = re.match('v_(.+)', view)[1]
+        materialized_view_id = f"{self.gcp_env.project}.{dataset}.mv_{re.match('v_(.+)', view)[1]}"
+        print('MATERIALIZED VIEW:', materialized_view_id)
         job_config = bigquery.QueryJobConfig(
-            destination=table_id, write_disposition='WRITE_TRUNCATE')
+            destination=materialized_view_id,
+            write_disposition='WRITE_TRUNCATE')
 
-        sql = """
+        sql = f"""
             SELECT
                 *
             FROM `{self.gcp_env.project}.{dataset}.{view}`
@@ -56,7 +58,7 @@ class RefreshMaterializedViewTask(BaseCronTask):
         query_job = client.query(sql, job_config=job_config)
         query_job.result()
 
-        _logger.info(f"Results loaded to table {table_id}")
+        _logger.info(f"Results loaded to table {materialized_view_id}")
 
         return JSONResponse(
             status_code=status.HTTP_200_OK,
