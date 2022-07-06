@@ -52,13 +52,18 @@ class RefreshMaterializedViewsJob(BaseCronJob):
 
         _logger.info('Created Cloud Tasks to refresh materialized views')
 
-        dataset = 'ehr_ops_metrics_staging'
+        resources_dataset = 'ehr_ops_resources'
+        staging_dataset = 'ehr_ops_metrics_staging'
 
-        views = self.get_views(self.gcp_env.project, dataset)
+        views = self.get_views(self.gcp_env.project, resources_dataset)
 
         for view in views:
             view_name = view.table_name
-            payload = {'dataset': dataset, 'view': view_name}
+            payload = {
+                'resources_dataset': resources_dataset,
+                'staging_dataset': staging_dataset,
+                'view': view_name
+            }
 
             GCPCloudTask().execute('/task/refresh-materialized-view',
                                    queue='cron-default',

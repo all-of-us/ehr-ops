@@ -38,13 +38,15 @@ class RefreshMaterializedViewTask(BaseCronTask):
         self.gcp_env.override_project('aou-ehr-ops-curation-test')
         client = bigquery.Client(project=self.gcp_env.project)
 
-        dataset = self.payload.dataset
+        resources_dataset = self.payload.resources_dataset
+        staging_dataset = self.payload.staging_dataset
         view = self.payload.view
 
-        _logger.info(f'Refreshing materialized view {dataset}.{view}')
+        _logger.info(f'Refreshing view {resources_dataset}.{view}')
 
-        materialized_view_id = f"{self.gcp_env.project}.{dataset}.mv_{re.match('v_(.+)', view)[1]}"
-        print('MATERIALIZED VIEW:', materialized_view_id)
+        materialized_view_id = f"{self.gcp_env.project}.{staging_dataset}.mv_{re.match('v_(.+)', view)[1]}"
+        _logger.info(f"MATERIALIZED VIEW: {materialized_view_id}")
+
         job_config = bigquery.QueryJobConfig(
             destination=materialized_view_id,
             write_disposition='WRITE_TRUNCATE')
@@ -52,7 +54,7 @@ class RefreshMaterializedViewTask(BaseCronTask):
         sql = f"""
             SELECT
                 *
-            FROM `{self.gcp_env.project}.{dataset}.{view}`
+            FROM `{self.gcp_env.project}.{resources_dataset}.{view}`
         """
 
         query_job = client.query(sql, job_config=job_config)
