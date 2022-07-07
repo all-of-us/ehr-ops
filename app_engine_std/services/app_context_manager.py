@@ -73,8 +73,7 @@ class AppEnvContextManager:
 
         if exc_type is not None:
             print((traceback.format_exc()))
-            _logger.error("program encountered an unexpected error, quitting.")
-            exit(1)
+            _logger.error("app encountered an unexpected error")
 
 class AppEnvAsyncContextManager:
     """ Async aware application environment context manager """
@@ -95,7 +94,6 @@ class AppEnvAsyncContextManager:
 
         if exc_type is not None:
             print((traceback.format_exc()))
-            _logger.error("program encountered an unexpected error, quitting.")
-            exit(1)
+            _logger.error("app encountered an unexpected error")
 #
 # End App Context Managers

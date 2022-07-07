@@ -6,6 +6,8 @@
 # Main entry point for cron service micro app
 #
 import logging
+
+from aou_cloud.services.system_utils import setup_logging
 from fastapi import Depends, FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi_utils.cbv import cbv
@@ -28,14 +30,14 @@ app = FastAPI()
 
 @app.on_event("startup")
 async def app_startup():
-    # Enable a GCP logging handler if we are running in GCP.
-    if GAE_PROJECT != 'localhost':
+
+    if GAE_PROJECT == 'localhost':
+        setup_logging(_logger, 'fastapi', debug=True)
+    else:
+        # Enable a GCP logging handler if we are running in GCP.
         # Note: Un-comment Simple logger to get full and simple output of everything.
         # enable_gcp_logging(GCPLoggingHandlerEnum.Simple, logging_level, allow_stdout=True)
         enable_gcp_logging(GCPLoggingHandlerEnum.FastAPI, logging.INFO, allow_stdout=False)
-    else:
-        # Running locally, set to debug and console output.
-        enable_gcp_logging(GCPLoggingHandlerEnum.Simple, logging.DEBUG, allow_stdout=False)
 
     # Stop uvicorn from sending random, empty uvicorn access log events.
     logger = logging.getLogger("uvicorn.access")
