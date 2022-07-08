@@ -55,13 +55,15 @@ class AppEngineStdDeploy(object):
         self.git_root = git_project_root()
         self.current_git_branch = git_current_branch()
 
-        self.developers = 'Jason Patterson'
+        self.developers = 'Jason Patterson, Zoey Jiang'
         self.project_manager = 'Justin Cook'
 
     def create_jira_ticket(self, summary, descr=None, board_id=None):
         """
         Create a Jira ticket.
         """
+        if self.args.no_jira is True:
+            return None
         # Save current working directory, we can't make 'git' calls in the temporary deploy directory.
         cwd = os.getcwd()
         os.chdir(self.git_root)
@@ -80,7 +82,8 @@ class AppEngineStdDeploy(object):
             circle_ci_url = '<CircleCI URL>'
             if 'CIRCLE_BUILD_URL' in os.environ:
                 circle_ci_url = os.environ.get('CIRCLE_BUILD_URL')
-            change_log = self.jira_handler.get_release_notes_since_tag(self.git_repo, previous_tag, self.args.git_target)
+            change_log = self.jira_handler.get_release_notes_since_tag(self.git_repo, previous_tag,
+                                                                       self.args.git_target)
 
             today = datetime.datetime.today()
             descr = f"""h1. Release Notes for {self.args.git_target}
@@ -121,7 +124,7 @@ class AppEngineStdDeploy(object):
         Add a comment to a Jira ticket
         :param comment: Comment to add to Jira ticket.
         """
-        if not self.jira_ready:
+        if not self.jira_ready or self.args.no_jira is True:
             return
 
         # If this description changes, change in 'create_jira_roc_ticket' as well.
@@ -219,6 +222,27 @@ class AppEngineStdDeploy(object):
 
         return 0
 
+    def get_aou_cloud_info(self):
+        """
+        Return information about the current 'aou-cloud' library package.
+        :return: version, path to library
+        """
+        # import aou_cloud as _aou_cloud
+        # aou_path = os.path.dirname(_aou_cloud.__file__)
+        # from importlib.metadata import version
+        # aou_version = version('aou_cloud')
+        # return aou_version, aou_path
+        args = ['pip', 'list']
+        code, so, se = run_external_program(args)  # pylint: disable=unused-variable
+        lines = so.split('\n')
+        for line in lines:
+            if 'aou-cloud' in line:
+                while '  ' in line:
+                    line = line.replace('  ', ' ')
+                parts = line.split(' ')
+                return parts[1], parts[2]
+        return None, None
+
     def run(self):
         """
         Main program process
@@ -242,6 +266,11 @@ class AppEngineStdDeploy(object):
             _logger.error('*** There are uncommitted changes in current branch, aborting. ***\n')
             return 1
 
+        aou_cloud_ver, aou_cloud_path = self.get_aou_cloud_info()
+        if not aou_cloud_ver:
+            _logger.error("Could not find the 'aou-cloud' python library path.")
+            return 1
+
         self.deploy_version = self.args.deploy_as or self.args.git_target.replace('.', '-')
 
         clr = self.gcp_env.terminal_colors
@@ -249,11 +278,11 @@ class AppEngineStdDeploy(object):
         # _logger.info(clr.fmt('This is a custom color line', clr.custom_fg_color(156)))
         _logger.info(clr.fmt('App Deployment Information:', clr.custom_fg_color(156)))
         _logger.info(clr.fmt(''))
-        _logger.info('=' * 90)
+        _logger.info('=' * 110)
+        _logger.info('  AOU Cloud Library     : {0}'.format(clr.fmt(f'v{aou_cloud_ver} @ {aou_cloud_path}')))
         _logger.info('  Target GCP Project    : {0}'.format(clr.fmt(self.gcp_env.project)))
         _logger.info('  Branch/Tag To Deploy  : {0}'.format(clr.fmt(self.args.git_target)))
         _logger.info('  App                   : {0}'.format(clr.fmt(self.args.app)))
-        _logger.info('  Service               : {0}'.format(clr.fmt(self.args.service)))
         _logger.info('  Deploy As             : {0}'.format(clr.fmt(self.deploy_version)))
 
         if 'JIRA_API_USER_NAME' in os.environ and 'JIRA_API_USER_PASSWORD' in os.environ and \
@@ -262,13 +291,14 @@ class AppEngineStdDeploy(object):
             self.jira_handler = JiraTicketHandler(
                 os.environ.get('JIRA_API_USER_NAME'), os.environ.get('JIRA_API_USER_PASSWORD'))
 
-        if self.jira_ready:
-            _logger.info('  JIRA Credentials      : {0}'.format(clr.fmt('Set')))
-        else:
-            if self.gcp_env.project in ('all-of-us-rdr-prod', 'all-of-us-rdr-stable'):
-                _logger.info('  JIRA Credentials      : {0}'.format(clr.fmt('*** Not Set ***', clr.fg_bright_red)))
+        if self.args.no_jira is False:
+            if self.jira_ready:
+                _logger.info('  JIRA Credentials      : {0}'.format(clr.fmt('Set')))
+            else:
+                if self.gcp_env.project in ('all-of-us-rdr-prod', 'all-of-us-rdr-stable'):
+                    _logger.info('  JIRA Credentials      : {0}'.format(clr.fmt('*** Not Set ***', clr.fg_bright_red)))
 
-        _logger.info('=' * 90)
+        _logger.info('=' * 110)
 
         if not self.args.quiet:
             confirm = input('\nDeploy App (Y/n)? : ')
@@ -326,6 +356,7 @@ def run():
     parser.add_argument('-a', '--app', help="name of app engine app to deploy", required=True)
     parser.add_argument("--deploy-as", help="deploy as version", default=None)
     parser.add_argument("--git-target", help="git branch/tag to deploy.", default=git_current_branch())
+    parser.add_argument("--no-jira", help="do not use any jira services", default=False, action="store_true")
     args = parser.parse_args()
 
     with GCPProcessContext(tool_cmd, args) as gcp_env:
