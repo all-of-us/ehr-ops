@@ -5,8 +5,10 @@
 #
 from .example_task import ExampleCloudTask
 from .refresh_snapshot_table import RefreshSnapshotTableTask
+from .refresh_metric_materialized_view import RefreshMaterializedViewTask
 
 __all__ = (
     ExampleCloudTask,
-    RefreshSnapshotTableTask
+    RefreshSnapshotTableTask,
+    RefreshMaterializedViewTask
 )
