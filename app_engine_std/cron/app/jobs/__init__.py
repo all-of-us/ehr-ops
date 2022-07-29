@@ -4,9 +4,9 @@
 #
 
 from .example_report import ExampleSheetReportJob
-from .refresh_snapshot_tables import RefreshSnaphotTablesJob
+from .refresh_snapshot_tables import RefreshSnapshotTablesJob
 
 __all__ = (
     ExampleSheetReportJob,
-    RefreshSnaphotTablesJob
+    RefreshSnapshotTablesJob
 )

@@ -14,7 +14,7 @@ from ._base_job import BaseCronJob
 _logger = logging.getLogger('aou_cloud')
 
 
-class RefreshSnaphotTablesJob(BaseCronJob):
+class RefreshSnapshotTablesJob(BaseCronJob):
     """ Simple starter template for Cron job """
     # Name is an all lower case url friendly name for the job and should be unique.
     job_name: str = 'refresh-snapshot-tables'
@@ -30,16 +30,14 @@ class RefreshSnaphotTablesJob(BaseCronJob):
         _logger.info('Creating Cloud Tasks to refresh snapshot tables')
 
         snapshot_tables = [
-            'dc_1',
-            'dc_2',
-            'dc_3',
-            'dc_4'
+           'mv_patient_status'
         ]
 
         for table in snapshot_tables:
             payload = {
-                'dataset': 'dev_testing',
-                'table': table
+                'dataset': 'ehr_ops_metrics_staging',
+                'table': table,
+                'snapshot_table': table.replace('mv', 'snapshot')
             }
             GCPCloudTask().execute('/task/refresh-snapshot-table', queue='cron-default', payload=payload,
                                    project_id=self.gcp_env.project)
