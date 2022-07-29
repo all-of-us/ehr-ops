@@ -1,39 +1,36 @@
-<?xml version='1.0' encoding='utf-8' ?>
-
-<!-- build 20213.22.0213.1115                               -->
-<workbook original-version='18.1' source-build='2021.3.8 (20213.22.0213.1115)' source-platform='mac' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+<workbook xmlns:user="http://www.tableausoftware.com/xml/user" original-version="18.1" source-build="2021.3.8 (20213.22.0213.1115)" source-platform="mac" version="18.1">
   <document-format-change-manifest>
-    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault />
-    <_.fcp.MarkAnimation.true...MarkAnimation />
-    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy />
-    <_.fcp.ObjectModelExtractV2.true...ObjectModelExtractV2 />
-    <_.fcp.ObjectModelTableType.true...ObjectModelTableType />
-    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel />
-    <SheetIdentifierTracking />
-    <SortTagCleanup />
-    <WindowsPersistSimpleIdentifiers />
+    <_.fcp.AnimationOnByDefault.true...AnimationOnByDefault/>
+    <_.fcp.MarkAnimation.true...MarkAnimation/>
+    <_.fcp.ObjectModelEncapsulateLegacy.true...ObjectModelEncapsulateLegacy/>
+    <_.fcp.ObjectModelExtractV2.true...ObjectModelExtractV2/>
+    <_.fcp.ObjectModelTableType.true...ObjectModelTableType/>
+    <_.fcp.SchemaViewerObjectModel.true...SchemaViewerObjectModel/>
+    <SheetIdentifierTracking/>
+    <SortTagCleanup/>
+    <WindowsPersistSimpleIdentifiers/>
   </document-format-change-manifest>
   <preferences>
-    <preference name='ui.encoding.shelf.height' value='24' />
-    <preference name='ui.shelf.height' value='26' />
+    <preference name="ui.encoding.shelf.height" value="24"/>
+    <preference name="ui.shelf.height" value="26"/>
   </preferences>
   <_.fcp.AnimationOnByDefault.false...style>
-    <_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule element='animation'>
-      <_.fcp.AnimationOnByDefault.false...format attr='animation-on' value='ao-on' />
+    <_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule element="animation">
+      <_.fcp.AnimationOnByDefault.false...format attr="animation-on" value="ao-on"/>
     </_.fcp.AnimationOnByDefault.false..._.fcp.MarkAnimation.true...style-rule>
   </_.fcp.AnimationOnByDefault.false...style>
   <datasources>
-    <datasource caption='v_ehr_rdr_participant (curation_data_view)' inline='true' name='federated.1pb6ce61g5yvh616da4ai0wp1pw7' version='18.1'>
-      <connection class='federated'>
+    <datasource caption="v_ehr_rdr_participant (curation_data_view)" inline="true" name="federated.1pb6ce61g5yvh616da4ai0wp1pw7" version="18.1">
+      <connection class="federated">
         <named-connections>
-          <named-connection caption='BigQuery' name='bigquery.1jakbt21u1k7jx1a65tf90v5bj23'>
-            <connection CATALOG='aou-pdr-data-prod' EXECCATALOG='aou-pdr-data-prod' authentication='oauth' class='bigquery' connection-dialect='google-sql' project='AoU PDR Prod' schema='curation_data_view' server-oauth='' username='xinzhuo.jiang@pmi-ops.org' />
+          <named-connection caption="BigQuery" name="bigquery.1jakbt21u1k7jx1a65tf90v5bj23">
+            <connection CATALOG="" EXECCATALOG="" authentication="oauth" class="bigquery" connection-dialect="google-sql" project="" schema="" server-oauth="" username=""/>
           </named-connection>
         </named-connections>
-        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection='bigquery.1jakbt21u1k7jx1a65tf90v5bj23' name='v_ehr_rdr_participant' table='[aou-pdr-data-prod.curation_data_view].[v_ehr_rdr_participant]' type='table' />
-        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection='bigquery.1jakbt21u1k7jx1a65tf90v5bj23' name='v_ehr_rdr_participant' table='[aou-pdr-data-prod.curation_data_view].[v_ehr_rdr_participant]' type='table' />
+        <_.fcp.ObjectModelEncapsulateLegacy.false...relation connection="bigquery.1jakbt21u1k7jx1a65tf90v5bj23" name="v_ehr_rdr_participant" table="[aou-pdr-data-prod.curation_data_view].[v_ehr_rdr_participant]" type="table"/>
+        <_.fcp.ObjectModelEncapsulateLegacy.true...relation connection="bigquery.1jakbt21u1k7jx1a65tf90v5bj23" name="v_ehr_rdr_participant" table="[aou-pdr-data-prod.curation_data_view].[v_ehr_rdr_participant]" type="table"/>
         <metadata-records>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>participant_id</remote-name>
             <remote-type>20</remote-type>
             <local-name>[participant_id]</local-name>
@@ -44,7 +41,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>ORGANIZATION</remote-name>
             <remote-type>130</remote-type>
             <local-name>[ORGANIZATION]</local-name>
@@ -55,7 +52,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>hpo</remote-name>
             <remote-type>130</remote-type>
             <local-name>[hpo]</local-name>
@@ -66,7 +63,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>hpo_display_name</remote-name>
             <remote-type>130</remote-type>
             <local-name>[hpo_display_name]</local-name>
@@ -77,7 +74,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>org_display_name</remote-name>
             <remote-type>130</remote-type>
             <local-name>[org_display_name]</local-name>
@@ -88,7 +85,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>external_id</remote-name>
             <remote-type>130</remote-type>
             <local-name>[external_id]</local-name>
@@ -99,7 +96,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>withdrawal_status</remote-name>
             <remote-type>130</remote-type>
             <local-name>[withdrawal_status]</local-name>
@@ -110,7 +107,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>patient_status</remote-name>
             <remote-type>130</remote-type>
             <local-name>[patient_status]</local-name>
@@ -121,7 +118,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>pm_status</remote-name>
             <remote-type>130</remote-type>
             <local-name>[pm_status]</local-name>
@@ -132,7 +129,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>onsite_collections</remote-name>
             <remote-type>20</remote-type>
             <local-name>[onsite_collections]</local-name>
@@ -143,7 +140,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>withdrawal_time</remote-name>
             <remote-type>7</remote-type>
             <local-name>[withdrawal_time]</local-name>
@@ -155,7 +152,7 @@
             <cast-to-local-type>true</cast-to-local-type>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>withdrawal_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[withdrawal_flag]</local-name>
@@ -166,7 +163,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>ehr_consent_yes_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[ehr_consent_yes_flag]</local-name>
@@ -177,7 +174,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>ehr_expired_consent_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[ehr_expired_consent_flag]</local-name>
@@ -188,7 +185,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>person_id</remote-name>
             <remote-type>20</remote-type>
             <local-name>[person_id]</local-name>
@@ -199,7 +196,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>person_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[person_flag]</local-name>
@@ -210,7 +207,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>condition_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[condition_flag]</local-name>
@@ -221,7 +218,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>device_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[device_flag]</local-name>
@@ -232,7 +229,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>death_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[death_flag]</local-name>
@@ -243,7 +240,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>drug_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[drug_flag]</local-name>
@@ -254,7 +251,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>measurement_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[measurement_flag]</local-name>
@@ -265,7 +262,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>procedure_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[procedure_flag]</local-name>
@@ -276,7 +273,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>observation_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[observation_flag]</local-name>
@@ -287,7 +284,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>visit_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[visit_flag]</local-name>
@@ -298,7 +295,7 @@
             <contains-null>true</contains-null>
             <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
           </metadata-record>
-          <metadata-record class='column'>
+          <metadata-record class="column">
             <remote-name>speciment_flag</remote-name>
             <remote-type>20</remote-type>
             <local-name>[speciment_flag]</local-name>
@@ -311,492 +308,123 @@
           </metadata-record>
         </metadata-records>
       </connection>
-      <aliases enabled='yes' />
-      <column caption='EHR flag' datatype='integer' name='[Calculation_3864862557793579008]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='[condition_flag] + [death_flag] + [device_flag] + [drug_flag] + [measurement_flag] + [observation_flag] + [procedure_flag] + [speciment_flag] + [visit_flag]' />
+      <aliases enabled="yes"/>
+      <column caption="EHR flag" datatype="integer" name="[Calculation_3864862557793579008]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="[condition_flag] + [death_flag] + [device_flag] + [drug_flag] + [measurement_flag] + [observation_flag] + [procedure_flag] + [speciment_flag] + [visit_flag]"/>
       </column>
-      <column caption='Eligible Participants with EHR' datatype='integer' name='[Calculation_3864862557793869825]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='COUNTD(IF [ehr_consent_yes_flag] = 1 &#10;       AND [withdrawal_flag] != 1&#10;       AND [Calculation_3864862557793579008] &gt;= 1 &#10;       THEN [participant_id] END)' />
+      <column caption="Eligible Participants with EHR" datatype="integer" name="[Calculation_3864862557793869825]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="COUNTD(IF [ehr_consent_yes_flag] = 1 &#10;       AND [withdrawal_flag] != 1&#10;       AND [Calculation_3864862557793579008] &gt;= 1 &#10;       THEN [participant_id] END)"/>
       </column>
-      <column caption='Total Eligible Participants' datatype='integer' name='[Calculation_3864862557796065282]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='COUNTD(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)' />
+      <column caption="Total Eligible Participants" datatype="integer" name="[Calculation_3864862557796065282]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="COUNTD(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)"/>
       </column>
-      <column caption='Data Transfer Rate A' datatype='real' name='[Calculation_3864862557796429827]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='[Calculation_3864862557793869825]/[Calculation_3864862557796065282]' />
+      <column caption="Data Transfer Rate A" datatype="real" name="[Calculation_3864862557796429827]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="[Calculation_3864862557793869825]/[Calculation_3864862557796065282]"/>
       </column>
-      <column caption='Eligible Participants with InPerson Visit' datatype='integer' name='[Calculation_3864862557803610116]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='countd(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [pm_status] = &apos;COMPLETED&apos;&#10;        AND [onsite_collections] &gt; 1&#10;        THEN [participant_id]&#10;        END)' />
+      <column caption="Eligible Participants with InPerson Visit" datatype="integer" name="[Calculation_3864862557803610116]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="countd(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [pm_status] = 'COMPLETED'&#10;        AND [onsite_collections] &gt; 1&#10;        THEN [participant_id]&#10;        END)"/>
       </column>
-      <column caption='Data Transfer Rate B' datatype='real' name='[Calculation_3864862557804052485]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='[Calculation_3864862557793869825]/[Calculation_3864862557803610116]' />
+      <column caption="Data Transfer Rate B" datatype="real" name="[Calculation_3864862557804052485]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="[Calculation_3864862557793869825]/[Calculation_3864862557803610116]"/>
       </column>
-      <column caption='Eligible Participant with Patient Status' datatype='integer' name='[Calculation_3864862557804777478]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='COUNTD(IF [patient_status] = &apos;YES&apos;&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)' />
+      <column caption="Eligible Participant with Patient Status" datatype="integer" name="[Calculation_3864862557804777478]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="COUNTD(IF [patient_status] = 'YES'&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)"/>
       </column>
-      <column caption='Eligible Participants with Patient Status and EHR' datatype='integer' name='[Calculation_3864862557805993991]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='COUNTD(IF [patient_status] = &apos;YES&apos;&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [Calculation_3864862557793579008] &gt;= 1&#10;        THEN [participant_id]&#10;        END)' />
+      <column caption="Eligible Participants with Patient Status and EHR" datatype="integer" name="[Calculation_3864862557805993991]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="COUNTD(IF [patient_status] = 'YES'&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [Calculation_3864862557793579008] &gt;= 1&#10;        THEN [participant_id]&#10;        END)"/>
       </column>
-      <column caption='Data Transfer Rate C' datatype='real' name='[Calculation_3864862557806399496]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='[Calculation_3864862557805993991]/[Calculation_3864862557804777478]' />
+      <column caption="Data Transfer Rate C" datatype="real" name="[Calculation_3864862557806399496]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="[Calculation_3864862557805993991]/[Calculation_3864862557804777478]"/>
       </column>
-      <column caption='Eligible Participants with EHR and InPerson Visit' datatype='integer' name='[Eligible Participants with EHR (copy)_3864862557806780425]' role='measure' type='quantitative'>
-        <calculation class='tableau' formula='COUNTD(IF [ehr_consent_yes_flag] = 1 &#10;       AND [withdrawal_flag] != 1&#10;       AND [Calculation_3864862557793579008] &gt;= 1 &#10;       AND [pm_status] = &apos;COMPLETED&apos;&#10;       AND [onsite_collections] &gt; 1&#10;       THEN [participant_id] END)' />
+      <column caption="Eligible Participants with EHR and InPerson Visit" datatype="integer" name="[Eligible Participants with EHR (copy)_3864862557806780425]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="COUNTD(IF [ehr_consent_yes_flag] = 1 &#10;       AND [withdrawal_flag] != 1&#10;       AND [Calculation_3864862557793579008] &gt;= 1 &#10;       AND [pm_status] = 'COMPLETED'&#10;       AND [onsite_collections] &gt; 1&#10;       THEN [participant_id] END)"/>
       </column>
-      <column caption='Organization' datatype='string' name='[ORGANIZATION]' role='dimension' type='nominal' />
-      <_.fcp.ObjectModelTableType.true...column caption='v_ehr_rdr_participant' datatype='table' name='[__tableau_internal_object_id__].[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]' role='measure' type='quantitative' />
-      <column caption='Condition Flag' datatype='integer' name='[condition_flag]' role='measure' type='quantitative' />
-      <column caption='Death Flag' datatype='integer' name='[death_flag]' role='measure' type='quantitative' />
-      <column caption='Device Flag' datatype='integer' name='[device_flag]' role='measure' type='quantitative' />
-      <column caption='Drug Flag' datatype='integer' name='[drug_flag]' role='measure' type='quantitative' />
-      <column caption='Ehr Consent Yes Flag' datatype='integer' name='[ehr_consent_yes_flag]' role='measure' type='quantitative' />
-      <column caption='Ehr Expired Consent Flag' datatype='integer' name='[ehr_expired_consent_flag]' role='measure' type='quantitative' />
-      <column caption='External Id' datatype='string' name='[external_id]' role='dimension' type='nominal' />
-      <column caption='Hpo' datatype='string' name='[hpo]' role='dimension' type='nominal' />
-      <column caption='Hpo Display Name' datatype='string' name='[hpo_display_name]' role='dimension' type='nominal' />
-      <column caption='Measurement Flag' datatype='integer' name='[measurement_flag]' role='measure' type='quantitative' />
-      <column caption='Observation Flag' datatype='integer' name='[observation_flag]' role='measure' type='quantitative' />
-      <column caption='Onsite Collections' datatype='integer' name='[onsite_collections]' role='measure' type='quantitative' />
-      <column caption='Org Display Name' datatype='string' name='[org_display_name]' role='dimension' type='nominal' />
-      <column caption='Participant Id' datatype='integer' name='[participant_id]' role='dimension' type='ordinal' />
-      <column caption='Patient Status' datatype='string' name='[patient_status]' role='dimension' type='nominal' />
-      <column caption='Person Flag' datatype='integer' name='[person_flag]' role='measure' type='quantitative' />
-      <column caption='Person Id' datatype='integer' name='[person_id]' role='dimension' type='ordinal' />
-      <column caption='Pm Status' datatype='string' name='[pm_status]' role='dimension' type='nominal' />
-      <column caption='Procedure Flag' datatype='integer' name='[procedure_flag]' role='measure' type='quantitative' />
-      <column caption='Speciment Flag' datatype='integer' name='[speciment_flag]' role='measure' type='quantitative' />
-      <column caption='Visit Flag' datatype='integer' name='[visit_flag]' role='measure' type='quantitative' />
-      <column caption='Withdrawal Flag' datatype='integer' name='[withdrawal_flag]' role='measure' type='quantitative' />
-      <column caption='Withdrawal Status' datatype='string' name='[withdrawal_status]' role='dimension' type='nominal' />
-      <column caption='Withdrawal Time' datatype='datetime' name='[withdrawal_time]' role='dimension' type='ordinal' />
-      <_.fcp.SchemaViewerObjectModel.false...folder name='Data Transfer Rates' role='measures'>
-        <folder-item name='[Calculation_3864862557793869825]' type='field' />
-        <folder-item name='[Calculation_3864862557796065282]' type='field' />
-        <folder-item name='[Calculation_3864862557796429827]' type='field' />
-        <folder-item name='[Calculation_3864862557803610116]' type='field' />
-        <folder-item name='[Calculation_3864862557804052485]' type='field' />
-        <folder-item name='[Calculation_3864862557804777478]' type='field' />
-        <folder-item name='[Calculation_3864862557805993991]' type='field' />
-        <folder-item name='[Calculation_3864862557806399496]' type='field' />
-        <folder-item name='[Eligible Participants with EHR (copy)_3864862557806780425]' type='field' />
+      <column caption="Organization" datatype="string" name="[ORGANIZATION]" role="dimension" type="nominal"/>
+      <_.fcp.ObjectModelTableType.true...column caption="v_ehr_rdr_participant" datatype="table" name="[__tableau_internal_object_id__].[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]" role="measure" type="quantitative"/>
+      <column caption="Condition Flag" datatype="integer" name="[condition_flag]" role="measure" type="quantitative"/>
+      <column caption="Death Flag" datatype="integer" name="[death_flag]" role="measure" type="quantitative"/>
+      <column caption="Device Flag" datatype="integer" name="[device_flag]" role="measure" type="quantitative"/>
+      <column caption="Drug Flag" datatype="integer" name="[drug_flag]" role="measure" type="quantitative"/>
+      <column caption="Ehr Consent Yes Flag" datatype="integer" name="[ehr_consent_yes_flag]" role="measure" type="quantitative"/>
+      <column caption="Ehr Expired Consent Flag" datatype="integer" name="[ehr_expired_consent_flag]" role="measure" type="quantitative"/>
+      <column caption="External Id" datatype="string" name="[external_id]" role="dimension" type="nominal"/>
+      <column caption="Hpo" datatype="string" name="[hpo]" role="dimension" type="nominal"/>
+      <column caption="Hpo Display Name" datatype="string" name="[hpo_display_name]" role="dimension" type="nominal"/>
+      <column caption="Measurement Flag" datatype="integer" name="[measurement_flag]" role="measure" type="quantitative"/>
+      <column caption="Observation Flag" datatype="integer" name="[observation_flag]" role="measure" type="quantitative"/>
+      <column caption="Onsite Collections" datatype="integer" name="[onsite_collections]" role="measure" type="quantitative"/>
+      <column caption="Org Display Name" datatype="string" name="[org_display_name]" role="dimension" type="nominal"/>
+      <column caption="Participant Id" datatype="integer" name="[participant_id]" role="dimension" type="ordinal"/>
+      <column caption="Patient Status" datatype="string" name="[patient_status]" role="dimension" type="nominal"/>
+      <column caption="Person Flag" datatype="integer" name="[person_flag]" role="measure" type="quantitative"/>
+      <column caption="Person Id" datatype="integer" name="[person_id]" role="dimension" type="ordinal"/>
+      <column caption="Pm Status" datatype="string" name="[pm_status]" role="dimension" type="nominal"/>
+      <column caption="Procedure Flag" datatype="integer" name="[procedure_flag]" role="measure" type="quantitative"/>
+      <column caption="Speciment Flag" datatype="integer" name="[speciment_flag]" role="measure" type="quantitative"/>
+      <column caption="Visit Flag" datatype="integer" name="[visit_flag]" role="measure" type="quantitative"/>
+      <column caption="Withdrawal Flag" datatype="integer" name="[withdrawal_flag]" role="measure" type="quantitative"/>
+      <column caption="Withdrawal Status" datatype="string" name="[withdrawal_status]" role="dimension" type="nominal"/>
+      <column caption="Withdrawal Time" datatype="datetime" name="[withdrawal_time]" role="dimension" type="ordinal"/>
+      <_.fcp.SchemaViewerObjectModel.false...folder name="Data Transfer Rates" role="measures">
+        <folder-item name="[Calculation_3864862557793869825]" type="field"/>
+        <folder-item name="[Calculation_3864862557796065282]" type="field"/>
+        <folder-item name="[Calculation_3864862557796429827]" type="field"/>
+        <folder-item name="[Calculation_3864862557803610116]" type="field"/>
+        <folder-item name="[Calculation_3864862557804052485]" type="field"/>
+        <folder-item name="[Calculation_3864862557804777478]" type="field"/>
+        <folder-item name="[Calculation_3864862557805993991]" type="field"/>
+        <folder-item name="[Calculation_3864862557806399496]" type="field"/>
+        <folder-item name="[Eligible Participants with EHR (copy)_3864862557806780425]" type="field"/>
       </_.fcp.SchemaViewerObjectModel.false...folder>
-      <_.fcp.SchemaViewerObjectModel.false...folder name='EHR Flags' role='measures'>
-        <folder-item name='[condition_flag]' type='field' />
-        <folder-item name='[death_flag]' type='field' />
-        <folder-item name='[device_flag]' type='field' />
-        <folder-item name='[drug_flag]' type='field' />
-        <folder-item name='[measurement_flag]' type='field' />
-        <folder-item name='[observation_flag]' type='field' />
-        <folder-item name='[person_flag]' type='field' />
-        <folder-item name='[procedure_flag]' type='field' />
-        <folder-item name='[speciment_flag]' type='field' />
-        <folder-item name='[visit_flag]' type='field' />
+      <_.fcp.SchemaViewerObjectModel.false...folder name="EHR Flags" role="measures">
+        <folder-item name="[condition_flag]" type="field"/>
+        <folder-item name="[death_flag]" type="field"/>
+        <folder-item name="[device_flag]" type="field"/>
+        <folder-item name="[drug_flag]" type="field"/>
+        <folder-item name="[measurement_flag]" type="field"/>
+        <folder-item name="[observation_flag]" type="field"/>
+        <folder-item name="[person_flag]" type="field"/>
+        <folder-item name="[procedure_flag]" type="field"/>
+        <folder-item name="[speciment_flag]" type="field"/>
+        <folder-item name="[visit_flag]" type="field"/>
       </_.fcp.SchemaViewerObjectModel.false...folder>
       <_.fcp.SchemaViewerObjectModel.true...folders-common>
-        <folder name='Data Transfer Rates'>
-          <folder-item name='[Calculation_3864862557793869825]' type='field' />
-          <folder-item name='[Calculation_3864862557796065282]' type='field' />
-          <folder-item name='[Calculation_3864862557796429827]' type='field' />
-          <folder-item name='[Calculation_3864862557803610116]' type='field' />
-          <folder-item name='[Calculation_3864862557804052485]' type='field' />
-          <folder-item name='[Calculation_3864862557804777478]' type='field' />
-          <folder-item name='[Calculation_3864862557805993991]' type='field' />
-          <folder-item name='[Calculation_3864862557806399496]' type='field' />
-          <folder-item name='[Eligible Participants with EHR (copy)_3864862557806780425]' type='field' />
+        <folder name="Data Transfer Rates">
+          <folder-item name="[Calculation_3864862557793869825]" type="field"/>
+          <folder-item name="[Calculation_3864862557796065282]" type="field"/>
+          <folder-item name="[Calculation_3864862557796429827]" type="field"/>
+          <folder-item name="[Calculation_3864862557803610116]" type="field"/>
+          <folder-item name="[Calculation_3864862557804052485]" type="field"/>
+          <folder-item name="[Calculation_3864862557804777478]" type="field"/>
+          <folder-item name="[Calculation_3864862557805993991]" type="field"/>
+          <folder-item name="[Calculation_3864862557806399496]" type="field"/>
+          <folder-item name="[Eligible Participants with EHR (copy)_3864862557806780425]" type="field"/>
         </folder>
-        <folder name='EHR Flags'>
-          <folder-item name='[condition_flag]' type='field' />
-          <folder-item name='[death_flag]' type='field' />
-          <folder-item name='[device_flag]' type='field' />
-          <folder-item name='[drug_flag]' type='field' />
-          <folder-item name='[measurement_flag]' type='field' />
-          <folder-item name='[observation_flag]' type='field' />
-          <folder-item name='[person_flag]' type='field' />
-          <folder-item name='[procedure_flag]' type='field' />
-          <folder-item name='[speciment_flag]' type='field' />
-          <folder-item name='[visit_flag]' type='field' />
+        <folder name="EHR Flags">
+          <folder-item name="[condition_flag]" type="field"/>
+          <folder-item name="[death_flag]" type="field"/>
+          <folder-item name="[device_flag]" type="field"/>
+          <folder-item name="[drug_flag]" type="field"/>
+          <folder-item name="[measurement_flag]" type="field"/>
+          <folder-item name="[observation_flag]" type="field"/>
+          <folder-item name="[person_flag]" type="field"/>
+          <folder-item name="[procedure_flag]" type="field"/>
+          <folder-item name="[speciment_flag]" type="field"/>
+          <folder-item name="[visit_flag]" type="field"/>
         </folder>
       </_.fcp.SchemaViewerObjectModel.true...folders-common>
-      <extract _.fcp.ObjectModelExtractV2.true...object-id='' count='-1' enabled='true' units='records'>
-        <connection access_mode='readonly' authentication='auth-none' author-locale='en_US' class='hyper' dbname='/Users/zoeyjiang/OneDrive - cumc.columbia.edu/3. Reporting/EHR Ops/NIH Award Grant Metrics/v_ehr_rdr_participant (curation_data_view).hyper' default-settings='yes' schema='Extract' sslmode='' tablename='Extract' update-time='04/11/2022 05:25:16 PM' username='tableau_internal_user'>
-          <_.fcp.ObjectModelEncapsulateLegacy.false...relation name='Extract' table='[Extract].[Extract]' type='table' />
-          <_.fcp.ObjectModelEncapsulateLegacy.true...relation name='Extract' table='[Extract].[Extract]' type='table' />
-          <refresh>
-            <refresh-event add-from-file-path='v_ehr_rdr_participant (curation_data_view)' increment-value='%null%' refresh-type='create' rows-inserted='470406' timestamp-start='2022-04-11 17:24:26.029' />
-          </refresh>
-          <metadata-records>
-            <metadata-record class='column'>
-              <remote-name>participant_id</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[participant_id]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>participant_id</remote-alias>
-              <ordinal>0</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>470406</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>ORGANIZATION</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[ORGANIZATION]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>ORGANIZATION</remote-alias>
-              <ordinal>1</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>152</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>hpo</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[hpo]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>hpo</remote-alias>
-              <ordinal>2</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>35</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>hpo_display_name</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[hpo_display_name]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>hpo_display_name</remote-alias>
-              <ordinal>3</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>35</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>org_display_name</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[org_display_name]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>org_display_name</remote-alias>
-              <ordinal>4</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>141</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>external_id</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[external_id]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>external_id</remote-alias>
-              <ordinal>5</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>152</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>withdrawal_status</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[withdrawal_status]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>withdrawal_status</remote-alias>
-              <ordinal>6</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>2</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>patient_status</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[patient_status]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>patient_status</remote-alias>
-              <ordinal>7</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>5</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>pm_status</remote-name>
-              <remote-type>129</remote-type>
-              <local-name>[pm_status]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>pm_status</remote-alias>
-              <ordinal>8</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>string</local-type>
-              <aggregation>Count</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <collation flag='0' name='LROOT' />
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>onsite_collections</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[onsite_collections]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>onsite_collections</remote-alias>
-              <ordinal>9</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>10</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>withdrawal_time</remote-name>
-              <remote-type>135</remote-type>
-              <local-name>[withdrawal_time]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>withdrawal_time</remote-alias>
-              <ordinal>10</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>datetime</local-type>
-              <aggregation>Year</aggregation>
-              <approx-count>13474</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>withdrawal_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[withdrawal_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>withdrawal_flag</remote-alias>
-              <ordinal>11</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>2</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>ehr_consent_yes_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[ehr_consent_yes_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>ehr_consent_yes_flag</remote-alias>
-              <ordinal>12</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>ehr_expired_consent_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[ehr_expired_consent_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>ehr_expired_consent_flag</remote-alias>
-              <ordinal>13</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>person_id</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[person_id]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>person_id</remote-alias>
-              <ordinal>14</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>366620</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>person_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[person_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>person_flag</remote-alias>
-              <ordinal>15</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>2</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>condition_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[condition_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>condition_flag</remote-alias>
-              <ordinal>16</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>device_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[device_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>device_flag</remote-alias>
-              <ordinal>17</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>death_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[death_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>death_flag</remote-alias>
-              <ordinal>18</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>drug_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[drug_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>drug_flag</remote-alias>
-              <ordinal>19</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>measurement_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[measurement_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>measurement_flag</remote-alias>
-              <ordinal>20</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>procedure_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[procedure_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>procedure_flag</remote-alias>
-              <ordinal>21</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>observation_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[observation_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>observation_flag</remote-alias>
-              <ordinal>22</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>visit_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[visit_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>visit_flag</remote-alias>
-              <ordinal>23</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-            <metadata-record class='column'>
-              <remote-name>speciment_flag</remote-name>
-              <remote-type>20</remote-type>
-              <local-name>[speciment_flag]</local-name>
-              <parent-name>[Extract]</parent-name>
-              <remote-alias>speciment_flag</remote-alias>
-              <ordinal>24</ordinal>
-              <family>v_ehr_rdr_participant</family>
-              <local-type>integer</local-type>
-              <aggregation>Sum</aggregation>
-              <approx-count>3</approx-count>
-              <contains-null>true</contains-null>
-              <_.fcp.ObjectModelEncapsulateLegacy.true...object-id>[v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28]</_.fcp.ObjectModelEncapsulateLegacy.true...object-id>
-            </metadata-record>
-          </metadata-records>
-        </connection>
-      </extract>
-      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage='0.5' _.fcp.SchemaViewerObjectModel.false...measure-percentage='0.4' dim-ordering='alphabetic' measure-ordering='alphabetic' show-aliased-fields='true' show-structure='false' />
+      <layout _.fcp.SchemaViewerObjectModel.false...dim-percentage="0.5" _.fcp.SchemaViewerObjectModel.false...measure-percentage="0.4" dim-ordering="alphabetic" measure-ordering="alphabetic" show-aliased-fields="true" show-structure="false"/>
       <semantic-values>
-        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+        <semantic-value key="[Country].[Name]" value="&quot;United States&quot;"/>
       </semantic-values>
       <_.fcp.ObjectModelEncapsulateLegacy.true...object-graph>
         <objects>
-          <object caption='v_ehr_rdr_participant' id='v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28'>
-            <properties context=''>
-              <relation connection='bigquery.1jakbt21u1k7jx1a65tf90v5bj23' name='v_ehr_rdr_participant' table='[aou-pdr-data-prod.curation_data_view].[v_ehr_rdr_participant]' type='table' />
+          <object caption="v_ehr_rdr_participant" id="v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28">
+            <properties context="">
+              <relation connection="bigquery.1jakbt21u1k7jx1a65tf90v5bj23" name="v_ehr_rdr_participant" table="[{{{{pdr_schema}}_project}}.curation_data_view].[v_ehr_rdr_participant]" type="table"/>
             </properties>
-            <properties context='extract'>
-              <relation name='Extract' table='[Extract].[Extract]' type='table' />
+            <properties context="extract">
+              <relation name="Extract" table="[Extract].[Extract]" type="table"/>
             </properties>
           </object>
         </objects>
@@ -804,139 +432,139 @@
     </datasource>
   </datasources>
   <worksheets>
-    <worksheet name='Sheet 1'>
+    <worksheet name="Sheet 1">
       <table>
         <view>
           <datasources>
-            <datasource caption='v_ehr_rdr_participant (curation_data_view)' name='federated.1pb6ce61g5yvh616da4ai0wp1pw7' />
+            <datasource caption="v_ehr_rdr_participant (curation_data_view)" name="federated.1pb6ce61g5yvh616da4ai0wp1pw7"/>
           </datasources>
-          <datasource-dependencies datasource='federated.1pb6ce61g5yvh616da4ai0wp1pw7'>
-            <column caption='EHR flag' datatype='integer' name='[Calculation_3864862557793579008]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[condition_flag] + [death_flag] + [device_flag] + [drug_flag] + [measurement_flag] + [observation_flag] + [procedure_flag] + [speciment_flag] + [visit_flag]' />
+          <datasource-dependencies datasource="federated.1pb6ce61g5yvh616da4ai0wp1pw7">
+            <column caption="EHR flag" datatype="integer" name="[Calculation_3864862557793579008]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="[condition_flag] + [death_flag] + [device_flag] + [drug_flag] + [measurement_flag] + [observation_flag] + [procedure_flag] + [speciment_flag] + [visit_flag]"/>
             </column>
-            <column caption='Eligible Participants with EHR' datatype='integer' name='[Calculation_3864862557793869825]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNTD(IF [ehr_consent_yes_flag] = 1 &#10;       AND [withdrawal_flag] != 1&#10;       AND [Calculation_3864862557793579008] &gt;= 1 &#10;       THEN [participant_id] END)' />
+            <column caption="Eligible Participants with EHR" datatype="integer" name="[Calculation_3864862557793869825]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="COUNTD(IF [ehr_consent_yes_flag] = 1 &#10;       AND [withdrawal_flag] != 1&#10;       AND [Calculation_3864862557793579008] &gt;= 1 &#10;       THEN [participant_id] END)"/>
             </column>
-            <column caption='Total Eligible Participants' datatype='integer' name='[Calculation_3864862557796065282]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNTD(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)' />
+            <column caption="Total Eligible Participants" datatype="integer" name="[Calculation_3864862557796065282]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="COUNTD(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)"/>
             </column>
-            <column caption='Data Transfer Rate A' datatype='real' name='[Calculation_3864862557796429827]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[Calculation_3864862557793869825]/[Calculation_3864862557796065282]' />
+            <column caption="Data Transfer Rate A" datatype="real" name="[Calculation_3864862557796429827]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="[Calculation_3864862557793869825]/[Calculation_3864862557796065282]"/>
             </column>
-            <column caption='Eligible Participants with InPerson Visit' datatype='integer' name='[Calculation_3864862557803610116]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='countd(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [pm_status] = &apos;COMPLETED&apos;&#10;        AND [onsite_collections] &gt; 1&#10;        THEN [participant_id]&#10;        END)' />
+            <column caption="Eligible Participants with InPerson Visit" datatype="integer" name="[Calculation_3864862557803610116]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="countd(IF [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [pm_status] = 'COMPLETED'&#10;        AND [onsite_collections] &gt; 1&#10;        THEN [participant_id]&#10;        END)"/>
             </column>
-            <column caption='Data Transfer Rate B' datatype='real' name='[Calculation_3864862557804052485]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[Calculation_3864862557793869825]/[Calculation_3864862557803610116]' />
+            <column caption="Data Transfer Rate B" datatype="real" name="[Calculation_3864862557804052485]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="[Calculation_3864862557793869825]/[Calculation_3864862557803610116]"/>
             </column>
-            <column caption='Eligible Participant with Patient Status' datatype='integer' name='[Calculation_3864862557804777478]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNTD(IF [patient_status] = &apos;YES&apos;&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)' />
+            <column caption="Eligible Participant with Patient Status" datatype="integer" name="[Calculation_3864862557804777478]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="COUNTD(IF [patient_status] = 'YES'&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        THEN [participant_id]&#10;        END)"/>
             </column>
-            <column caption='Eligible Participants with Patient Status and EHR' datatype='integer' name='[Calculation_3864862557805993991]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='COUNTD(IF [patient_status] = &apos;YES&apos;&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [Calculation_3864862557793579008] &gt;= 1&#10;        THEN [participant_id]&#10;        END)' />
+            <column caption="Eligible Participants with Patient Status and EHR" datatype="integer" name="[Calculation_3864862557805993991]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="COUNTD(IF [patient_status] = 'YES'&#10;        AND [ehr_consent_yes_flag] = 1&#10;        AND [withdrawal_flag] != 1&#10;        AND [Calculation_3864862557793579008] &gt;= 1&#10;        THEN [participant_id]&#10;        END)"/>
             </column>
-            <column caption='Data Transfer Rate C' datatype='real' name='[Calculation_3864862557806399496]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='[Calculation_3864862557805993991]/[Calculation_3864862557804777478]' />
+            <column caption="Data Transfer Rate C" datatype="real" name="[Calculation_3864862557806399496]" role="measure" type="quantitative">
+              <calculation class="tableau" formula="[Calculation_3864862557805993991]/[Calculation_3864862557804777478]"/>
             </column>
-            <column caption='Condition Flag' datatype='integer' name='[condition_flag]' role='measure' type='quantitative' />
-            <column caption='Death Flag' datatype='integer' name='[death_flag]' role='measure' type='quantitative' />
-            <column caption='Device Flag' datatype='integer' name='[device_flag]' role='measure' type='quantitative' />
-            <column caption='Drug Flag' datatype='integer' name='[drug_flag]' role='measure' type='quantitative' />
-            <column caption='Ehr Consent Yes Flag' datatype='integer' name='[ehr_consent_yes_flag]' role='measure' type='quantitative' />
-            <column caption='Hpo Display Name' datatype='string' name='[hpo_display_name]' role='dimension' type='nominal' />
-            <column caption='Measurement Flag' datatype='integer' name='[measurement_flag]' role='measure' type='quantitative' />
-            <column-instance column='[hpo_display_name]' derivation='None' name='[none:hpo_display_name:nk]' pivot='key' type='nominal' />
-            <column-instance column='[org_display_name]' derivation='None' name='[none:org_display_name:nk]' pivot='key' type='nominal' />
-            <column caption='Observation Flag' datatype='integer' name='[observation_flag]' role='measure' type='quantitative' />
-            <column caption='Onsite Collections' datatype='integer' name='[onsite_collections]' role='measure' type='quantitative' />
-            <column caption='Org Display Name' datatype='string' name='[org_display_name]' role='dimension' type='nominal' />
-            <column caption='Participant Id' datatype='integer' name='[participant_id]' role='dimension' type='ordinal' />
-            <column caption='Patient Status' datatype='string' name='[patient_status]' role='dimension' type='nominal' />
-            <column caption='Pm Status' datatype='string' name='[pm_status]' role='dimension' type='nominal' />
-            <column caption='Procedure Flag' datatype='integer' name='[procedure_flag]' role='measure' type='quantitative' />
-            <column caption='Speciment Flag' datatype='integer' name='[speciment_flag]' role='measure' type='quantitative' />
-            <column-instance column='[Calculation_3864862557793869825]' derivation='User' name='[usr:Calculation_3864862557793869825:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_3864862557796065282]' derivation='User' name='[usr:Calculation_3864862557796065282:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_3864862557796429827]' derivation='User' name='[usr:Calculation_3864862557796429827:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_3864862557804052485]' derivation='User' name='[usr:Calculation_3864862557804052485:qk]' pivot='key' type='quantitative' />
-            <column-instance column='[Calculation_3864862557806399496]' derivation='User' name='[usr:Calculation_3864862557806399496:qk]' pivot='key' type='quantitative' />
-            <column caption='Visit Flag' datatype='integer' name='[visit_flag]' role='measure' type='quantitative' />
-            <column caption='Withdrawal Flag' datatype='integer' name='[withdrawal_flag]' role='measure' type='quantitative' />
+            <column caption="Condition Flag" datatype="integer" name="[condition_flag]" role="measure" type="quantitative"/>
+            <column caption="Death Flag" datatype="integer" name="[death_flag]" role="measure" type="quantitative"/>
+            <column caption="Device Flag" datatype="integer" name="[device_flag]" role="measure" type="quantitative"/>
+            <column caption="Drug Flag" datatype="integer" name="[drug_flag]" role="measure" type="quantitative"/>
+            <column caption="Ehr Consent Yes Flag" datatype="integer" name="[ehr_consent_yes_flag]" role="measure" type="quantitative"/>
+            <column caption="Hpo Display Name" datatype="string" name="[hpo_display_name]" role="dimension" type="nominal"/>
+            <column caption="Measurement Flag" datatype="integer" name="[measurement_flag]" role="measure" type="quantitative"/>
+            <column-instance column="[hpo_display_name]" derivation="None" name="[none:hpo_display_name:nk]" pivot="key" type="nominal"/>
+            <column-instance column="[org_display_name]" derivation="None" name="[none:org_display_name:nk]" pivot="key" type="nominal"/>
+            <column caption="Observation Flag" datatype="integer" name="[observation_flag]" role="measure" type="quantitative"/>
+            <column caption="Onsite Collections" datatype="integer" name="[onsite_collections]" role="measure" type="quantitative"/>
+            <column caption="Org Display Name" datatype="string" name="[org_display_name]" role="dimension" type="nominal"/>
+            <column caption="Participant Id" datatype="integer" name="[participant_id]" role="dimension" type="ordinal"/>
+            <column caption="Patient Status" datatype="string" name="[patient_status]" role="dimension" type="nominal"/>
+            <column caption="Pm Status" datatype="string" name="[pm_status]" role="dimension" type="nominal"/>
+            <column caption="Procedure Flag" datatype="integer" name="[procedure_flag]" role="measure" type="quantitative"/>
+            <column caption="Speciment Flag" datatype="integer" name="[speciment_flag]" role="measure" type="quantitative"/>
+            <column-instance column="[Calculation_3864862557793869825]" derivation="User" name="[usr:Calculation_3864862557793869825:qk]" pivot="key" type="quantitative"/>
+            <column-instance column="[Calculation_3864862557796065282]" derivation="User" name="[usr:Calculation_3864862557796065282:qk]" pivot="key" type="quantitative"/>
+            <column-instance column="[Calculation_3864862557796429827]" derivation="User" name="[usr:Calculation_3864862557796429827:qk]" pivot="key" type="quantitative"/>
+            <column-instance column="[Calculation_3864862557804052485]" derivation="User" name="[usr:Calculation_3864862557804052485:qk]" pivot="key" type="quantitative"/>
+            <column-instance column="[Calculation_3864862557806399496]" derivation="User" name="[usr:Calculation_3864862557806399496:qk]" pivot="key" type="quantitative"/>
+            <column caption="Visit Flag" datatype="integer" name="[visit_flag]" role="measure" type="quantitative"/>
+            <column caption="Withdrawal Flag" datatype="integer" name="[withdrawal_flag]" role="measure" type="quantitative"/>
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]'>
-            <groupfilter function='union' user:op='manual'>
-              <groupfilter function='member' level='[:Measure Names]' member='&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796065282:qk]&quot;' />
-              <groupfilter function='member' level='[:Measure Names]' member='&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557793869825:qk]&quot;' />
-              <groupfilter function='member' level='[:Measure Names]' member='&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796429827:qk]&quot;' />
-              <groupfilter function='member' level='[:Measure Names]' member='&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557804052485:qk]&quot;' />
-              <groupfilter function='member' level='[:Measure Names]' member='&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557806399496:qk]&quot;' />
+          <filter class="categorical" column="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]">
+            <groupfilter function="union" user:op="manual">
+              <groupfilter function="member" level="[:Measure Names]" member="&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796065282:qk]&quot;"/>
+              <groupfilter function="member" level="[:Measure Names]" member="&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557793869825:qk]&quot;"/>
+              <groupfilter function="member" level="[:Measure Names]" member="&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796429827:qk]&quot;"/>
+              <groupfilter function="member" level="[:Measure Names]" member="&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557804052485:qk]&quot;"/>
+              <groupfilter function="member" level="[:Measure Names]" member="&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557806399496:qk]&quot;"/>
             </groupfilter>
           </filter>
-          <manual-sort column='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]' direction='ASC'>
+          <manual-sort column="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]" direction="ASC">
             <dictionary>
-              <bucket>&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796065282:qk]&quot;</bucket>
-              <bucket>&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557793869825:qk]&quot;</bucket>
-              <bucket>&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796429827:qk]&quot;</bucket>
-              <bucket>&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557804052485:qk]&quot;</bucket>
-              <bucket>&quot;[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557806399496:qk]&quot;</bucket>
+              <bucket>"[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796065282:qk]"</bucket>
+              <bucket>"[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557793869825:qk]"</bucket>
+              <bucket>"[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796429827:qk]"</bucket>
+              <bucket>"[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557804052485:qk]"</bucket>
+              <bucket>"[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557806399496:qk]"</bucket>
             </dictionary>
           </manual-sort>
-          <filter class='categorical' column='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:hpo_display_name:nk]'>
-            <groupfilter function='union' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Arizona&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;California Precision Medicine Consortium&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Cherokee Health Systems&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Community Health Center, Inc&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Eau Claire Cooperative Health Center&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Hudson River Health Care, Inc.&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Illinois&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Jackson-Hinds Comprehensive Health Center&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;New England Precision Medicine Consortium&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;New York&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Pittsburgh&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;San Ysidro Health Center&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Southeast Enrollment Center&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Southern Consortium&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Trans-American Consortium for the Health Care Systems Research Network (TACH)&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;United States Department of Veteran Affairs&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Virginia Commonwealth University&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Washington University in St. Louis&quot;' />
-              <groupfilter function='member' level='[none:hpo_display_name:nk]' member='&quot;Wisconsin Consortium&quot;' />
+          <filter class="categorical" column="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:hpo_display_name:nk]">
+            <groupfilter function="union" user:ui-domain="relevant" user:ui-enumeration="inclusive" user:ui-marker="enumerate">
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Arizona&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;California Precision Medicine Consortium&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Cherokee Health Systems&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Community Health Center, Inc&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Eau Claire Cooperative Health Center&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Hudson River Health Care, Inc.&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Illinois&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Jackson-Hinds Comprehensive Health Center&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;New England Precision Medicine Consortium&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;New York&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Pittsburgh&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;San Ysidro Health Center&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Southeast Enrollment Center&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Southern Consortium&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Trans-American Consortium for the Health Care Systems Research Network (TACH)&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;United States Department of Veteran Affairs&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Virginia Commonwealth University&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Washington University in St. Louis&quot;"/>
+              <groupfilter function="member" level="[none:hpo_display_name:nk]" member="&quot;Wisconsin Consortium&quot;"/>
             </groupfilter>
           </filter>
           <slices>
             <column>[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]</column>
             <column>[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:hpo_display_name:nk]</column>
           </slices>
-          <aggregation value='true' />
+          <aggregation value="true"/>
         </view>
         <style>
-          <style-rule element='cell'>
-            <format attr='width' field='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]' value='261' />
-            <format attr='text-format' field='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796429827:qk]' value='n#,##0.00;-#,##0.00' />
-            <format attr='text-format' field='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557804052485:qk]' value='n#,##0.00;-#,##0.00' />
-            <format attr='text-format' field='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557806399496:qk]' value='n#,##0.00;-#,##0.00' />
+          <style-rule element="cell">
+            <format attr="width" field="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]" value="261"/>
+            <format attr="text-format" field="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557796429827:qk]" value="n#,##0.00;-#,##0.00"/>
+            <format attr="text-format" field="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557804052485:qk]" value="n#,##0.00;-#,##0.00"/>
+            <format attr="text-format" field="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[usr:Calculation_3864862557806399496:qk]" value="n#,##0.00;-#,##0.00"/>
           </style-rule>
-          <style-rule element='header'>
-            <format attr='width' field='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:org_display_name:nk]' value='280' />
+          <style-rule element="header">
+            <format attr="width" field="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:org_display_name:nk]" value="280"/>
           </style-rule>
         </style>
         <panes>
-          <pane selection-relaxation-option='selection-relaxation-allow'>
+          <pane selection-relaxation-option="selection-relaxation-allow">
             <view>
-              <breakdown value='auto' />
+              <breakdown value="auto"/>
             </view>
-            <mark class='Automatic' />
+            <mark class="Automatic"/>
             <encodings>
-              <text column='[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[Multiple Values]' />
+              <text column="[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[Multiple Values]"/>
             </encodings>
             <style>
-              <style-rule element='mark'>
-                <format attr='mark-labels-show' value='true' />
+              <style-rule element="mark">
+                <format attr="mark-labels-show" value="true"/>
               </style-rule>
-              <style-rule element='pane'>
-                <format attr='minwidth' value='-1' />
-                <format attr='maxwidth' value='-1' />
+              <style-rule element="pane">
+                <format attr="minwidth" value="-1"/>
+                <format attr="maxwidth" value="-1"/>
               </style-rule>
             </style>
           </pane>
@@ -944,29 +572,29 @@
         <rows>([federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:hpo_display_name:nk] / [federated.1pb6ce61g5yvh616da4ai0wp1pw7].[none:org_display_name:nk])</rows>
         <cols>[federated.1pb6ce61g5yvh616da4ai0wp1pw7].[:Measure Names]</cols>
       </table>
-      <simple-id uuid='{6986B03E-6310-4D10-8E89-252526C04F98}' />
+      <simple-id uuid="{6986B03E-6310-4D10-8E89-252526C04F98}"/>
     </worksheet>
   </worksheets>
-  <windows source-height='30'>
-    <window class='worksheet' maximized='true' name='Sheet 1'>
+  <windows source-height="30">
+    <window class="worksheet" maximized="true" name="Sheet 1">
       <cards>
-        <edge name='left'>
-          <strip size='160'>
-            <card type='pages' />
-            <card type='filters' />
-            <card type='marks' />
-            <card type='measures' />
+        <edge name="left">
+          <strip size="160">
+            <card type="pages"/>
+            <card type="filters"/>
+            <card type="marks"/>
+            <card type="measures"/>
           </strip>
         </edge>
-        <edge name='top'>
-          <strip size='2147483647'>
-            <card type='columns' />
+        <edge name="top">
+          <strip size="2147483647">
+            <card type="columns"/>
           </strip>
-          <strip size='2147483647'>
-            <card type='rows' />
+          <strip size="2147483647">
+            <card type="rows"/>
           </strip>
-          <strip size='31'>
-            <card type='title' />
+          <strip size="31">
+            <card type="title"/>
           </strip>
         </edge>
       </cards>
@@ -980,11 +608,11 @@
           </color-one-way>
         </highlight>
       </viewpoint>
-      <simple-id uuid='{8B7AD4A1-C6F2-4180-83EF-0F4FAB74798E}' />
+      <simple-id uuid="{8B7AD4A1-C6F2-4180-83EF-0F4FAB74798E}"/>
     </window>
   </windows>
   <thumbnails>
-    <thumbnail height='384' name='Sheet 1' width='384'>
+    <thumbnail height="384" name="Sheet 1" width="384">
       iVBORw0KGgoAAAANSUhEUgAAAYAAAAGACAYAAACkx7W/AAAACXBIWXMAAA7DAAAOwwHHb6hk
       AAAgAElEQVR4nOydeXQU55W3n161S6i1o7W1AWKRAQcIBgwYbGy8JQ7OeCOJM3Yyk5xkPJPN
       M/kSx5NkJs6ZSXImYeIli8E2xhgHA2aTMRIIARLa0IaE9tbe6m5J3eq9u74/NF1Rs+NgC9nv

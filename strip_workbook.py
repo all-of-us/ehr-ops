@@ -12,8 +12,12 @@ from dotenv import dotenv_values
 from pathlib import Path
 
 CIPHER_FILE = '.cipher'
-WORKBOOKS = [Path(__file__).parent / 'EHR Ops Dashboard.twb',
-                Path(__file__).parent / 'Data_Transfer_Rate.twb']
+
+DASHBOARDS_PATH = Path(__file__).parent / 'dashboard_metrics'
+WORKBOOKS = [DASHBOARDS_PATH / 'EHR Ops Dashboard' / 'EHR Ops Dashboard.twb',
+             DASHBOARDS_PATH / 'Data Transfer Rate' / 'Data Transfer Rate.twb',
+             DASHBOARDS_PATH / 'EHR Ops General Data Quality Dashboard' / 'EHR Ops General Data Quality Dashboard.twb',
+             DASHBOARDS_PATH / 'NIH Grant Award Metrics' / 'NIH Grant Award Metrics.twb']
 
 CONNECTION_TAG = 'connection'
 EXTRACT_TAG = 'extract'
