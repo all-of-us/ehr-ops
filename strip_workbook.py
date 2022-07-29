@@ -49,7 +49,7 @@ def reverse_dict(d):
 
 
 def contains_dict(s, d):
-    for key, value in d.items():
+    for key, _value in d.items():
         if re.search(key, s):
             return True
 
