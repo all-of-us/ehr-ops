@@ -4,8 +4,9 @@
 #
 import logging
 import os
-import traceback
 from typing import Any, Dict, AnyStr, List, Union
+
+from aou_cloud.services.gcp_logging_fastapi import format_traceback
 
 from ._app_context_async_database_mixin import AppContextAsyncDatabase
 from ._app_context_database_mixin import AppContextDatabaseMixin
@@ -72,9 +73,7 @@ class AppEnvContextManager:
         self._env_config_obj.cleanup()
 
         if exc_type is not None:
-            print((traceback.format_exc()))
-            _logger.error("program encountered an unexpected error, quitting.")
-            exit(1)
+            _logger.error(format_traceback(exc_val))
 
 class AppEnvAsyncContextManager:
     """ Async aware application environment context manager """
@@ -94,8 +93,6 @@ class AppEnvAsyncContextManager:
         await self._env_config_obj.cleanup()
 
         if exc_type is not None:
-            print((traceback.format_exc()))
-            _logger.error("program encountered an unexpected error, quitting.")
-            exit(1)
+            _logger.error(format_traceback(exc_val))
 #
 # End App Context Managers

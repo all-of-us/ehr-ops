@@ -2,7 +2,7 @@
 # This file is subject to the terms and conditions defined in the
 # file 'LICENSE', which is part of this source code package.
 #
-
+import logging
 from services.app_context_manager import GenericJSONStructure
 
 from services.app_context_base import AppEnvContextBase
@@ -10,6 +10,9 @@ from fastapi import HTTPException
 from starlette import status
 
 from aou_cloud.services.system_utils import JSONObject
+
+
+_logger = logging.getLogger('aou_cloud')
 
 
 class BaseCronTask:
@@ -27,6 +30,7 @@ class BaseCronTask:
         if payload:
             # Using JSONObject here will convert the binary keys and values in the dict to utf-8.
             self.payload = JSONObject(payload)
+        _logger.info(f'Starting Cron Task: {self.task_name}')
 
     def run(self):
         """

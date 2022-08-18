@@ -4,9 +4,11 @@
 #
 
 from .example_report import ExampleSheetReportJob
-from .refresh_snapshot_tables import RefreshSnapshotTablesJob
+from .refresh_snapshot_tables import RefreshSnaphotTablesJob
+from .refresh_metric_materialized_views import RefreshMaterializedViewsJob
 
 __all__ = (
     ExampleSheetReportJob,
-    RefreshSnapshotTablesJob
+    RefreshSnaphotTablesJob,
+    RefreshMaterializedViewsJob
 )
