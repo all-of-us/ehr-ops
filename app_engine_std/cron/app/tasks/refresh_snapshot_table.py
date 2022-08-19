@@ -33,16 +33,13 @@ class RefreshSnapshotTableTask(BaseCronTask):
 
         dataset = self.payload.dataset
         table = self.payload.table
+        snapshot_table = self.payload.snapshot_table
 
         _logger.info(f'Refreshing snapshot table {dataset}.{table}')
 
         sql = f"""
-            insert into {dataset}.snapshot_update_history (id, created, table) values (
-                case when (select max(id)+1 from {dataset}.snapshot_update_history) is null then 1 else
-                   (select max(id)+1 from {dataset}.snapshot_update_history) end,
-                CURRENT_DATETIME,
-                '{table}'
-            )
+            CREATE TABLE {dataset}.{snapshot_table} AS
+            select *, current_timestamp() as snapshot_ts from {dataset}.{table}
           """
 
         job = BigQueryJob(sql, dataset=dataset, project=self.gcp_env.project)
