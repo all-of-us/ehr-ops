@@ -1,0 +1,2 @@
+- name: Cloud Storage Uploader
+  uses: google-github-actions/upload-cloud-storage@v0.10.2
