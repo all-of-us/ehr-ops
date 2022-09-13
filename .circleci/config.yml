@@ -1,0 +1,81 @@
+version: 2.1
+# For more information on choosing an image (or alternatively using a
+# VM instead of a container) see https://circleci.com/docs/2.0/executor-types/
+# To see the list of pre-built images that CircleCI provides for most common languages see
+# https://circleci.com/docs/2.0/circleci-images/
+
+job_defaults: &job_defaults
+  docker:
+    - image: cimg/python:3.9
+  working_directory: ~/all-of-us/ehr-ops
+  parallelism: 1
+  shell: /bin/bash --login
+  environment:
+    IS_AUTOMATED_TESTING_ENVIRONMENT: "true"
+
+
+commands:
+  unittest-steps:
+    steps:
+      # Add fingerprint for python-aou-cloud-service github repo.
+      - add_ssh_keys:
+          fingerprints:
+            - 41:e2:50:db:15:0f:01:9e:ed:db:45:84:08:97:71:62
+      - checkout
+#      - run:
+#          name: Install PostgreSQL 13 Server
+#          command: .ci_scripts/install_postgresql.sh
+      - run:
+          name: Setup Python Environment
+          command: .ci_scripts/setup_python_env.sh
+      - run:
+          name: Running Unittests
+          command: .ci_scripts/run_unittests.sh
+
+#  deploy-app-steps:
+#    parameters:
+#      project-id:
+#        type: string
+#        default: bad-mojo-teacup
+#      git-target:
+#        type: string
+#        default: bad-mojo-teacup
+#    steps:
+#      - checkout
+#      - run:
+#          name: Install Cloud SDK
+#          command: ./circleci/install_google_sdk.sh
+#      - run:
+#          name: Setup Python Environment
+#          command: ./circleci/setup_python_env.sh
+#      - run:
+#          name: Deploy App To Test Environment
+#          command: ./circleci/deploy_app.sh << parameters.project-id >> << parameters.git-target >>
+
+jobs:
+  job_run_unittests:
+    <<: *job_defaults
+    steps:
+      - unittest-steps
+
+#  job_deploy_to_test:
+#    <<: *job_defaults
+#    steps:
+#      - deploy-app-steps:
+#          project-id: aou-ehr-curation-ops-test
+#          git-target: << pipeline.git.branch >>
+#
+
+workflows:
+
+  test_commits_workflow:
+    jobs:
+      - job_run_unittests:
+          filters:
+            branches:
+              ignore:
+                - circleci-deploy
+                - develop
+            tags:
+              ignore: /.*/
+

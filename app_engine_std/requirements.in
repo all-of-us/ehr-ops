@@ -1,0 +1,4 @@
+#
+# Import all micro-service apps requirement files.
+#
+-r cron/requirements.in

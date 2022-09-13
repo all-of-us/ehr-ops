@@ -1,0 +1,17 @@
+# Configuration for resource service.
+
+runtime: python39
+service: default
+
+# entrypoint: uvicorn --proxy-headers --port 8081 default.app.main:app
+entrypoint: gunicorn -c services/gunicorn_config.py --timeout 600 default.app.main:app
+# entrypoint: supervisord -c services/supervisor.conf
+
+# https://cloud.google.com/appengine/docs/standard
+instance_class: B1
+
+basic_scaling:
+  max_instances: 1
+  idle_timeout: 10m
+
+# env_variables:
