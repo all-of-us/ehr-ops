@@ -57,6 +57,8 @@ class RefreshMaterializedViewsJob(BaseCronJob):
 
         views = self.get_views(self.gcp_env.project, resources_dataset)
 
+        # TODO: Check dependencies (e.g. reorder_by_dependencies(views))
+
         for view in views:
             view_name = view.table_name
             payload = {
