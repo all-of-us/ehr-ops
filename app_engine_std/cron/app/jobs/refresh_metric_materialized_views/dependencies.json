@@ -1,0 +1,17 @@
+{
+    "v_ehr_rdr_participant": {
+        "depends_on": [
+            "v_ehr_flag"
+        ]
+    },
+    "v_ehr_gc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant"
+        ]
+    },
+    "v_ehr_dc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant"
+        ]
+    }
+}
