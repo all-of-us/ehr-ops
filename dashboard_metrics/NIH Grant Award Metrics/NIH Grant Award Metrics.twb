@@ -421,7 +421,7 @@
         <objects>
           <object caption="v_ehr_rdr_participant" id="v_ehr_rdr_participant_142C3AFD329B47B98C0EC5F52D015E28">
             <properties context="">
-              <relation connection="bigquery.1jakbt21u1k7jx1a65tf90v5bj23" name="v_ehr_rdr_participant" table="[{{{{pdr_schema}}_project}}.curation_data_view].[v_ehr_rdr_participant]" type="table"/>
+              <relation connection="bigquery.1jakbt21u1k7jx1a65tf90v5bj23" name="v_ehr_rdr_participant" table="[{{{{{{pdr_schema}}_schema}}_project}}.curation_data_view].[v_ehr_rdr_participant]" type="table"/>
             </properties>
             <properties context="extract">
               <relation name="Extract" table="[Extract].[Extract]" type="table"/>

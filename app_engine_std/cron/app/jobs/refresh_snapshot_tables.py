@@ -29,15 +29,32 @@ class RefreshSnapshotTablesJob(BaseCronJob):
 
         _logger.info('Creating Cloud Tasks to refresh snapshot tables')
 
-        snapshot_tables = [
-           'mv_patient_status'
+        mv_tables = [
+            'mv_covid_mapping',
+            'mv_dc_1',
+            'mv_dc_2',
+            'mv_dc_3',
+            'mv_dc_4',
+            'mv_duplicates',
+            'mv_all_eligible_participants',
+            'mv_eligible_participants_ehr',
+            'mv_gc1_standard',
+            'mv_physical_meas',
+            'mv_table_counts_with_upload_timestamp',
+            'mv_unit_route_failure',
+            'mv_visit_id_failure',
+            'mv_nih_dc_1',
+            'mv_nih_dc_2',
+            'mv_nih_dc_3',
+            'mv_nih_dc_4',
+            'mv_nih_gc_1',
+            'mv_in_person_participants'
         ]
 
-        for table in snapshot_tables:
+        for table in mv_tables:
             payload = {
                 'dataset': 'ehr_ops_metrics_staging',
-                'table': table,
-                'snapshot_table': table.replace('mv', 'snapshot')
+                'table': table
             }
             GCPCloudTask().execute('/task/refresh-snapshot-table', queue='cron-default', payload=payload,
                                    project_id=self.gcp_env.project)
