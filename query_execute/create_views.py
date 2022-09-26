@@ -4,6 +4,9 @@ from pathlib import Path
 from google.api_core.exceptions import NotFound
 
 
+#TODO:
+#Put the SCOPE and PROJECT_ID in the environment variables
+
 SCOPES = ['https://www.googleapis.com/auth/bigquery']
 PROJECT_ID = 'aou-ehr-ops-curation-prod'
 DATASET = 'ehr_ops_resources'
