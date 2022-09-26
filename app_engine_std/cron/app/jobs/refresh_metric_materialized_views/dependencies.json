@@ -13,5 +13,30 @@
         "depends_on": [
             "v_ehr_rdr_participant"
         ]
+    },
+    "v_nih_dc_1": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ]
+    },
+    "v_nih_dc_2": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ]
+    },
+    "v_nih_dc_3": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ]
+    },
+    "v_nih_dc_4": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ]
+    },
+    "v_nih_gc_1": {
+        "depends_on": [
+            "v_ehr_gc_overall"
+        ]
     }
 }
