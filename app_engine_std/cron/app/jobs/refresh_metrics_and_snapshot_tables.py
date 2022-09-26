@@ -3,6 +3,7 @@
 # file 'LICENSE', which is part of this source code package.
 #
 import logging
+import traceback
 
 from fastapi.responses import JSONResponse
 from starlette import status
@@ -62,13 +63,14 @@ class RefreshMetricsAndSnapshotTables(BaseCronJob):
                 status_code=status.HTTP_200_OK,
                 content=
                 f'Job {self.gcp_env.project}.{self.job_name} has completed.')
-        except Exception as e:
+        except Exception:
             topic = GCPGooglePubSubTopic(self.gcp_env.project,
-                                         PUB_SUB_COMPLETED_TOPIC)
+                                         PUB_SUB_FAILED_TOPIC)
             topic.publish("failed")
 
+            _logger.error(traceback.format_exc())
+
             return JSONResponse(
-                status_code=status.HTTP_500,
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 content=
-                f'Job {self.gcp_env.project}.{self.job_name} has failed.\n\n{e}'
-            )
+                f'Job {self.gcp_env.project}.{self.job_name} has failed.')

@@ -23,7 +23,7 @@ echo "No private keys found, continuing."
 PYLINT_VERSION=`pylint --version | head -1 | sed 's/pylint \([0-9.]*\),/\1/g'`
 echo "`date -u` Linting with pylint ${PYLINT_VERSION}..."
 ENABLE_FOR_TESTS="\
-  --enable=bad-indentation,broad-except,bare-except,logging-too-many-args \
+  --enable=bad-indentation,bare-except,logging-too-many-args \
   --enable=unused-argument,redefined-outer-name,redefined-builtin,superfluous-parens \
   --enable=syntax-error \
   --max-line-length=120 \
