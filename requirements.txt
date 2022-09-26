@@ -207,6 +207,7 @@ nest-asyncio>=1.5.5
     # via
     #   ipykernel
     #   jupyter-client
+networkx>=2.8.6
 nodeenv>=1.6.0
     # via pre-commit
 numpy>=1.21.6

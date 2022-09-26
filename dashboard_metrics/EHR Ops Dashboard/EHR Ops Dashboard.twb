@@ -6272,6 +6272,7 @@ AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relat
           <map key="[wrong_visit_end_death_date]" value="[mv_dc_2].[wrong_visit_end_death_date]"/>
           <map key="[wrong_visit_start_death_date]" value="[mv_dc_2].[wrong_visit_start_death_date]"/>
         </cols>
+        <refresh increment-key="" incremental-updates="false"/>
         <metadata-records>
           <metadata-record class="column">
             <remote-name>external_id</remote-name>
@@ -10223,6 +10224,12 @@ AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relat
             <map to="#f9d23c">
               <bucket>"Approaching Target"</bucket>
             </map>
+<<<<<<< HEAD:dashboard_metrics/EHR Ops Dashboard/EHR Ops Dashboard.twb
+=======
+            <map to="#f9d23c">
+              <bucket>"Approaching Target"</bucket>
+            </map>
+>>>>>>> master:EHR Ops Dashboard.twb
           </encoding>
           <encoding attr="color" field="[none:Calculation_4981684931525156866:nk]" type="palette">
             <map to="#8cd17d">
