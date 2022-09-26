@@ -3,15 +3,20 @@
 # file 'LICENSE', which is part of this source code package.
 #
 import logging
+import json
 
 from fastapi.responses import JSONResponse
 from starlette import status
 from aou_cloud.services.gcp_cloud_tasks import GCPCloudTask
 
-from ._base_job import BaseCronJob
+from .._base_job import BaseCronJob
 from aou_cloud.services.gcp_bigquery import BigQueryJob
 
+import networkx as nx
+
 _logger = logging.getLogger('aou_cloud')
+
+DEPENDENCY_FILE = './dependencies.json'
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
@@ -34,9 +39,32 @@ class RefreshMaterializedViewsJob(BaseCronJob):
         views = []
         for batch in job:
             for row in batch:
-                views.append(row)
+                views.append(row.table_name)
 
         return views
+
+    def _order_by_dependencies(self, views, dependency_dict):
+        """Order a list of view names by a dictionary of dependencies
+
+        Args:
+            views (list[str]): List of view names
+            dependency_dict (dict): Dictionary with 'depends_on' relationships
+        """
+
+        g = nx.DiGraph()
+        for view_name in views:
+            g.add_node(view_name)
+
+        for view_name, attr in dependency_dict.items():
+            if view_name in views:
+                dependencies = attr['depends_on']
+                for dependency in dependencies:
+                    if dependency in views:
+                        g.add_edge(view_name, dependency)
+
+        sorted_views = list(reversed(list(nx.topological_sort(g))))
+
+        return sorted_views
 
     def run(self):
         """
@@ -57,10 +85,11 @@ class RefreshMaterializedViewsJob(BaseCronJob):
 
         views = self.get_views(self.gcp_env.project, resources_dataset)
 
-        # TODO: Check dependencies (e.g. reorder_by_dependencies(views))
+        dependency_dict = json.load(open(DEPENDENCY_FILE, 'r'))
+        views = self._order_by_dependencies(views, dependency_dict)
 
         for view in views:
-            view_name = view.table_name
+            view_name = view
             payload = {
                 'resources_dataset': resources_dataset,
                 'staging_dataset': staging_dataset,
