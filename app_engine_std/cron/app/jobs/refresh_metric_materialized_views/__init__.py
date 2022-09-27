@@ -4,6 +4,7 @@
 #
 import logging
 import json
+from pathlib import Path
 
 from fastapi.responses import JSONResponse
 from starlette import status
@@ -16,7 +17,7 @@ import networkx as nx
 
 _logger = logging.getLogger('aou_cloud')
 
-DEPENDENCY_FILE = './dependencies.json'
+DEPENDENCY_FILE = Path(__file__).parent / 'dependencies.json'
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
