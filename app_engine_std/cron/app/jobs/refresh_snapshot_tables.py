@@ -29,13 +29,24 @@ class RefreshSnapshotTablesJob(BaseCronJob):
         _logger.info('Creating Cloud Tasks to refresh snapshot tables')
 
         mv_tables = [
-            'mv_covid_mapping', 'mv_dc_1', 'mv_dc_2', 'mv_dc_3', 'mv_dc_4',
-            'mv_duplicates', 'mv_all_eligible_participants',
-            'mv_eligible_participants_ehr', 'mv_gc_1_standard',
+            'mv_covid_mapping',
+            'mv_dc_1',
+            'mv_dc_2',
+            'mv_dc_3',
+            'mv_dc_4',
+            'mv_duplicates',
+            'mv_all_eligible_participants',
+            'mv_eligible_participants_ehr',
+            'mv_gc_1_standard',
             'mv_physical_meas',
             'mv_table_counts_with_upload_timestamp_for_hpo_sites',
-            'mv_unit_route_failure', 'mv_visit_id_failure', 'mv_nih_dc_1',
-            'mv_nih_dc_2', 'mv_nih_dc_3', 'mv_nih_dc_4', 'mv_nih_gc_1',
+            'mv_unit_route_failure',
+            'mv_visit_id_failure',
+            'mv_nih_dc_1',
+            'mv_nih_dc_2',
+            'mv_nih_dc_3',
+            'mv_nih_dc_4',
+            'mv_nih_gc_1',
             'mv_in_person_participants'
         ]
 
