@@ -29,9 +29,8 @@ SELECT
   SUM(device_start_total_rows_3) AS device_start_total_rows,
   SUM(device_start_wrong_date_rows_3) AS device_start_wrong_date_rows,
   SUM(device_end_total_rows_3) AS device_end_total_rows,
-  SUM(device_end_wrong_date_rows_3) AS device_end_wrong_date_rows,
+  SUM(device_end_wrong_date_rows_3) AS device_end_wrong_date_rows
 
-  CURRENT_TIMESTAMP()  AS snapshot_ts
 FROM
   `{{ehr_ops_project}}.{{ehr_ops_staging_dataset}}.mv_ehr_dc_overall`
 GROUP BY 1,2,3

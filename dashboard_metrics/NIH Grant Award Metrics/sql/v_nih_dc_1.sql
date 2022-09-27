@@ -9,8 +9,7 @@ SELECT
   SUM(drug_total_rows) AS drug_total_rows,
   SUM(drug_wrong_date_rows) AS drug_wrong_date_rows,
   SUM(device_total_rows) AS device_total_rows,
-  SUM(device_wrong_date_rows) AS device_wrong_date_rows,
-  CURRENT_TIMESTAMP()  AS snapshot_ts
+  SUM(device_wrong_date_rows) AS device_wrong_date_rows
 FROM
   `{{ehr_ops_project}}.{{ehr_ops_staging_dataset}}.mv_ehr_dc_overall`
 GROUP BY 1,2,3

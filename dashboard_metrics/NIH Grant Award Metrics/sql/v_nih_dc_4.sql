@@ -29,9 +29,8 @@ SELECT
   SUM(device_start_total_rows) AS device_start_total_rows,
   SUM(device_start_not_match) AS device_start_not_match,
   SUM(device_end_total_rows) AS device_end_total_rows,
-  SUM(device_end_not_match) AS device_end_not_match,
+  SUM(device_end_not_match) AS device_end_not_match
 
-  CURRENT_TIMESTAMP()  AS snapshot_ts
 FROM
   `{{ehr_ops_project}}.{{ehr_ops_staging_dataset}}.mv_ehr_dc_overall`
 GROUP BY 1,2,3

@@ -14,7 +14,7 @@ DATASET = 'ehr_ops_resources'
 client = bigquery.Client(project=PROJECT_ID)
 
 #TODO: Add a list of dashboards
-dashboard = 'EHR Ops General Data Quality Dashboard'
+dashboard = 'NIH Grant Award Metrics'
 current_path = Path('.').absolute()
 root_path = current_path.parent
 dashboard_metrics_path = root_path / 'dashboard_metrics'
@@ -24,7 +24,12 @@ dashboard_view_queries = list(sql_path.glob('**/v_*.sql'))
 nih_dependency = ['v_ehr_flag.sql',
                   'v_ehr_rdr_participant.sql',
                   'v_ehr_gc_overall.sql',
-                  'v_ehr_dc_overall.sql']
+                  'v_ehr_dc_overall.sql',
+                  'v_nih_dc_1.sql',
+                  'v_nih_dc_2.sql',
+                  'v_nih_dc_3.sql',
+                  'v_nih_dc_4.sql',
+                  'v_nih_gc_1.sql']
 
 if dashboard == 'NIH Grant Award Metrics':
     for order in nih_dependency:

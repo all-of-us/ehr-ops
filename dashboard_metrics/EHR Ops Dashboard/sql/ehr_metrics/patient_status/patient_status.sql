@@ -12,5 +12,5 @@ rank() over(partition by p.participant_id order by c.consent_module_authored des
 FROM `{{pdr_project}}.{{rdr_dataset}}.pdr_participant` p, UNNEST(patient_statuses) as ps
 INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_organization` as o on p.organization_id = o.organization_id
 INNER JOIN `{{pdr_project}}.{{rdr_dataset}}.v_pdr_participant_consent` as c on p.participant_id = c.participant_id
-WHERE c.consent = 'EHRConsentPII_ConsentPermission'
+WHERE c.consent_module = 'EHRConsentPII'
 AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')

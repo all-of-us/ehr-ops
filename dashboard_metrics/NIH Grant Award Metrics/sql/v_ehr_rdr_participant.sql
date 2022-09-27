@@ -1,7 +1,7 @@
 WITH most_recent_submission as (
   SELECT *
   FROM
-  `{{curation_project}}.{{operations_analytics_dataset}}.v_org_hpo_mapping` org
+  `{{ehr_ops_project}}.{{ehr_ops_staging_dataset}}.mv_org_hpo_mapping` org
   LEFT JOIN `{{curation_project}}.{{operations_analytics_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites` tc
   ON tc.org_id = org.external_id
   AND tc.hpo_id IS NOT NULL
