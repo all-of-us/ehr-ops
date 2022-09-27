@@ -23,7 +23,7 @@ FROM(
     WHERE  p.is_ghost_id = 0
     AND (p.hpo_id != 21)
     AND (ps.withdrawal_status_id = 1 or ps.withdrawal_status = 'NOT_WITHDRAWN')
-    AND c.consent = 'EHRConsentPII_ConsentPermission'
+    AND c.consent_module = 'EHRConsentPII'
     GROUP BY 1,2,3,4,5,consent_module_authored
     ORDER BY ps.participant_id) a
 where a.most_consent_date_rank = 1

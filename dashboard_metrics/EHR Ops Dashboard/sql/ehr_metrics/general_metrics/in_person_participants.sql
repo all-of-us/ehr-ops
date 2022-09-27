@@ -20,7 +20,7 @@ SELECT
     INNER JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_consent` AS c ON ps.participant_id = c.participant_id
     LEFT JOIN `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_pm` AS pm ON ps.participant_id = pm.participant_id
     WHERE (ps.withdrawal_status_id = 1 OR ps.withdrawal_status = 'NOT_WITHDRAWN')
-    AND (c.consent = 'EHRConsentPII_ConsentPermission')
+    AND (c.consent_module = 'EHRConsentPII')
     AND (pm.pm_status_id=1 OR bio.biosp_baseline_tests_confirmed >= 1)
     ) a
 WHERE most_consent_date_rank = 1
