@@ -25,9 +25,8 @@ SELECT
   SUM(wrong_observation_death_date_2) AS wrong_observation_death_date,
 
   SUM(procedure_total_rows_2) AS procedure_total_rows,
-  SUM(wrong_procedure_death_date_2) AS wrong_procedure_death_date,
+  SUM(wrong_procedure_death_date_2) AS wrong_procedure_death_date
 
-  CURRENT_TIMESTAMP()  AS snapshot_ts
 FROM
   `{{ehr_ops_project}}.{{ehr_ops_staging_dataset}}.mv_ehr_dc_overall`
 GROUP BY 1,2,3
