@@ -289,7 +289,7 @@ FROM `{{pdr_project}}.curation_data_view.snapshot_physical_meas`</relation>
                       </relation>
                       <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_visit_id_failure" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
   condition_rows_w_no_valid_vo, procedure_rows_w_no_valid_vo
-FROM `{{pdr_project}}.curation_data_view.snapshot_visit_id_failure`</relation>
+FROM `{{pdr_project}}.{{curation_dataset}}.snapshot_visit_id_failure`</relation>
                     </relation>
                     <relation connection="bigquery.1vh9vef03xdi601c6xz5e0i35pp2" name="snapshot_duplicates" type="text">SELECT distinct src_hpo_id, cast(snapshot_ts as date) AS snapshot_ts_dt, 
     condition_dup_cnt, procedure_dup_cnt, visit_dup_cnt, observation_dup_cnt, 
@@ -10224,12 +10224,6 @@ AND (p.withdrawal_status_id = 1 or p.withdrawal_status = 'NOT_WITHDRAWN')</relat
             <map to="#f9d23c">
               <bucket>"Approaching Target"</bucket>
             </map>
-<<<<<<< HEAD:dashboard_metrics/EHR Ops Dashboard/EHR Ops Dashboard.twb
-=======
-            <map to="#f9d23c">
-              <bucket>"Approaching Target"</bucket>
-            </map>
->>>>>>> master:EHR Ops Dashboard.twb
           </encoding>
           <encoding attr="color" field="[none:Calculation_4981684931525156866:nk]" type="palette">
             <map to="#8cd17d">

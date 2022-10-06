@@ -40,9 +40,8 @@ class RefreshSnapshotTableTask(BaseCronTask):
 
         snapshot_table_id = f"{self.gcp_env.project}.{staging_dataset}.snapshot_{re.match('mv_(.+)', table)[1]}"
 
-        job_config = bigquery.QueryJobConfig(
-            destination=snapshot_table_id,
-            write_disposition='WRITE_APPEND')
+        job_config = bigquery.QueryJobConfig(destination=snapshot_table_id,
+                                             write_disposition='WRITE_APPEND')
 
         sql = f"""select *, current_timestamp() as snapshot_ts from {staging_dataset}.{table}"""
 
@@ -51,5 +50,8 @@ class RefreshSnapshotTableTask(BaseCronTask):
 
         _logger.info(f"Results loaded to table {snapshot_table_id}")
 
-        return JSONResponse(status_code=status.HTTP_200_OK,
-                            content=f'Cron task {self.gcp_env.project}.{self.task_name} has completed.')
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=
+            f'Cron task {self.gcp_env.project}.{self.task_name} has completed.'
+        )
