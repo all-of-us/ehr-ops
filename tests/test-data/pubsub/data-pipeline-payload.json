@@ -1,0 +1,15 @@
+{
+  "message": {
+    "attributes": {
+      "googclient_schemaencoding": "JSON",
+      "origin": "test-pubsub",
+      "username": "gcp"
+    },
+    "data": "eyJpbnN0YW5jZSI6ICJwbWktZHJjLWFwaS10ZXN0OnVzLWNlbnRyYWwxOnJkci1waXBlbGluZSIsICJkYXRhYmFzZSI6ICJyZHIiLCAidGFibGUiOiAidGVzdCIsICJ0aW1lc3RhbXAiOiAiMjAyMi0wMy0zMFQxNDo0MTowMC45MTA5ODYiLCAiYWN0aW9uIjogImluc2VydCIsICJpbnRfcGtzIjogWzEyMywgMjQ1XSwgInN0cl9wa3MiOiBbXX0=",
+    "messageId": "4318130915921672",
+    "message_id": "4318130915921672",
+    "publishTime": "2022-03-30T19:17:35.463Z",
+    "publish_time": "2022-03-30T19:17:35.463Z"
+  },
+  "subscription": "projects/pmi-drc-api-test/subscriptions/data-pipeline-sub"
+}
