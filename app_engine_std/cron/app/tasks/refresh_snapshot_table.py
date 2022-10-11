@@ -6,10 +6,11 @@ import logging
 
 from fastapi.responses import JSONResponse
 from starlette import status
-from aou_cloud.services.gcp_bigquery import BigQueryJob
 
 from ._base_task import BaseCronTask
 
+from google.cloud import bigquery
+import re
 
 _logger = logging.getLogger('aou_cloud')
 
@@ -30,20 +31,27 @@ class RefreshSnapshotTableTask(BaseCronTask):
         """
         # Ensure we are pointed at the dev environment if running locally.
         self.gcp_env.override_project('aou-ehr-ops-curation-test')
+        client = bigquery.Client(project=self.gcp_env.project)
 
-        dataset = self.payload.dataset
+        staging_dataset = self.payload.dataset
         table = self.payload.table
-        snapshot_table = self.payload.snapshot_table
 
-        _logger.info(f'Refreshing snapshot table {dataset}.{table}')
+        _logger.info(f'Refreshing snapshot table {staging_dataset}.{table}')
 
-        sql = f"""
-            CREATE TABLE {dataset}.{snapshot_table} AS
-            select *, current_timestamp() as snapshot_ts from {dataset}.{table}
-          """
+        snapshot_table_id = f"{self.gcp_env.project}.{staging_dataset}.snapshot_{re.match('mv_(.+)', table)[1]}"
 
-        job = BigQueryJob(sql, dataset=dataset, project=self.gcp_env.project)
-        job.start_job()
+        job_config = bigquery.QueryJobConfig(destination=snapshot_table_id,
+                                             write_disposition='WRITE_APPEND')
 
-        return JSONResponse(status_code=status.HTTP_200_OK,
-                            content=f'Cron task {self.gcp_env.project}.{self.task_name} has completed.')
+        sql = f"""select *, current_timestamp() as snapshot_ts from {staging_dataset}.{table}"""
+
+        query_job = client.query(sql, job_config=job_config)
+        query_job.result()
+
+        _logger.info(f"Results loaded to table {snapshot_table_id}")
+
+        return JSONResponse(
+            status_code=status.HTTP_200_OK,
+            content=
+            f'Cron task {self.gcp_env.project}.{self.task_name} has completed.'
+        )
