@@ -147,3 +147,6 @@ dmypy.json
 .pyre/
 
 .vscode
+
+# Project Specific
+zendesk_automation/utils.py
