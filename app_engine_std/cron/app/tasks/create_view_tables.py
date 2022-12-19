@@ -8,13 +8,13 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from aou_cloud.services.gcp_bigquery import BigQueryJob
 
-from ._base_task import BaseCronTask
+from services.base_app_cloud_task import BaseAppCloudTask
 
 
 _logger = logging.getLogger('aou_cloud')
 
 
-class CreateViewsTask(BaseCronTask):
+class CreateViewsTask(BaseAppCloudTask):
     """
     Simple starter template for Cloud Task. These Cloud Tasks are usually created and called by
     Cron jobs that need to split up tasks to run in parallel.

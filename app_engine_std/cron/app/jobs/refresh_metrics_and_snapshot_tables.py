@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from aou_cloud.services.gcp_google_pubsub import GCPGooglePubSubTopic
 
-from ._base_job import BaseCronJob
+from services.base_app_cron_job import BaseAppCronJob
 from .refresh_metric_materialized_views import RefreshMaterializedViewsJob
 from .refresh_snapshot_tables import RefreshSnapshotTablesJob
 
@@ -20,7 +20,7 @@ PUB_SUB_FAILED_TOPIC = "metric-load-failed"
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
-class RefreshMetricsAndSnapshotTables(BaseCronJob):
+class RefreshMetricsAndSnapshotTables(BaseAppCronJob):
     """ Execute the refresh_metric_materialized_views and refresh_snapshot_tables jobs sequentially """
     # Name is an all lower case url friendly name for the job and should be unique.
     # TODO: Change 'job_name' once you create a copy of this file.

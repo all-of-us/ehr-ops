@@ -7,8 +7,9 @@ import logging
 import psycopg
 from psycopg.rows import tuple_row
 
+from python_easy_json import JSONObject
 from .app_context_base import AppEnvContextBase, class_row_factory, DBVersionModel
-from aou_cloud.services.system_utils import JSONObject
+
 _logger = logging.getLogger('aou_cloud')
 
 
@@ -32,8 +33,8 @@ class AppContextDatabaseMixin(AppEnvContextBase):
                     db_conn.close()
             self.db_connections = list()
 
-    def db_connect_database(self, database='drc', replica=False, user='ehr_ops', project=None,
-                         instance_pool='primary', row_factory=class_row_factory) -> psycopg.Connection:
+    def db_connect_database(self, database='drc', replica=False, user='pdr_ops', project=None,
+                         instance_pool='primary', name='primary', row_factory=class_row_factory) -> psycopg.Connection:
         """
         Connect to a PostgreSQL database instance. All connections are stored in the self.db_connections property
         and closed on exit.
@@ -42,11 +43,12 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         :param replica: Connect to writable instance if False else connect to read-only instance.
         :param project: override project used for connection.
         :param instance_pool: db config instance pool id
-        :param row_factory: psycopg Connection object
+        :param name: specific instance name in pool
+        :param row_factory: psycopg compatible row factory
         """
         project = self.project if not project else project
         # Find instance we should try to connect to.
-        instance = self.get_db_instance_info(replica=replica, project=project, instance_pool=instance_pool)
+        instance = self.get_db_instance_info(replica=replica, project=project, instance_pool=instance_pool, name=name)
 
         db_config = self.db_config if self.project == project else self.get_db_config(project)
 
@@ -64,7 +66,6 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         if not proxy_conn:
             raise ValueError('Failed to find or activate a Cloud SQL Proxy connection.')
 
-        import psycopg
         db_conn = psycopg.connect(
             user=user_info.name,
             password=user_info.password,
@@ -81,15 +82,15 @@ class AppContextDatabaseMixin(AppEnvContextBase):
             cursor.execute('SELECT version() as version;')
             row = cursor.fetchone()
             if isinstance(row, tuple):
-                _logger.info(f'Connected to {instance.connection_name} ({row[0]})')
+                _logger.debug(f'Connected to {instance.connection_name} ({row[0]})')
             else:
                 # Cast JSONObject to a known model class
-                row: DBVersionModel = row
-                _logger.info(f'Connected to {instance.connection_name} ({row.version})')
+                row: DBVersionModel = JSONObject(row) if isinstance(row, dict) else row
+                _logger.debug(f'Connected to {instance.connection_name} ({row.version})')
 
         return db_conn
 
-    def connect_sqlalchemy_engine(self, database='postgres', replica=False, user='ehr_ops', project=None):
+    def connect_sqlalchemy_engine(self, database='postgres', replica=False, user='pdr_ops', project=None):
         """
         Create and return a SQL Alchemy engine object connected to self.db_conn.
         :param database: database name
@@ -111,6 +112,26 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         # return self.sa_engine
         raise EnvironmentError('Requires psycopg2 library, will not work with newer psycopg library yet.')
 
+    def db_close(self, db_conn: psycopg.Connection):
+        """
+        Close and remove connection from connections array.
+        :param db_conn: psycopg Connection object.
+        """
+        if db_conn.closed is False:
+            db_conn.close()
+
+        found = False
+        for conn in self.db_connections:
+            if conn == db_conn:
+                found = True
+                break
+        if found is True:
+            _logger.debug('Closed and removed db connection from connections array.')
+            self.db_connections.remove(db_conn)
+            return
+
+        _logger.warning('Unable to find db connection in connections array.')
+
     def db_execute(self, sql, args=None, db_conn=None):
         """
         Non-async: Run database query that returns no results.
@@ -126,13 +147,14 @@ class AppContextDatabaseMixin(AppEnvContextBase):
         with db_conn.cursor() as cursor:
             cursor.execute(sql, args)
 
-    def db_fetch_many(self, sql, args=None, chunk_size: int = 2000, db_conn=None):
+    def db_fetch_many(self, sql, args=None, chunk_size: int = 2000, db_conn=None, row_factory=None):
         """
         Non-async: Return a python generator that returns a chunk of records.
         :param sql: SQL statement
         :param args: List of statement argument values
         :param chunk_size: Number of records to return in each chunk.
         :param db_conn: Database connection object (optional)
+        :param row_factory: psycopg compatible row factory
         :return: list of query results
         """
         if not db_conn:
@@ -140,7 +162,7 @@ class AppContextDatabaseMixin(AppEnvContextBase):
                 raise IOError('No database connection available to use, please call db_connect_database() first.')
             db_conn = self.db_connections[0]
 
-        with db_conn.cursor() as cursor:
+        with db_conn.cursor(row_factory=row_factory) as cursor:
             cursor.execute(sql, args)
             data = cursor.fetchmany(chunk_size)
             while data:
@@ -148,12 +170,13 @@ class AppContextDatabaseMixin(AppEnvContextBase):
                 data = cursor.fetchmany(chunk_size)
             raise StopIteration
 
-    def db_fetch_all(self, sql, args=None, db_conn=None):
+    def db_fetch_all(self, sql, args=None, db_conn=None, row_factory=None):
         """
         Non-async: Run database query and combine query results with column names.
         :param sql: SQL statement
         :param args: List of statement argument values
         :param db_conn: Database connection object (optional)
+        :param row_factory: psycopg compatible row factory
         :return: list of JSONObject records
         """
         if not db_conn:
@@ -161,17 +184,18 @@ class AppContextDatabaseMixin(AppEnvContextBase):
                 raise IOError('No database connection available to use, please call db_connect_database() first.')
             db_conn = self.db_connections[0]
 
-        with db_conn.cursor() as cursor:
+        with db_conn.cursor(row_factory=row_factory) as cursor:
             cursor.execute(sql, args)
             data = cursor.fetchall()
             return data
 
-    def db_fetch_one(self, sql, args=None, db_conn=None):
+    def db_fetch_one(self, sql, args=None, db_conn=None, row_factory=None):
         """
         Non-async: Run database query and combine query results with column names.
         :param sql: SQL statement
         :param args: List of statement argument values
         :param db_conn: Database connection object (optional)
+        :param row_factory: psycopg compatible row factory
         :return: list of JSONObject records
         """
         if not db_conn:
@@ -179,7 +203,7 @@ class AppContextDatabaseMixin(AppEnvContextBase):
                 raise IOError('No database connection available to use, please call db_connect_database() first.')
             db_conn = self.db_connections[0]
 
-        with db_conn.cursor() as cursor:
+        with db_conn.cursor(row_factory=row_factory) as cursor:
             cursor.execute(sql, args)
             data = cursor.fetchone()
             return data

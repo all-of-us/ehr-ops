@@ -47,8 +47,8 @@ class AppEngineStdDeploy(object):
         self.jira_ready = False
         self.jira_board = 'PD'
         self.jira_handler = None
-        self.stable_project_id = 'aou-pdr-data-stable'
-        self.production_project = 'aou-pdr-data-prod'
+        self.stable_project_id = 'aou-ehr-ops-curation-test'
+        self.production_project = 'aou-ehr-ops-curation-prod'
         self.deploy_version = None
 
         self.git_repo = 'program-data-repository'
