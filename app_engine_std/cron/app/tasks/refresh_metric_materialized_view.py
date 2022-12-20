@@ -8,7 +8,7 @@ import re
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from ._base_task import BaseCronTask
+from ._base_task import ManagedCronTask
 
 from google.cloud import bigquery
 
@@ -16,7 +16,7 @@ _logger = logging.getLogger('aou_cloud')
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
-class RefreshMaterializedViewTask(BaseCronTask):
+class RefreshMaterializedViewTask(ManagedCronTask):
     """
     Simple starter template for Cloud Task. These Cloud Tasks are usually created and called by
     Cron jobs that need to split up tasks to run in parallel.
@@ -25,7 +25,7 @@ class RefreshMaterializedViewTask(BaseCronTask):
     # TODO: Change 'task_name' once you create a copy of this file.
     task_name: str = 'refresh-materialized-view'
 
-    def run(self):
+    def _run(self):
         """
         Entry point for cron cloud task job.
         :returns: JSONResponse
@@ -65,5 +65,4 @@ class RefreshMaterializedViewTask(BaseCronTask):
         return JSONResponse(
             status_code=status.HTTP_200_OK,
             content=
-            f'Cron task {self.gcp_env.project}.{self.task_name} has completed.'
-        )
+            f'Cron task {self.gcp_env.project}.{self.task_id} has completed.')
