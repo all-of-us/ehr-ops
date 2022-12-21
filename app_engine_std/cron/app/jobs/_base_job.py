@@ -123,7 +123,7 @@ class ManagedCronJob(BaseCronJob):
                 INSERT `{self.task_instance_table}` (task_instance_id, job_id, job_instance_id, task_name, start_datetime, end_datetime, status)
                 VALUES(
                     '{task_instance_id}', '{job_id}', '{job_instance_id}', '{task_id}',
-                    TIMESTAMP('{start_datetime}'), NULL,
+                    NULL, NULL,
                     'QUEUED')
             """)
             create_task_instance_query.result()
@@ -224,7 +224,7 @@ class ManagedCronJob(BaseCronJob):
                 running_tasks_dict[task_instance_id] = task_status
                 if task_status not in ('RUNNING', 'QUEUED'):
                     running_tasks.remove(task_instance_id)
-
+            _logger.info(len(running_tasks))
             if len(running_tasks) == 0:
                 running = False
 

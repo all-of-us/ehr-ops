@@ -90,19 +90,32 @@ class ManagedCronTask:
 
         statuses = []
         for dependency in self.depends_on:
-            dependency_task_id_query = client.query(f"""
+            # dependency_task_id_query = client.query(f"""
+            #     SELECT
+            #         task_instance_id
+            #     FROM `{self.task_instance_table}`
+            #     WHERE job_instance_id = '{self.job_instance_id}'
+            #         AND task_name = '{dependency}'
+            # """)
+            # result = dependency_task_id_query.result()
+            # if result.total_rows > 0:
+            #     dependency_task_instance_id = next(result)['task_instance_id']
+
+            #     s = self.check_status(dependency_task_instance_id)
+            #     statuses.append(s)
+
+            dependency_task_status_query = client.query(f"""
                 SELECT 
-                    task_instance_id 
+                    status 
                 FROM `{self.task_instance_table}`
                 WHERE job_instance_id = '{self.job_instance_id}'
                     AND task_name = '{dependency}'
             """)
-            result = dependency_task_id_query.result()
+            result = dependency_task_status_query.result()
             if result.total_rows > 0:
-                dependency_task_instace_id = next(result)['task_instance_id']
+                dependency_task_status = next(result)['status']
 
-                s = self.check_status(dependency_task_instace_id)
-                statuses.append(s)
+                statuses.append(dependency_task_status)
 
         return statuses
 
@@ -115,6 +128,15 @@ class ManagedCronTask:
                 SET 
                     status = '{new_status}',
                     end_datetime = TIMESTAMP('{end_datetime}')
+                WHERE task_instance_id = '{task_instance_id}'
+            """)
+        elif new_status == 'RUNNING':
+            start_datetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            update_status_query = client.query(f"""
+                UPDATE `{self.task_instance_table}`
+                SET 
+                    status = '{new_status}',
+                    start_datetime = TIMESTAMP('{start_datetime}')
                 WHERE task_instance_id = '{task_instance_id}'
             """)
         else:
@@ -139,9 +161,11 @@ class ManagedCronTask:
         self.gcp_env.override_project('aou-ehr-ops-curation-test')
 
         dependency_statuses = self.get_dependency_statuses()
+
         ready = False
         while not ready:
             sleep(5)
+            _logger.info(f'Task dependencies: {dependency_statuses}')
             if not all([s == 'SUCCESS' for s in dependency_statuses]):
                 if any([
                         s in ('FAILED', 'UPSTREAM FAILED')
@@ -151,14 +175,18 @@ class ManagedCronTask:
                     self.update_status(self.task_instance_id,
                                        'UPSTREAM FAILED')
 
+                    _logger.error(f'Upstream failure stopped task')
                     raise HTTPException(
-                        status_code=status.HTTP_400_BAD_REQUEST,
+                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                         detail=
                         f'Cron task {self.gcp_env.project}.{self.task_id} has not run due to upstream failure.'
                     )
+
+                dependency_statuses = self.get_dependency_statuses()
             else:
                 ready = True
 
+        _logger.info(f'Running task')
         self.update_status(self.task_instance_id, 'RUNNING')
         try:
             run_response = self._run()
