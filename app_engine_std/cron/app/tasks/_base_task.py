@@ -165,7 +165,6 @@ class ManagedCronTask:
         ready = False
         while not ready:
             sleep(5)
-            _logger.info(f'Task dependencies: {dependency_statuses}')
             if not all([s == 'SUCCESS' for s in dependency_statuses]):
                 if any([
                         s in ('FAILED', 'UPSTREAM FAILED')

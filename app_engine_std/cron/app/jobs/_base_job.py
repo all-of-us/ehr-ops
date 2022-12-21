@@ -151,6 +151,10 @@ class ManagedCronJob(BaseCronJob):
 
         assert nx.is_directed_acyclic_graph(g)
 
+        # sort tasks in topological order so queue is ordered well
+        sorted_tasks = list(reversed(list(nx.topological_sort(g))))
+        return sorted_tasks
+
     def check_task_status(self, task_instance_id):
         client = bigquery.Client(project=self.gcp_env.project)
         status_query = client.query(
@@ -168,8 +172,8 @@ class ManagedCronJob(BaseCronJob):
                 UPDATE `{self.job_instance_table}`
                 SET 
                     status = '{new_status}',
-                    end_datetime = TIMESTAMP(`{end_datetime}`)
-                WHERE task_instance_id = '{job_instance_id}'
+                    end_datetime = TIMESTAMP('{end_datetime}')
+                WHERE job_instance_id = '{job_instance_id}'
             """)
         else:
             update_status_query = client.query(f"""
@@ -197,7 +201,7 @@ class ManagedCronJob(BaseCronJob):
         job_id = self.register_job()
 
         # Ensure that tasks are in a dag
-        self.check_if_dag()
+        sorted_task_ids = self.check_if_dag()
 
         # Initialize job instance
         job_instance_id = self.create_job_instance()
@@ -208,10 +212,11 @@ class ManagedCronJob(BaseCronJob):
 
         # Start tasks
 
-        for _, args in self.task_list.items():
-            task_kwargs = args['task_kwargs']
-            print(task_kwargs['payload'])
+        for task_id in sorted_task_ids:
+            task_kwargs = self.task_list[task_id]['task_kwargs']
             GCPCloudTask().execute(**task_kwargs)
+        # for _, args in self.task_list.items():
+        #     task_kwargs = args['task_kwargs']
 
         # Poll job until complete or prematurely terminated
         running_tasks = task_instance_ids
@@ -224,7 +229,6 @@ class ManagedCronJob(BaseCronJob):
                 running_tasks_dict[task_instance_id] = task_status
                 if task_status not in ('RUNNING', 'QUEUED'):
                     running_tasks.remove(task_instance_id)
-            _logger.info(len(running_tasks))
             if len(running_tasks) == 0:
                 running = False
 
