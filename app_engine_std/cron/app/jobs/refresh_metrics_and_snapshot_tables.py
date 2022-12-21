@@ -6,6 +6,7 @@ import logging
 import traceback
 
 from fastapi.responses import JSONResponse
+from fastapi import HTTPException
 from starlette import status
 from aou_cloud.services.gcp_google_pubsub import GCPGooglePubSubTopic
 
@@ -48,10 +49,16 @@ class RefreshMetricsAndSnapshotTables(BaseCronJob):
             resp = refresh_metrics_job.run()
 
             if not resp.status_code == status.HTTP_200_OK:
-                return resp
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=resp)
 
             # Execute refresh snapshots job
             resp = refresh_snapshot_tables_job.run()
+            if not resp.status_code == status.HTTP_200_OK:
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail=resp)
 
             # Send pubsub message
 
