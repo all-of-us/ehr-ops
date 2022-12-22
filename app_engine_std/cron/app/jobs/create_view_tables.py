@@ -10,13 +10,13 @@ from aou_cloud.services.gcp_cloud_tasks import GCPCloudTask
 import glob
 import os
 
-from ._base_job import BaseCronJob
+from services.base_app_cron_job import BaseAppCronJob
 
 
 _logger = logging.getLogger('aou_cloud')
 
 
-class CreateViewsJob(BaseCronJob):
+class CreateViewsJob(BaseAppCronJob):
     """ Simple starter template for Cron job """
     # Name is an all lower case url friendly name for the job and should be unique.
     job_name: str = 'create-views'

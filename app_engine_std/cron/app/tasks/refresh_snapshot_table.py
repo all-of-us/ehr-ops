@@ -5,9 +5,10 @@
 import logging
 
 from fastapi.responses import JSONResponse
+from python_easy_json import JSONObject
 from starlette import status
 
-from ._base_task import BaseCronTask
+from services.base_app_cloud_task import BaseAppCloudTask
 
 from google.cloud import bigquery
 import re
@@ -15,7 +16,13 @@ import re
 _logger = logging.getLogger('aou_cloud')
 
 
-class RefreshSnapshotTableTask(BaseCronTask):
+class RefreshSnapshotTaskPayload(JSONObject):
+    """ A simple JSON payload model helper class """
+    dataset: str = None
+    table: str = None
+
+
+class RefreshSnapshotTableTask(BaseAppCloudTask):
     """
     Simple starter template for Cloud Task. These Cloud Tasks are usually created and called by
     Cron jobs that need to split up tasks to run in parallel.
@@ -23,6 +30,7 @@ class RefreshSnapshotTableTask(BaseCronTask):
     # Name is an all lower case url friendly name for the job and should be unique.
     # TODO: Change 'task_name' once you create a copy of this file.
     task_name: str = 'refresh-snapshot-table'
+    payload: RefreshSnapshotTaskPayload = None
 
     def run(self):
         """

@@ -6,17 +6,25 @@ import logging
 import re
 
 from fastapi.responses import JSONResponse
+from python_easy_json import JSONObject
 from starlette import status
 
-from ._base_task import BaseCronTask
+from services.base_app_cloud_task import BaseAppCloudTask
 
 from google.cloud import bigquery
 
 _logger = logging.getLogger('aou_cloud')
 
 
+class RefreshMVTaskPayload(JSONObject):
+    """ A simple JSON payload model helper class """
+    resources_dataset: str = None
+    staging_dataset: str = None
+    view: str = None
+
+
 # TODO: Rename class and add to __all__ list in __init__.py.
-class RefreshMaterializedViewTask(BaseCronTask):
+class RefreshMaterializedViewTask(BaseAppCloudTask):
     """
     Simple starter template for Cloud Task. These Cloud Tasks are usually created and called by
     Cron jobs that need to split up tasks to run in parallel.
@@ -24,6 +32,7 @@ class RefreshMaterializedViewTask(BaseCronTask):
     # Name is an all lower case url friendly name for the job and should be unique.
     # TODO: Change 'task_name' once you create a copy of this file.
     task_name: str = 'refresh-materialized-view'
+    payload: RefreshMVTaskPayload = None
 
     def run(self):
         """

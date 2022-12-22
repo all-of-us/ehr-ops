@@ -11,8 +11,8 @@ from aou_cloud.services.gcp_google_iam import GCPGooleIAM
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from ._base_job import BaseCronJob
 from services.app_context_base import AppEnvContextBase
+from services.base_app_cron_job import BaseAppCronJob
 
 
 _logger = logging.getLogger('aou_cloud')
@@ -138,7 +138,7 @@ class ExampleSheetReport:
         finally:
             iam.delete_sa_key(service_key_id)
 
-class ExampleSheetReportJob(BaseCronJob):
+class ExampleSheetReportJob(BaseAppCronJob):
     """ Simple starter template for Cron job """
     # Name is an all lower case url friendly name for the job and should be unique.
     job_name: str = 'example-report-pub'

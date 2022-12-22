@@ -7,13 +7,13 @@ import logging
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from ._base_job import BaseCronJob
+from services.base_app_cron_job import BaseAppCronJob
 
 
 _logger = logging.getLogger('aou_cloud')
 
 # TODO: Rename class and add to __all__ list in __init__.py.
-class TemplateJob(BaseCronJob):
+class TemplateJob(BaseAppCronJob):
     """ Simple starter template for Cron job """
     # Name is an all lower case url friendly name for the job and should be unique.
     # TODO: Change 'job_name' once you create a copy of this file.

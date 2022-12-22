@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from aou_cloud.services.gcp_cloud_tasks import GCPCloudTask
 
-from .._base_job import BaseCronJob
+from services.base_app_cron_job import BaseAppCronJob
 from aou_cloud.services.gcp_bigquery import BigQueryJob
 
 import networkx as nx
@@ -21,7 +21,7 @@ DEPENDENCY_FILE = Path(__file__).parent / 'dependencies.json'
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
-class RefreshMaterializedViewsJob(BaseCronJob):
+class RefreshMaterializedViewsJob(BaseAppCronJob):
     """ Simple starter template for Cron job """
     # Name is an all lower case url friendly name for the job and should be unique.
     # TODO: Change 'job_name' once you create a copy of this file.
