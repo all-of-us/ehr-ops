@@ -5,7 +5,7 @@
 from tests.helpers.unittest_base import BaseTestCase
 
 from aou_cloud.services.gcp_cloud_app_config import get_config_provider, LocalFilesystemConfigProvider
-from aou_cloud.services.system_utils import JSONObject
+from python_easy_json import JSONObject
 
 
 class TestAppConfigs(BaseTestCase):

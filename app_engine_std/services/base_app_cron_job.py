@@ -2,21 +2,17 @@
 # This file is subject to the terms and conditions defined in the
 # file 'LICENSE', which is part of this source code package.
 #
-import logging
-from services.app_context_manager import GenericJSONStructure
-
-from services.app_context_base import AppEnvContextBase
 from fastapi import HTTPException
 from starlette import status
+from python_easy_json import JSONObject
 
-from aou_cloud.services.system_utils import JSONObject
+from services.app_context_base import AppEnvContextBase
+from services.app_context_manager import GenericJSONStructure
+from services.base_app import BaseAppEndpoint
 
 
-_logger = logging.getLogger('aou_cloud')
-
-
-class BaseCronJob:
-    """ Base cron job class """
+class BaseAppCronJob(BaseAppEndpoint):
+    """ Base app cron job class """
     # Name is an all lower case url friendly name for the job and should be unique.
     job_name: str = 'unknown'
     gcp_env: AppEnvContextBase = None
@@ -28,9 +24,8 @@ class BaseCronJob:
         """
         self.gcp_env = gcp_env
         if payload:
-            # Using JSONObject here will convert the binary keys and values in the dict to utf-8.
-            self.payload = JSONObject(payload)
-        _logger.info(f'Starting Cron Job: {self.job_name}')
+            # Using JSONObject or derived class here will convert the binary keys and values in the dict to utf-8.
+            self.payload = self._get_annot_cls('payload')(payload, cast_types=True)
 
     def run(self):
         """
