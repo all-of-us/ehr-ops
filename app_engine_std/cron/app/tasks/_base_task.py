@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 from aou_cloud.services.system_utils import JSONObject
 from google.cloud import bigquery
 from time import sleep
-from datetime import datetime
+from datetime import datetime, timedelta
 
 _logger = logging.getLogger('aou_cloud')
 
@@ -54,6 +54,7 @@ class ManagedCronTask:
     task_name: str = 'unknown'
     gcp_env: AppEnvContextBase = None
     payload: JSONObject = None
+    timeout: int = 600
 
     def __init__(self, gcp_env, payload: GenericJSONStructure = None):
         """
@@ -163,6 +164,8 @@ class ManagedCronTask:
         dependency_statuses = self.get_dependency_statuses()
 
         ready = False
+        timeout_time = datetime.now() + timedelta(seconds=self.timeout)
+
         while not ready:
             sleep(5)
             if not all([s == 'SUCCESS' for s in dependency_statuses]):
@@ -182,6 +185,18 @@ class ManagedCronTask:
                     )
 
                 dependency_statuses = self.get_dependency_statuses()
+
+                if timeout_time < datetime.now():
+                    _logger.error(
+                        f'Task timed out after {self.timeout} seconds while dependencies were executing.'
+                    )
+                    self.update_status(self.task_instance_id, 'FAILED')
+                    return JSONResponse(
+                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        content=
+                        f'Task {self.gcp_env.project}.{self.task_id} has failed due to timeout.'
+                    )
+
             else:
                 ready = True
 
@@ -190,6 +205,7 @@ class ManagedCronTask:
         try:
             run_response = self._run()
             self.update_status(self.task_instance_id, 'SUCCESS')
+            _logger.info(f'Task completed.')
         except Exception as _:
 
             _logger.error(traceback.format_exc())

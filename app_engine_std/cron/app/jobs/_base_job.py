@@ -3,7 +3,7 @@
 # file 'LICENSE', which is part of this source code package.
 #
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from hashlib import md5
 from services.app_context_manager import GenericJSONStructure
 
@@ -57,6 +57,7 @@ class ManagedCronJob(BaseCronJob):
     publish_response: bool = False
     pub_sub_success_topic: str = None
     pub_sub_failed_topic: str = None
+    timeout: int = 600
 
     def __init__(
         self,
@@ -226,6 +227,7 @@ class ManagedCronJob(BaseCronJob):
         running_tasks = task_instance_ids
         running_tasks_dict = {}
         running = True
+        timeout_time = datetime.now() + timedelta(seconds=self.timeout)
         while running:
             sleep(5)
             for task_instance_id in list(running_tasks):
@@ -236,9 +238,22 @@ class ManagedCronJob(BaseCronJob):
             if len(running_tasks) == 0:
                 running = False
 
+            if timeout_time < datetime.now():
+                self.update_job_status(job_instance_id, 'FAILED')
+                _logger.error(f'Job timed out after {self.timeout} seconds.')
+                if self.publish_response:
+                    topic = GCPGooglePubSubTopic(self.gcp_env.project,
+                                                 self.pub_sub_failed_topic)
+                    topic.publish("failed")
+                return JSONResponse(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    content=
+                    f'Job {self.gcp_env.project}.{self.job_name} has failed due to timeout.'
+                )
+
         if all([s == 'SUCCESS' for s in running_tasks_dict.values()]):
             self.update_job_status(job_instance_id, 'SUCCESS')
-            _logger.error(f'Job completed.')
+            _logger.info(f'Job completed.')
             if self.publish_response:
                 topic = GCPGooglePubSubTopic(self.gcp_env.project,
                                              self.pub_sub_success_topic)
