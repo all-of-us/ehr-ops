@@ -238,6 +238,7 @@ class ManagedCronJob(BaseCronJob):
 
         if all([s == 'SUCCESS' for s in running_tasks_dict.values()]):
             self.update_job_status(job_instance_id, 'SUCCESS')
+            _logger.error(f'Job completed.')
             if self.publish_response:
                 topic = GCPGooglePubSubTopic(self.gcp_env.project,
                                              self.pub_sub_success_topic)
@@ -248,6 +249,7 @@ class ManagedCronJob(BaseCronJob):
                 f'Job {self.gcp_env.project}.{self.job_name} has completed.')
 
         self.update_job_status(job_instance_id, 'FAILED')
+        _logger.error(f'Job failed.')
         if self.publish_response:
             topic = GCPGooglePubSubTopic(self.gcp_env.project,
                                          self.pub_sub_failed_topic)

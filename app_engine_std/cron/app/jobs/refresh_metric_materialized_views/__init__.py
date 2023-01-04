@@ -80,11 +80,11 @@ class RefreshMaterializedViewsJob(ManagedCronJob):
                 view,
                 'depends_on':
                 [f'materialize_{d}' for d in dependencies[view]['depends_on']]
-                if view in dependencies
-                and 'depends_on' in dependencies['view'] else [],
+                if view in dependencies and 'depends_on' in dependencies[view]
+                else [],
                 'snapshot':
                 dependencies[view]['snapshot'] if view in dependencies
-                and 'snapshot' in dependencies['view'] else False
+                and 'snapshot' in dependencies[view] else False
             }
 
             task_args = (task_uri)
