@@ -41,6 +41,12 @@ class RefreshMaterializedViewTask(ManagedCronTask):
         resources_dataset = self.payload.resources_dataset
         staging_dataset = self.payload.staging_dataset
         view = self.payload.view
+        snapshot = False
+
+        if snapshot in self.payload:
+            snapshot = self.payload.snapshot
+
+        # Refresh metric from view
 
         _logger.info(f'Refreshing view {resources_dataset}.{view}')
 
@@ -60,7 +66,28 @@ class RefreshMaterializedViewTask(ManagedCronTask):
         query_job = client.query(sql, job_config=job_config)
         query_job.result()
 
-        _logger.info(f"Results loaded to table {materialized_view_id}")
+        _logger.info(f"Metric loaded to table {materialized_view_id}")
+
+        # Snapshot metric if selected
+
+        if snapshot:
+            _logger.info(
+                f'Refreshing snapshot table {staging_dataset}.{materialized_view_id}'
+            )
+
+            snapshot_table_id = \
+                f"{self.gcp_env.project}.{staging_dataset}.snapshot_{re.match('mv_(.+)', materialized_view_id)[1]}"
+
+            job_config = bigquery.QueryJobConfig(
+                destination=snapshot_table_id,
+                write_disposition='WRITE_APPEND')
+
+            sql = f"""select *, current_timestamp() as snapshot_ts from {staging_dataset}.{materialized_view_id}"""
+
+            query_job = client.query(sql, job_config=job_config)
+            query_job.result()
+
+            _logger.info(f"Snapshot loaded to table {snapshot_table_id}")
 
         return JSONResponse(
             status_code=status.HTTP_200_OK,

@@ -18,6 +18,8 @@ import networkx as nx
 _logger = logging.getLogger('aou_cloud')
 
 DEPENDENCY_FILE = Path(__file__).parent / 'dependencies.json'
+PUB_SUB_COMPLETED_TOPIC = "metric-load-completed"
+PUB_SUB_FAILED_TOPIC = "metric-load-failed"
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
@@ -27,6 +29,9 @@ class RefreshMaterializedViewsJob(ManagedCronJob):
     # TODO: Change 'job_name' once you create a copy of this file.
     job_name: str = 'refresh_materialized_views'
     task_list: dict = {}
+    publish_response: bool = True
+    pub_sub_success_topic: str = PUB_SUB_COMPLETED_TOPIC
+    pub_sub_failed_topic: str = PUB_SUB_FAILED_TOPIC
 
     def __init__(
         self,
@@ -75,7 +80,11 @@ class RefreshMaterializedViewsJob(ManagedCronJob):
                 view,
                 'depends_on':
                 [f'materialize_{d}' for d in dependencies[view]['depends_on']]
-                if view in dependencies else []
+                if view in dependencies
+                and 'depends_on' in dependencies['view'] else [],
+                'snapshot':
+                dependencies[view]['snapshot'] if view in dependencies
+                and 'snapshot' in dependencies['view'] else False
             }
 
             task_args = (task_uri)

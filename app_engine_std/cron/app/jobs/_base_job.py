@@ -9,6 +9,7 @@ from services.app_context_manager import GenericJSONStructure
 
 from services.app_context_base import AppEnvContextBase
 from aou_cloud.services.gcp_cloud_tasks import GCPCloudTask
+from aou_cloud.services.gcp_google_pubsub import GCPGooglePubSubTopic
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from starlette import status
@@ -53,6 +54,9 @@ class BaseCronJob:
 class ManagedCronJob(BaseCronJob):
     """ Cron job that executes in a dependency order """
     task_list: dict = None
+    publish_response: bool = False
+    pub_sub_success_topic: str = None
+    pub_sub_failed_topic: str = None
 
     def __init__(
         self,
@@ -234,12 +238,20 @@ class ManagedCronJob(BaseCronJob):
 
         if all([s == 'SUCCESS' for s in running_tasks_dict.values()]):
             self.update_job_status(job_instance_id, 'SUCCESS')
+            if self.publish_response:
+                topic = GCPGooglePubSubTopic(self.gcp_env.project,
+                                             self.pub_sub_success_topic)
+                topic.publish("completed")
             return JSONResponse(
                 status_code=status.HTTP_200_OK,
                 content=
                 f'Job {self.gcp_env.project}.{self.job_name} has completed.')
 
         self.update_job_status(job_instance_id, 'FAILED')
+        if self.publish_response:
+            topic = GCPGooglePubSubTopic(self.gcp_env.project,
+                                         self.pub_sub_failed_topic)
+            topic.publish("failed")
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content=
