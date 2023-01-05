@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from aou_cloud.services.gcp_cloud_tasks import GCPCloudTask
 
-from .._base_job import ManagedCronJob
+from services.base_app_cron_job import ManagedAppCronJob
 from aou_cloud.services.gcp_bigquery import BigQueryJob
 
 import networkx as nx
@@ -23,8 +23,8 @@ PUB_SUB_FAILED_TOPIC = "metric-load-failed"
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
-class RefreshMaterializedViewsJob(ManagedCronJob):
-    """ Nightly refresh of materialized views with conditional dependencies """
+class RefreshMaterializedViewsJob(ManagedAppCronJob):
+    """ Simple starter template for Cron job """
     # Name is an all lower case url friendly name for the job and should be unique.
     # TODO: Change 'job_name' once you create a copy of this file.
     job_name: str = 'refresh_materialized_views'

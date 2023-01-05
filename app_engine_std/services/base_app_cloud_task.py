@@ -2,6 +2,8 @@
 # This file is subject to the terms and conditions defined in the
 # file 'LICENSE', which is part of this source code package.
 #
+# Base class for Cloud Task endpoints
+#
 import logging
 import traceback
 from services.app_context_manager import GenericJSONStructure
@@ -15,12 +17,17 @@ from aou_cloud.services.system_utils import JSONObject
 from google.cloud import bigquery
 from time import sleep
 from datetime import datetime, timedelta
+from python_easy_json import JSONObject
+
+from services.app_context_manager import GenericJSONStructure
+from services.app_context_base import AppEnvContextBase
+from services.base_app import BaseAppEndpoint
 
 _logger = logging.getLogger('aou_cloud')
 
 
-class BaseCronTask:
-    """ Base cron task class """
+class BaseAppCloudTask(BaseAppEndpoint):
+    """ Base Cloud Task endpoint class """
     # Name is an all lower case url friendly name for the task and should be unique.
     task_name: str = 'unknown'
     gcp_env: AppEnvContextBase = None
@@ -32,23 +39,24 @@ class BaseCronTask:
         """
         self.gcp_env = gcp_env
         if payload:
-            # Using JSONObject here will convert the binary keys and values in the dict to utf-8.
-            self.payload = JSONObject(payload)
-        _logger.info(f'Starting Cron Task: {self.task_name}')
+            # Using JSONObject or derived class here will convert the binary keys and values in the dict to utf-8.
+            self.payload = self._get_annot_cls('payload')(payload,
+                                                          cast_types=True)
+        _logger.info(f'Starting Cloud Task: {self.task_name}')
 
     def run(self):
         """
-        (Virtual Function) Entry point for cron task, override in child class.
+        (Virtual Function) Entry point for Cloud Task, override in child class.
         :returns: JSONResponse
         """
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=
-            f'Job {self.gcp_env.project}.{self.task_name} has failed, invalid configuration.'
+            f'Cloud Task {self.gcp_env.project}.{self.task_name} has failed, invalid configuration.'
         )
 
 
-class ManagedCronTask:
+class ManagedAppCloudTask(BaseAppCloudTask):
     """ Cron task that is executed in a dependency order """
     # Name is an all lower case url friendly name for the task and should be unique.
     task_name: str = 'unknown'

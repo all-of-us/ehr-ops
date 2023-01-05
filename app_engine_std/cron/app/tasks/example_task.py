@@ -8,13 +8,13 @@ import psycopg
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from ._base_task import BaseCronTask
+from services.base_app_cloud_task import BaseAppCloudTask
 
 
 _logger = logging.getLogger('aou_cloud')
 
 
-class ExampleCloudTask(BaseCronTask):
+class ExampleCloudTask(BaseAppCloudTask):
     """
     Simple starter template for Cloud Task. These Cloud Tasks are usually created and called by
     Cron jobs that need to split up tasks to run in parallel.

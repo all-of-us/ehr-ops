@@ -7,13 +7,13 @@ import logging
 from fastapi.responses import JSONResponse
 from starlette import status
 
-from ._base_task import BaseCronTask
+from services.base_app_cloud_task import BaseAppCloudTask
 
 
 _logger = logging.getLogger('aou_cloud')
 
 # TODO: Rename class and add to __all__ list in __init__.py.
-class TemplateCloudTask(BaseCronTask):
+class TemplateCloudTask(BaseAppCloudTask):
     """
     Simple starter template for Cloud Task. These Cloud Tasks are usually created and called by
     Cron jobs that need to split up tasks to run in parallel.

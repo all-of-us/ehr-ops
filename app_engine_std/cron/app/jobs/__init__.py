@@ -7,4 +7,8 @@ from .example_report import ExampleSheetReportJob
 from .create_view_tables import CreateViewsJob
 from .refresh_metric_materialized_views import RefreshMaterializedViewsJob
 
-__all__ = (ExampleSheetReportJob, CreateViewsJob, RefreshMaterializedViewsJob)
+__all__ = (
+    ExampleSheetReportJob,
+    CreateViewsJob,
+    RefreshMaterializedViewsJob,
+)
