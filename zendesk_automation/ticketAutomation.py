@@ -3,11 +3,11 @@ from unittest import case
 import utils
 import pandas as pd
 from zenpy import Zenpy
-from impersonation_tools import get_impersonation_credentials
-from zenpy.lib.api_objects import Ticket, User, Comment
+from zenpy.lib.api_objects import Ticket, User, Comment, BaseObject
 from google.cloud import bigquery
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
+import json
 
 # Zenpy credentials
 credentials = {
@@ -96,6 +96,15 @@ def get_ticket_body(table_name, metric, metric_value, hpo_name):
 
     return ticket_body
 
+def zenpy_obj_to_json(filename, request):
+    with open(f"{filename}.json", "w") as outfile:
+        outfile.write('[')
+        for i, each in enumerate(request):
+            outfile.write(each.to_json())
+            if i < len(request)-1:
+                outfile.write(',')
+        outfile.write(']')
+
 # Create google sheets credentials
 key_file_location = utils.KEYFILE_LOC
 scopes=['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
@@ -131,6 +140,9 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= utils.GOOGLE_APP_CREDS
 
 zenpy_client = Zenpy(**credentials)
 
+request = zenpy_client.tickets(tags=["auto-test-tickets"])
+zenpy_obj_to_json("mock", request)
+
 # Create bigquery client
 bigquery_client = bigquery.Client()
 
@@ -144,78 +156,78 @@ included_hpos = set(hpo_list) ^ set(exclude)
 metrics = ['gc1']
 
 # CALCULATE EACH METRIC
-# TODO: add loop going through each metric where the query file is a variable 
-for metric in metrics:
+def ticket_automation():
+    for metric in metrics:
 
-    # GC1 query/calculation for included hpos
-    job_config = bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ArrayQueryParameter("included_hpos", "STRING", included_hpos)
-        ]
-    )
-    f = open(f'{metric}.sql')
-    QUERY = f.read()
-    # API request
-    query_job = bigquery_client.query(QUERY, job_config=job_config)
-    scores_df = query_job.result().to_dataframe()
-    filled_scores_df = scores_df.fillna(0)
+        # GC1 query/calculation for included hpos
+        job_config = bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ArrayQueryParameter("included_hpos", "STRING", included_hpos)
+            ]
+        )
+        f = open(f'{metric}.sql')
+        QUERY = f.read()
+        # API request
+        query_job = bigquery_client.query(QUERY, job_config=job_config)
+        scores_df = query_job.result().to_dataframe()
+        filled_scores_df = scores_df.fillna(0)
 
-    # If metrics are returned
-    if filled_scores_df.shape[0] > 0:
-        # TODO: should I just remove the metric name from the column names so the variables can be generic for each metric?
-        # Find all hpos with scores below the threshold
-        low_scores_df = filled_scores_df[(filled_scores_df[f'condition_{metric}'] < 0.9) | (filled_scores_df[f'drug_{metric}'] < 0.9) | (filled_scores_df[f'measurement_{metric}'] < 0.9) | (filled_scores_df[f'observation_{metric}'] < 0.9) | (filled_scores_df[f'procedure_{metric}'] < 0.9) | (filled_scores_df[f'visit_{metric}'] < 0.9) | (filled_scores_df[f'_{metric}'] < 0.9)]
-        
-        # For each hpo with a low score evaluate which table has the low metric
-        for index, row in low_scores_df.iterrows():
-            src_hpo_id = row['src_hpo_id']
-
-            # Dictionary of current hpo's tables and respective calculation
-            scores = {f'_{metric}': row[f'_{metric}'], 'condition': row[f'condition_{metric}'], 'drug': row[f'drug_{metric}'], 'measurement': row[f'measurement_{metric}'], 'observation': row[f'observation_{metric}'], 'procedure': row[f'procedure_{metric}'], 'visit': row[f'visit_{metric}']}
+        # If metrics are returned
+        if filled_scores_df.shape[0] > 0:
+            # TODO: should I just remove the metric name from the column names so the variables can be generic for each metric?
+            # Find all hpos with scores below the threshold
+            low_scores_df = filled_scores_df[(filled_scores_df[f'condition_{metric}'] < 0.9) | (filled_scores_df[f'drug_{metric}'] < 0.9) | (filled_scores_df[f'measurement_{metric}'] < 0.9) | (filled_scores_df[f'observation_{metric}'] < 0.9) | (filled_scores_df[f'procedure_{metric}'] < 0.9) | (filled_scores_df[f'visit_{metric}'] < 0.9) | (filled_scores_df[f'_{metric}'] < 0.9)]
             
-            for name, score in scores.items():
+            # For each hpo with a low score evaluate which table has the low metric
+            for index, row in low_scores_df.iterrows():
+                src_hpo_id = row['src_hpo_id']
+
+                # Dictionary of current hpo's tables and respective calculation
+                scores = {f'_{metric}': row[f'_{metric}'], 'condition': row[f'condition_{metric}'], 'drug': row[f'drug_{metric}'], 'measurement': row[f'measurement_{metric}'], 'observation': row[f'observation_{metric}'], 'procedure': row[f'procedure_{metric}'], 'visit': row[f'visit_{metric}']}
                 
-                # If the score is low (whole row is returned for the hpo_id) begin search & comment or create ticket workflow
-                if score < 0.9:
-                    # search for pending and open tickets with GC-1 and hpo_id
-                    table_name = name.split(f'_{metric}')[0]
-                    if len(table_name) < 1 or metric != 'gc1':
-                        tag_list = [src_hpo_id, metric, "auto-test-tickets"]
-                    else:
-                        tag_list = [src_hpo_id, table_name, metric, "auto-test-tickets"]
+                for name, score in scores.items():
                     
-                    ticket_status = ['open', 'pending']
-                    search = tag_intersection(ticket_status, tag_list)
-
-                    # TODO: Decide what to do if multiple tickets are returned by the search
-                    # If the search does return a ticket then add a comment to the existing ticket
-                    if len(search) > 0:
-                        for ticket_obj in search:
-                            ticket_id = ticket_obj.id
-                            ticket = zenpy_client.tickets(id=ticket_id)
-                            print(f'Commenting on Zendesk ticket with ID {ticket_id}...')
-                            ticket.comment = Comment(body=comment_body, public=False)
-                            zenpy_client.tickets.update(ticket)
-
-                    # If the search does not return a ticket then create a new ticket
-                    else:
-                        hpo_row=submission_tracking_df.loc[submission_tracking_df['hpo_id'] == src_hpo_id]
-                        assignee_email = hpo_row['contact_email']
-                        assignee = zenpy_client.search(type='user', email=assignee_email)
-                        assignee_id = list(assignee)[0].id
-                        requester = zenpy_client.search(type='user', email='noreply@researchallofus.org')
-                        requester_id = list(requester)[0].id
-                        hpo_name = list(site_contact_df[site_contact_df['hpo_id'] == src_hpo_id]['Site Name'])[0]
-                        if table_name == '':
-                            metric_value = scores[f'_{metric}']
-                            table_phrase = table_name
+                    # If the score is low (whole row is returned for the hpo_id) begin search & comment or create ticket workflow
+                    if score < 0.9:
+                        # search for pending and open tickets with GC-1 and hpo_id
+                        table_name = name.split(f'_{metric}')[0]
+                        if len(table_name) < 1 or metric != 'gc1':
+                            tag_list = [src_hpo_id, metric, "auto-test-tickets"]
                         else:
-                            metric_value = scores[table_name]
-                            table_name = table_name.title() + " Table"
-                            table_phrase = " for the " + table_name + " table"
-                        metric_upper = metric.upper()
-                        ticket_descr = get_ticket_body(table_phrase, metric_upper, round(metric_value, 2), hpo_name)
-                        print('Creating Zendesk ticket...')
-                        zenpy_client.tickets.create(Ticket(requester_id=requester_id, assignee_id=assignee_id, 
-                                                            subject=f"{metric_upper} {table_name} Data Quality Issue Flagged", 
-                                                            description=ticket_descr, tags=tag_list))
+                            tag_list = [src_hpo_id, table_name, metric, "auto-test-tickets"]
+                        
+                        ticket_status = ['open', 'pending']
+                        search = tag_intersection(ticket_status, tag_list)
+
+                        # TODO: Decide what to do if multiple tickets are returned by the search
+                        # If the search does return a ticket then add a comment to the existing ticket
+                        if len(search) > 0:
+                            for ticket_obj in search:
+                                ticket_id = ticket_obj.id
+                                ticket = zenpy_client.tickets(id=ticket_id)
+                                print(f'Commenting on Zendesk ticket with ID {ticket_id}...')
+                                # ticket.comment = Comment(body=comment_body, public=False)
+                                # zenpy_client.tickets.update(ticket)
+
+                        # If the search does not return a ticket then create a new ticket
+                        else:
+                            hpo_row=submission_tracking_df.loc[submission_tracking_df['hpo_id'] == src_hpo_id]
+                            assignee_email = hpo_row['contact_email']
+                            assignee = zenpy_client.search(type='user', email=assignee_email)
+                            assignee_id = list(assignee)[0].id
+                            requester = zenpy_client.search(type='user', email='noreply@researchallofus.org')
+                            requester_id = list(requester)[0].id
+                            hpo_name = list(site_contact_df[site_contact_df['hpo_id'] == src_hpo_id]['Site Name'])[0]
+                            if table_name == '':
+                                metric_value = scores[f'_{metric}']
+                                table_phrase = table_name
+                            else:
+                                metric_value = scores[table_name]
+                                table_name = table_name.title() + " Table"
+                                table_phrase = " for the " + table_name + " table"
+                            metric_upper = metric.upper()
+                            ticket_descr = get_ticket_body(table_phrase, metric_upper, round(metric_value, 2), hpo_name)
+                            print('Creating Zendesk ticket...')
+                            # zenpy_client.tickets.create(Ticket(requester_id=requester_id, assignee_id=assignee_id, 
+                            #                                     subject=f"{metric_upper} {table_name} Data Quality Issue Flagged", 
+                            #                                     description=ticket_descr, tags=tag_list))
