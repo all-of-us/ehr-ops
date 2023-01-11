@@ -21,6 +21,7 @@ class RefreshMVTaskPayload(JSONObject):
     resources_dataset: str = None
     staging_dataset: str = None
     view: str = None
+    snapshot: bool = False
 
 
 # TODO: Rename class and add to __all__ list in __init__.py.
@@ -52,18 +53,19 @@ class RefreshMaterializedViewTask(ManagedAppCloudTask):
         view = self.payload.view
         snapshot = False
 
-        if snapshot in self.payload:
+        if "snapshot" in self.payload.to_dict():
             snapshot = self.payload.snapshot
 
         # Refresh metric from view
 
         _logger.info(f'Refreshing view {resources_dataset}.{view}')
 
-        materialized_view_id = f"{self.gcp_env.project}.{staging_dataset}.mv_{re.match('v_(.+)', view)[1]}"
-        _logger.info(f"MATERIALIZED VIEW: {materialized_view_id}")
+        materialized_view_id = f"mv_{re.match('v_(.+)', view)[1]}"
+        materialized_view_id_fq = f"{self.gcp_env.project}.{staging_dataset}.{materialized_view_id}"
+        _logger.info(f"MATERIALIZED VIEW: {materialized_view_id_fq}")
 
         job_config = bigquery.QueryJobConfig(
-            destination=materialized_view_id,
+            destination=materialized_view_id_fq,
             write_disposition='WRITE_TRUNCATE')
 
         sql = f"""
@@ -75,17 +77,15 @@ class RefreshMaterializedViewTask(ManagedAppCloudTask):
         query_job = client.query(sql, job_config=job_config)
         query_job.result()
 
-        _logger.info(f"Metric loaded to table {materialized_view_id}")
+        _logger.info(f"Metric loaded to table {materialized_view_id_fq}")
 
         # Snapshot metric if selected
-
         if snapshot:
-            _logger.info(
-                f'Refreshing snapshot table {staging_dataset}.{materialized_view_id}'
-            )
 
             snapshot_table_id = \
                 f"{self.gcp_env.project}.{staging_dataset}.snapshot_{re.match('mv_(.+)', materialized_view_id)[1]}"
+
+            _logger.info(f'Refreshing snapshot table {snapshot_table_id}')
 
             job_config = bigquery.QueryJobConfig(
                 destination=snapshot_table_id,

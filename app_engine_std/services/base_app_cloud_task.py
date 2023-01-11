@@ -70,8 +70,9 @@ class ManagedAppCloudTask(BaseAppCloudTask):
         """
         self.gcp_env = gcp_env
         if payload:
-            # Using JSONObject here will convert the binary keys and values in the dict to utf-8.
-            self.payload = JSONObject(payload)
+            # Using JSONObject or derived class here will convert the binary keys and values in the dict to utf-8.
+            self.payload = self._get_annot_cls('payload')(payload,
+                                                          cast_types=True)
 
         # Ensure we are pointed at PDR dev environment if running locally.
         self.gcp_env.override_project('aou-ehr-ops-curation-test')
