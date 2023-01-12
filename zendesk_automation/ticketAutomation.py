@@ -23,7 +23,7 @@ DEFAULT_SCOPES = [
     'https://www.googleapis.com/auth/drive'
 ]
 
-def tag_intersection(status_list, tag_list):
+def tag_intersection(zenpy_client, status_list, tag_list):
     # create set of ticket ids that will be intersected on each search
     ticket_ids = {}
     for index, tag in enumerate(tag_list):
