@@ -16,6 +16,10 @@ Note: Remember to add any new job classes to the `__all__` variable in `cron/job
 
 ### Jobs
 
-#### QC Report
+#### Refresh Materialized Views
 
-Publish PDR QC query results to a Google sheet.
+Execute views for data quality metrics and save the results in materialized views. For a subset of the materialized views, append a snapshot to an aggregating snapshot table.
+
+Some metrics have dependencies, so the strategy illustrated below is used to manage the Cloud Tasks.
+
+![](job_dataflow.png)

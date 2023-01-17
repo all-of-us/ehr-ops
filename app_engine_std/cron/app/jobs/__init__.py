@@ -5,10 +5,10 @@
 
 from .example_report import ExampleSheetReportJob
 from .create_view_tables import CreateViewsJob
-from .refresh_snapshot_tables import RefreshSnapshotTablesJob
 from .refresh_metric_materialized_views import RefreshMaterializedViewsJob
-from .refresh_metrics_and_snapshot_tables import RefreshMetricsAndSnapshotTables
-from .gcp_logging_test import GCPLoggingTestJob
 
-__all__ = (ExampleSheetReportJob, CreateViewsJob, RefreshSnapshotTablesJob,
-           RefreshMaterializedViewsJob, RefreshMetricsAndSnapshotTables, GCPLoggingTestJob)
+__all__ = (
+    ExampleSheetReportJob,
+    CreateViewsJob,
+    RefreshMaterializedViewsJob,
+)
