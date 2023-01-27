@@ -81,20 +81,6 @@ class TestBasicInput(unittest.TestCase):
         cls.assertTrue(ticket_subject == expected_subject)
         cls.assertMultiLineEqual(ticket_body, expected_body) 
 
-
-    # TODO: Create ticket scenario to test intersection of tags, compare list returned to expected list
-    def test_tag_intersection(cls):
-        
-        status_list = ['open', 'pending']
-        tag_list = ['auto-test-tickets']
-        shared_ids = ta.tag_intersection(cls.zenpy_client, status_list, tag_list)
-        cls.assertEqual(shared_ids)
-
-
-
-
-
-
         
 if __name__ == '__main__':
     unittest.main()
