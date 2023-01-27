@@ -111,7 +111,7 @@ def comment_update(zenpy_client, search, comment_body):
     return search
 
 
-def create_ticket(zenpy_client, submission_tracking_df, src_hpo_id, site_contact_df, scores, metric, table_name, tag_list):
+def create_ticket(zenpy_client, submission_tracking_df, src_hpo_id, site_contact_df, scores, metric, table_name, tag_list, hpo_name):
     hpo_row=submission_tracking_df.loc[submission_tracking_df['hpo_id'] == src_hpo_id]
     # assignee_email = hpo_row['contact_email']
     # assignee = zenpy_client.search(type='user', email=assignee_email)
@@ -130,7 +130,7 @@ def create_ticket(zenpy_client, submission_tracking_df, src_hpo_id, site_contact
     else:
         metric_value = scores[table_name]
         table_name = table_name.title() + " Table"
-        table_phrase = " for the " + table_name + " table"
+        table_phrase = " for the " + table_name
     metric_upper = metric.upper()
     ticket_descr = get_ticket_body(table_phrase, metric_upper, round(metric_value, 2), hpo_name)
     print('Creating Zendesk ticket...')
