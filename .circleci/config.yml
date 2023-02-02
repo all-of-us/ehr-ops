@@ -21,7 +21,7 @@ commands:
       # Add fingerprint for python-aou-cloud-service github repo.
       - add_ssh_keys:
           fingerprints:
-            - 41:e2:50:db:15:0f:01:9e:ed:db:45:84:08:97:71:62
+            - 46:ac:03:b3:25:32:2e:c2:45:40:d3:96:4b:dd:af:29
       - checkout
 #      - run:
 #          name: Install PostgreSQL 13 Server
