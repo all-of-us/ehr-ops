@@ -3,7 +3,6 @@ import io
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../../zendesk_automation')) 
-import utils
 import unittest
 import shutil
 import ticketAutomation as ta
@@ -33,10 +32,10 @@ class TestBasicInput(unittest.TestCase):
 
         cls.cleanup = []
 
-        credentials = {
-            "email": utils.EMAIL,
-            "token": utils.ZENPY_TOKEN,
-            "subdomain": utils.SUBDOMAIN
+        CREDENTIALS = {
+            "email": os.environ['EMAIL'],
+            "token": os.environ['ZENPY_TOKEN'],
+            "subdomain": os.environ['SUBDOMAIN']
         }
         cls.zenpy_client = Zenpy(**credentials)
 
