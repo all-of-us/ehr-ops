@@ -42,10 +42,11 @@ commands:
           command: .ci_scripts/setup_python_env.sh
       - run:
           name: Running Unittests
-          command: |
-          echo "$KEYFILE_LOC" | base64 --decode > ./zendesk_automation/KEYFILE_LOC.txt
-          echo "$GOOGLE_APP_CREDS" | base64 --decode > ./zendesk_automation/GOOGLE_APP_CREDS.txt
-          .ci_scripts/run_unittests.sh
+          command:
+          - script:
+            echo "$KEYFILE_LOC" | base64 --decode > ./zendesk_automation/KEYFILE_LOC.txt
+            echo "$GOOGLE_APP_CREDS" | base64 --decode > ./zendesk_automation/GOOGLE_APP_CREDS.txt
+            .ci_scripts/run_unittests.sh
 
 #  deploy-app-steps:
 #    parameters:
