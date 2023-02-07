@@ -1,6 +1,5 @@
 import os
 from unittest import case
-import utils
 import pandas as pd
 from zenpy import Zenpy
 from zenpy.lib.api_objects import Ticket, User, Comment, BaseObject
@@ -11,9 +10,9 @@ import json
 
 # Zenpy credentials
 CREDENTIALS = {
-    "email": utils.EMAIL,
-    "token": utils.ZENPY_TOKEN,
-    "subdomain": utils.SUBDOMAIN
+    "email": os.environ['EMAIL'],
+    "token": os.environ['ZENPY_TOKEN'],
+    "subdomain": os.environ['SUBDOMAIN']
 }
 
 # Google scopes
@@ -31,7 +30,7 @@ EHR Ops Team
 '''    
 
 # Set Google Application Credentials to key file
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= utils.GOOGLE_APP_CREDS
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "./zendesk_automation/GOOGLE_APP_CREDS.txt"
 
 def tag_intersection(zenpy_client, status_list, tag_list):
     # create set of ticket ids that will be intersected on each search
@@ -203,7 +202,7 @@ def zenpy_obj_to_json(filename, request):
 
 def get_sheets():
     # Create google sheets credentials
-    key_file_location = utils.KEYFILE_LOC
+    key_file_location = "./zendesk_automation/KEYFILE_LOC.txt"
     scopes=['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
     creds = service_account.Credentials.from_service_account_file(key_file_location, scopes=scopes)
 
@@ -219,13 +218,13 @@ def get_sheets():
 
     # Get TEST Site Contact data
     sheet = service.spreadsheets()
-    site_contact_result = sheet.values().get(spreadsheetId=utils.SITE_CONTACT_ID,
+    site_contact_result = sheet.values().get(spreadsheetId=os.getenv.SITE_CONTACT_ID,
                                 range='Site Contacts').execute()
     site_contact_values = site_contact_result.get('values')
     site_contact_df = pd.DataFrame(site_contact_values[1:], columns=site_contact_values[0])
 
     # Get Submission Tracking data
-    submission_tracking_result = sheet.values().get(spreadsheetId=utils.SUBMISSION_TRACK_ID,
+    submission_tracking_result = sheet.values().get(spreadsheetId=os.getenv.SUBMISSION_TRACK_ID,
                                 range='Mapping').execute()
     submission_tracking_values = submission_tracking_result.get('values')
     submission_tracking_df = pd.DataFrame(submission_tracking_values[1:], columns=submission_tracking_values[0])
