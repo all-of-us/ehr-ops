@@ -6,7 +6,6 @@ from zenpy import Zenpy
 
 
 class TestBasicInput(unittest.TestCase):
-    @classmethod
     def tearDown(self) -> None:
         for ticket in self.cleanup:
             try:
