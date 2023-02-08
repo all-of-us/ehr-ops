@@ -4,7 +4,7 @@ import os
 import sys
 import unittest
 import shutil
-from ...zendesk_automation import ticketAutomation as ta
+from ..zendesk_automation import ticketAutomation as ta
 import pandas as pd
 from zenpy import Zenpy
 from zenpy.lib.api_objects import Ticket, User, Comment, BaseObject
