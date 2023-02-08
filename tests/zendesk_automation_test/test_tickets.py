@@ -14,7 +14,7 @@ class TestBasicInput(unittest.TestCase):
             except Zenpy.ApiException:
                 print()
 
-        return super().tearDownClass(cls)
+        return super().tearDownClass()
 
     @classmethod
     def setUp(cls) -> None:
@@ -28,7 +28,7 @@ class TestBasicInput(unittest.TestCase):
         }
         cls.zenpy_client = Zenpy(**CREDENTIALS)
 
-        return super().setUp(cls)
+        return super().setUp()
 
     def test_create_ticket(cls):
         pd.set_option('display.max_columns', None)
