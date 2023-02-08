@@ -7,10 +7,10 @@ from zenpy import Zenpy
 
 class TestBasicInput(unittest.TestCase):
     @classmethod
-    def tearDownClass(cls) -> None:
-        for ticket in cls.cleanup:
+    def tearDown(self) -> None:
+        for ticket in self.cleanup:
             try:
-                cls.zenpy_client.tickets.delete(ticket)
+                self.zenpy_client.tickets.delete(ticket)
             except Zenpy.ApiException:
                 print()
 
