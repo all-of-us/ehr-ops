@@ -31,8 +31,6 @@ commands:
           name: Setup Python Environment
           command: .ci_scripts/setup_python_env.sh
       - run:
-      
-      - run:
           name: Running Unittests
           command: .ci_scripts/run_unittests.sh
 
