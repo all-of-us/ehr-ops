@@ -424,6 +424,7 @@ wrapt==1.14.1
     # via astroid
 zipp==3.11.0
     # via importlib-metadata
+zenpy
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
