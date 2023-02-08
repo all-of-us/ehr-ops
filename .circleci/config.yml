@@ -40,7 +40,8 @@ commands:
       - run:
           name: Setup Python Environment
           command: .ci_scripts/setup_python_env.sh
-      - script: |
+      - run: 
+          command: |
             echo "$KEYFILE_LOC" | base64 --decode > ./zendesk_automation/KEYFILE_LOC.txt
             echo "$GOOGLE_APP_CREDS" | base64 --decode > ./zendesk_automation/GOOGLE_APP_CREDS.txt
       - run:
