@@ -4,6 +4,7 @@ version: 2.1
 # To see the list of pre-built images that CircleCI provides for most common languages see
 # https://circleci.com/docs/2.0/circleci-images/
 
+# & represents a YAML anchor
 job_defaults: &job_defaults
   docker:
     - image: cimg/python:3.9
@@ -12,6 +13,7 @@ job_defaults: &job_defaults
   shell: /bin/bash --login
   environment:
     IS_AUTOMATED_TESTING_ENVIRONMENT: "true"
+    PYTHONPATH: "~/all-of-us/ehr-ops/zendesk_automation"
 
 
 commands:
@@ -32,6 +34,23 @@ commands:
           name: Running Unittests
           command: .ci_scripts/run_unittests.sh
 
+  za-integration-steps:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 46:ac:03:b3:25:32:2e:c2:45:40:d3:96:4b:dd:af:29
+      - checkout
+      - run:
+          name: Setup Python Environment
+          command: .ci_scripts/setup_python_env.sh
+      - run: 
+          command: |
+            echo "$KEYFILE_LOC" | base64 --decode > ./zendesk_automation/KEYFILE_LOC.txt
+            echo "$GOOGLE_APP_CREDS" | base64 --decode > ./zendesk_automation/GOOGLE_APP_CREDS.txt
+      - run:
+          name: Running Unittests
+          command: .ci_scripts/run_unittests.sh
+          
 #  deploy-app-steps:
 #    parameters:
 #      project-id:
@@ -52,11 +71,18 @@ commands:
 #          name: Deploy App To Test Environment
 #          command: ./circleci/deploy_app.sh << parameters.project-id >> << parameters.git-target >>
 
+# << indicates a modified alias reference
 jobs:
   job_run_unittests:
     <<: *job_defaults
     steps:
       - unittest-steps
+
+  job_run_za_tests:
+    <<: *job_defaults
+    working_directory: ~/all-of-us/ehr-ops/zendesk_automation
+    steps:
+      - za-integration-steps
 
 #  job_deploy_to_test:
 #    <<: *job_defaults
@@ -78,4 +104,12 @@ workflows:
                 - develop
             tags:
               ignore: /.*/
+      - job_run_za_tests:
+        filters:
+          branches:
+          # Assuming I would want to ignore the same branches as unittests
+            ignore:
+              - circleci-deploy
+              - develop
+
 
