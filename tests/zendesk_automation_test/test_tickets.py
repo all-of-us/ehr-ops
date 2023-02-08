@@ -2,10 +2,9 @@
 import io
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../zendesk_automation')) 
 import unittest
 import shutil
-import ticketAutomation as ta
+from zendesk_automation.ticketAutomation import ticketAutomation as ta
 import pandas as pd
 from zenpy import Zenpy
 from zenpy.lib.api_objects import Ticket, User, Comment, BaseObject
