@@ -120,13 +120,12 @@ def create_ticket(zenpy_client, submission_tracking_df, src_hpo_id,
     # assignee_email = hpo_row['contact_email']
     # assignee = zenpy_client.search(type='user', email=assignee_email)
     # assignee_id = list(assignee)[0].id
-    assignee_email = 'em3697@cumc.columbia.edu'
+    assignee_email = os.environ['EMAIL']
     assignee = zenpy_client.search(type='user', email=assignee_email)
     assignee_id = list(assignee)[0].id
     # requester = zenpy_client.search(type='user', email='noreply@researchallofus.org')
     # requester_id = list(requester)[0].id
-    requester = zenpy_client.search(type='user',
-                                    email='em3697@cumc.columbia.edu')
+    requester = zenpy_client.search(type='user', email=os.environ['EMAIL'])
     requester_id = list(requester)[0].id
     hpo_name = list(site_contact_df[site_contact_df['hpo_id'] == src_hpo_id]
                     ['Site Name'])[0]

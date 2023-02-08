@@ -27,9 +27,7 @@ class TestBasicInput(unittest.TestCase):
 
     def test_create_ticket(self):
         pd.set_option('display.max_columns', None)
-        contact_data = [[
-            'Test', 'test_create_ticket', 'em3697@cumc.columbia.edu'
-        ]]
+        contact_data = [['Test', 'test_create_ticket', os.environ['EMAIL']]]
         site_contact_df = pd.DataFrame(
             contact_data,
             columns=[
@@ -37,7 +35,7 @@ class TestBasicInput(unittest.TestCase):
                 'Point of Contact (mostly data stewards)\n*Use semi-colons to separate the email addresses*'
             ])
         submission_data = [[
-            'Test', 'Elise', 'em3697@cumc.columbia.edu', 'test_create_ticket'
+            'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
         ]]
         submission_tracking_df = pd.DataFrame(
             submission_data,
