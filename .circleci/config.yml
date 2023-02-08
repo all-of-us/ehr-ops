@@ -13,7 +13,7 @@ job_defaults: &job_defaults
   shell: /bin/bash --login
   environment:
     IS_AUTOMATED_TESTING_ENVIRONMENT: "true"
-    PYTHONPATH: "./zendesk_automation"
+    PYTHONPATH: "~/all-of-us/ehr-ops/zendesk_automation"
 
 
 commands:
@@ -30,6 +30,8 @@ commands:
       - run:
           name: Setup Python Environment
           command: .ci_scripts/setup_python_env.sh
+      - run:
+      
       - run:
           name: Running Unittests
           command: .ci_scripts/run_unittests.sh
