@@ -14,23 +14,18 @@ class TestBasicInput(unittest.TestCase):
             except Zenpy.ApiException:
                 print()
 
-        return super().tearDownClass()
+    def setUp(self) -> None:
 
-    @classmethod
-    def setUp(cls) -> None:
-
-        cls.cleanup = []
+        self.cleanup = []
 
         CREDENTIALS = {
             "email": os.environ['EMAIL'],
             "token": os.environ['ZENPY_TOKEN'],
             "subdomain": os.environ['SUBDOMAIN']
         }
-        cls.zenpy_client = Zenpy(**CREDENTIALS)
+        self.zenpy_client = Zenpy(**CREDENTIALS)
 
-        return super().setUp()
-
-    def test_create_ticket(cls):
+    def test_create_ticket(self):
         pd.set_option('display.max_columns', None)
         contact_data = [[
             'Test', 'test_create_ticket', 'em3697@cumc.columbia.edu'
@@ -64,11 +59,12 @@ class TestBasicInput(unittest.TestCase):
         tag_list = [
             'test_create_ticket', metric, table_name, 'auto-test-tickets'
         ]
-        ticket_obj = ta.create_ticket(cls.zenpy_client, submission_tracking_df,
-                                      src_hpo_id, site_contact_df, scores,
-                                      metric, table_name, tag_list, hpo_name)
+        ticket_obj = ta.create_ticket(self.zenpy_client,
+                                      submission_tracking_df, src_hpo_id,
+                                      site_contact_df, scores, metric,
+                                      table_name, tag_list, hpo_name)
         ticket_body = list(
-            cls.zenpy_client.tickets.comments(ticket=ticket_obj.id))[0].body
+            self.zenpy_client.tickets.comments(ticket=ticket_obj.id))[0].body
         ticket_subject = ticket_obj.subject
         expected_subject = f"GC1 Condition Table Data Quality Issue Flagged"
         expected_body = f'''Hi Test, 
@@ -83,9 +79,9 @@ class TestBasicInput(unittest.TestCase):
 
         Thanks, 
         EHR Ops Team'''
-        cls.cleanup.append(ticket_obj)
-        cls.assertTrue(ticket_subject == expected_subject)
-        cls.assertMultiLineEqual(ticket_body, expected_body)
+        self.cleanup.append(ticket_obj)
+        self.assertTrue(ticket_subject == expected_subject)
+        self.assertMultiLineEqual(ticket_body, expected_body)
 
 
 if __name__ == '__main__':
