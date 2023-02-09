@@ -181,7 +181,6 @@ class AppContextAsyncDatabase(AppEnvContextBase):
             while data:
                 yield data
                 data = await cursor.fetchmany(chunk_size)
-            # raise StopAsyncIteration
 
     async def db_fetch_all(self, sql, args=None, db_conn=None, row_factory=None):
         """
