@@ -47,3 +47,5 @@ ipykernel
 ## Google
 google-cloud-pubsub
 
+# Zendesk API support
+zenpy

@@ -20,7 +20,9 @@ backcall==0.2.0
 build==0.10.0
     # via pip-tools
 cachetools==5.3.0
-    # via google-auth
+    # via
+    #   google-auth
+    #   zenpy
 certifi==2022.12.7
     # via requests
 cffi==1.15.1
@@ -309,6 +311,7 @@ python-dateutil==2.8.2
     #   jupyter-client
     #   pandas
     #   python-easy-json
+    #   zenpy
 python-dotenv==0.21.1
     # via -r requirements.in
 python-easy-json==1.0.12
@@ -323,6 +326,7 @@ pytz==2022.7.1
     #   dateutils
     #   pandas
     #   python-easy-json
+    #   zenpy
 pyyaml==6.0
     # via pre-commit
 pyzmq==25.0.0
@@ -337,6 +341,7 @@ requests==2.28.2
     #   jira
     #   requests-oauthlib
     #   requests-toolbelt
+    #   zenpy
 requests-oauthlib==1.3.1
     # via
     #   google-auth-oauthlib
@@ -358,6 +363,7 @@ six==1.16.0
     #   oauth2client
     #   python-dateutil
     #   python-easy-json
+    #   zenpy
 sniffio==1.3.0
     # via anyio
 sqlalchemy==1.4.46
@@ -419,6 +425,8 @@ wheel==0.38.4
     # via pip-tools
 wrapt==1.14.1
     # via astroid
+zenpy==2.0.25
+    # via -r requirements.in
 zipp==3.13.0
     # via importlib-metadata
 
