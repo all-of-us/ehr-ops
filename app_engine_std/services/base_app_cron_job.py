@@ -15,7 +15,6 @@ from fastapi.responses import JSONResponse
 from starlette import status
 from python_easy_json import JSONObject
 
-from aou_cloud.services.system_utils import JSONObject
 from google.cloud import bigquery
 import networkx as nx
 from time import sleep
