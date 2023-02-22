@@ -13,7 +13,6 @@ from fastapi import HTTPException
 from starlette import status
 from fastapi.responses import JSONResponse
 
-from aou_cloud.services.system_utils import JSONObject
 from google.cloud import bigquery
 from time import sleep
 from datetime import datetime, timedelta

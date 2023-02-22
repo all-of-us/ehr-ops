@@ -168,7 +168,6 @@ class AppContextDatabaseMixin(AppEnvContextBase):
             while data:
                 yield data
                 data = cursor.fetchmany(chunk_size)
-            raise StopIteration
 
     def db_fetch_all(self, sql, args=None, db_conn=None, row_factory=None):
         """

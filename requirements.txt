@@ -11,23 +11,25 @@
     #   -r requirements.in
 anyio==3.6.2
     # via starlette
-astroid==2.12.13
+astroid==2.14.1
     # via pylint
 asttokens==2.2.1
     # via stack-data
 backcall==0.2.0
     # via ipython
-build==0.9.0
+build==0.10.0
     # via pip-tools
-cachetools==5.2.0
-    # via google-auth
+cachetools==5.3.0
+    # via
+    #   google-auth
+    #   zenpy
 certifi==2022.12.7
     # via requests
 cffi==1.15.1
     # via cryptography
 cfgv==3.3.1
     # via pre-commit
-charset-normalizer==2.1.1
+charset-normalizer==3.0.1
     # via requests
 click==8.1.3
     # via
@@ -36,11 +38,11 @@ click==8.1.3
     #   uvicorn
 comm==0.1.2
     # via ipykernel
-cryptography==38.0.4
+cryptography==39.0.1
     # via aou-cloud
 dateutils==0.6.12
     # via python-easy-json
-debugpy==1.6.4
+debugpy==1.6.6
     # via ipykernel
 decorator==5.1.1
     # via ipython
@@ -50,19 +52,17 @@ dill==0.3.6
     # via pylint
 distlib==0.3.6
     # via virtualenv
-entrypoints==0.4
-    # via jupyter-client
 executing==1.2.0
     # via stack-data
-faker==15.3.4
+faker==16.7.0
     # via aou-cloud
-fastapi==0.88.0
+fastapi==0.90.0
     # via
     #   -r app_engine_std/cron/requirements.in
     #   fastapi-utils
 fastapi-utils==0.2.1
     # via -r app_engine_std/cron/requirements.in
-filelock==3.8.2
+filelock==3.9.0
     # via virtualenv
 flask==2.2.2
     # via aou-cloud
@@ -76,9 +76,9 @@ google-api-core[grpc]==2.11.0
     #   google-cloud-pubsub
     #   google-cloud-storage
     #   google-cloud-tasks
-google-api-python-client==2.70.0
+google-api-python-client==2.77.0
     # via aou-cloud
-google-auth==2.15.0
+google-auth==2.16.0
     # via
     #   google-api-core
     #   google-api-python-client
@@ -89,9 +89,9 @@ google-auth==2.15.0
     #   gspread
 google-auth-httplib2==0.1.0
     # via google-api-python-client
-google-auth-oauthlib==0.8.0
+google-auth-oauthlib==1.0.0
     # via gspread
-google-cloud-bigquery==3.4.1
+google-cloud-bigquery==3.5.0
     # via aou-cloud
 google-cloud-core==2.3.2
     # via
@@ -99,30 +99,30 @@ google-cloud-core==2.3.2
     #   google-cloud-datastore
     #   google-cloud-firestore
     #   google-cloud-storage
-google-cloud-datastore==2.11.0
+google-cloud-datastore==2.13.2
     # via aou-cloud
-google-cloud-firestore==2.7.3
+google-cloud-firestore==2.9.1
     # via aou-cloud
-google-cloud-pubsub==2.13.11
+google-cloud-pubsub==2.14.1
     # via -r requirements.in
 google-cloud-storage==2.7.0
     # via aou-cloud
-google-cloud-tasks==2.11.0
+google-cloud-tasks==2.12.1
     # via aou-cloud
 google-crc32c==1.5.0
     # via google-resumable-media
-google-resumable-media==2.4.0
+google-resumable-media==2.4.1
     # via
     #   google-cloud-bigquery
     #   google-cloud-storage
-googleapis-common-protos[grpc]==1.57.0
+googleapis-common-protos[grpc]==1.58.0
     # via
     #   google-api-core
     #   grpc-google-iam-v1
     #   grpcio-status
-greenlet==2.0.1
+greenlet==2.0.2
     # via sqlalchemy
-grpc-google-iam-v1==0.12.4
+grpc-google-iam-v1==0.12.6
     # via
     #   google-cloud-pubsub
     #   google-cloud-tasks
@@ -149,19 +149,21 @@ httplib2==0.21.0
     #   google-api-python-client
     #   google-auth-httplib2
     #   oauth2client
-identify==2.5.10
+identify==2.5.17
     # via pre-commit
 idna==3.4
     # via
     #   anyio
     #   requests
-importlib-metadata==5.2.0
-    # via flask
-ipykernel==6.19.3
+importlib-metadata==6.0.0
+    # via
+    #   flask
+    #   jupyter-client
+ipykernel==6.21.1
     # via -r requirements.in
-ipython==8.7.0
+ipython==8.9.0
     # via ipykernel
-isort==5.11.3
+isort==5.12.0
     # via pylint
 itsdangerous==2.1.2
     # via flask
@@ -173,15 +175,17 @@ jinja2==3.1.2
     #   flask
 jira==3.4.1
     # via aou-cloud
-jupyter-client==7.4.8
+jupyter-client==8.0.2
     # via ipykernel
-jupyter-core==5.1.0
-    # via jupyter-client
-lazy-object-proxy==1.8.0
+jupyter-core==5.2.0
+    # via
+    #   ipykernel
+    #   jupyter-client
+lazy-object-proxy==1.9.0
     # via astroid
 lxml==4.9.2
     # via -r requirements.in
-markupsafe==2.1.1
+markupsafe==2.1.2
     # via
     #   jinja2
     #   werkzeug
@@ -198,14 +202,12 @@ matplotlib-inline==0.1.6
 mccabe==0.7.0
     # via pylint
 nest-asyncio==1.5.6
-    # via
-    #   ipykernel
-    #   jupyter-client
-networkx==2.8.8
+    # via ipykernel
+networkx==3.0
     # via -r requirements.in
 nodeenv==1.7.0
     # via pre-commit
-numpy==1.24.0
+numpy==1.24.2
     # via
     #   -r requirements.in
     #   pandas
@@ -213,37 +215,35 @@ oauth2client==4.1.3
     # via -r app_engine_std/cron/requirements.in
 oauthlib==3.2.2
     # via requests-oauthlib
-packaging==21.3
+packaging==23.0
     # via
     #   build
     #   google-cloud-bigquery
     #   ipykernel
     #   jira
     #   marshmallow
-pandas==1.5.2
+pandas==1.5.3
     # via
     #   -r app_engine_std/cron/requirements.in
     #   -r requirements.in
 parso==0.8.3
     # via jedi
-pep517==0.13.0
-    # via build
 pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
-pip-tools==6.12.1
+pip-tools==6.12.2
     # via -r requirements.in
-platformdirs==2.6.0
+platformdirs==3.0.0
     # via
     #   jupyter-core
     #   pylint
     #   virtualenv
-pre-commit==2.20.0
+pre-commit==3.0.4
     # via -r requirements.in
 prompt-toolkit==3.0.36
     # via ipython
-proto-plus==1.22.1
+proto-plus==1.22.2
     # via
     #   google-cloud-bigquery
     #   google-cloud-datastore
@@ -260,16 +260,17 @@ protobuf==4.21.12
     #   google-cloud-pubsub
     #   google-cloud-tasks
     #   googleapis-common-protos
+    #   grpc-google-iam-v1
     #   grpcio-status
     #   proto-plus
 psutil==5.9.4
     # via ipykernel
-psycopg[binary]==3.1.6
+psycopg[binary]==3.1.8
     # via
     #   -r app_engine_std/cron/requirements.in
     #   -r cloud_functions/requirements.in
     #   -r requirements.in
-psycopg-binary==3.1.6
+psycopg-binary==3.1.8
     # via psycopg
 ptyprocess==0.7.0
     # via pexpect
@@ -286,18 +287,18 @@ pyasn1-modules==0.2.8
     #   oauth2client
 pycparser==2.21
     # via cffi
-pydantic==1.10.2
+pydantic==1.10.4
     # via
     #   fastapi
     #   fastapi-utils
-pygments==2.13.0
+pygments==2.14.0
     # via ipython
-pylint==2.15.9
+pylint==2.16.1
     # via aou-cloud
 pyparsing==3.0.9
-    # via
-    #   httplib2
-    #   packaging
+    # via httplib2
+pyproject-hooks==1.0.0
+    # via build
 python-dateutil==2.8.2
     # via
     #   -r app_engine_std/cron/requirements.in
@@ -310,27 +311,29 @@ python-dateutil==2.8.2
     #   jupyter-client
     #   pandas
     #   python-easy-json
-python-dotenv==0.21.0
+    #   zenpy
+python-dotenv==0.21.1
     # via -r requirements.in
-python-easy-json==1.0.6
+python-easy-json==1.0.12
     # via
     #   -r requirements.in
     #   aou-cloud
 python-http-client==3.3.7
     # via sendgrid
-pytz==2022.7
+pytz==2022.7.1
     # via
     #   aou-cloud
     #   dateutils
     #   pandas
     #   python-easy-json
+    #   zenpy
 pyyaml==6.0
     # via pre-commit
-pyzmq==24.0.1
+pyzmq==25.0.0
     # via
     #   ipykernel
     #   jupyter-client
-requests==2.28.1
+requests==2.28.2
     # via
     #   google-api-core
     #   google-cloud-bigquery
@@ -338,6 +341,7 @@ requests==2.28.1
     #   jira
     #   requests-oauthlib
     #   requests-toolbelt
+    #   zenpy
 requests-oauthlib==1.3.1
     # via
     #   google-auth-oauthlib
@@ -359,9 +363,10 @@ six==1.16.0
     #   oauth2client
     #   python-dateutil
     #   python-easy-json
+    #   zenpy
 sniffio==1.3.0
     # via anyio
-sqlalchemy==1.4.45
+sqlalchemy==1.4.46
     # via fastapi-utils
 sqlparse==0.4.3
     # via -r requirements.in
@@ -369,26 +374,24 @@ stack-data==0.6.2
     # via ipython
 starkbank-ecdsa==2.2.0
     # via sendgrid
-starlette==0.22.0
+starlette==0.23.0
     # via
     #   -r app_engine_std/cron/requirements.in
     #   fastapi
-supervisor==4.2.4
+supervisor==4.2.5
     # via -r app_engine_std/cron/requirements.in
-toml==0.10.2
-    # via pre-commit
 tomli==2.0.1
     # via
     #   build
-    #   pep517
     #   pylint
+    #   pyproject-hooks
 tomlkit==0.11.6
     # via pylint
 tornado==6.2
     # via
     #   ipykernel
     #   jupyter-client
-traitlets==5.8.0
+traitlets==5.9.0
     # via
     #   comm
     #   ipykernel
@@ -406,13 +409,13 @@ typing-extensions==4.4.0
     #   starlette
 uritemplate==4.1.1
     # via google-api-python-client
-urllib3==1.26.13
+urllib3==1.26.14
     # via requests
 uvicorn==0.20.0
     # via -r app_engine_std/cron/requirements.in
-virtualenv==20.17.1
+virtualenv==20.19.0
     # via pre-commit
-wcwidth==0.2.5
+wcwidth==0.2.6
     # via prompt-toolkit
 werkzeug==2.2.2
     # via
@@ -422,9 +425,10 @@ wheel==0.38.4
     # via pip-tools
 wrapt==1.14.1
     # via astroid
-zipp==3.11.0
+zenpy==2.0.25
+    # via -r requirements.in
+zipp==3.13.0
     # via importlib-metadata
-zenpy
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
