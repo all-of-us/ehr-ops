@@ -352,6 +352,8 @@ rsa==4.9
     # via
     #   google-auth
     #   oauth2client
+scikit-learn==1.2.0
+seaborn==0.12.2
 sendgrid==6.9.7
     # via
     #   -r app_engine_std/cron/requirements.in
@@ -407,6 +409,7 @@ typing-extensions==4.4.0
     #   pydantic
     #   pylint
     #   starlette
+umap-learn==0.5.3
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==1.26.14
