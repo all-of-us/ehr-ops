@@ -239,6 +239,7 @@ platformdirs==3.0.0
     #   jupyter-core
     #   pylint
     #   virtualenv
+plotly==5.13.1
 pre-commit==3.0.4
     # via -r requirements.in
 prompt-toolkit==3.0.36
