@@ -1,0 +1,92 @@
+{
+    "v_ehr_rdr_participant": {
+        "depends_on": [
+            "v_ehr_flag"
+        ],
+        "snapshot": false
+    },
+    "v_ehr_gc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant"
+        ],
+        "snapshot": false
+    },
+    "v_ehr_dc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant"
+        ],
+        "snapshot": false
+    },
+    "v_nih_dc_1": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ],
+        "snapshot": true
+    },
+    "v_nih_dc_2": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ],
+        "snapshot": true
+    },
+    "v_nih_dc_3": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ],
+        "snapshot": true
+    },
+    "v_nih_dc_4": {
+        "depends_on": [
+            "v_ehr_dc_overall"
+        ],
+        "snapshot": true
+    },
+    "v_nih_gc_1": {
+        "depends_on": [
+            "v_ehr_gc_overall"
+        ],
+        "snapshot": true
+    },
+    "v_covid_mapping": {
+        "snapshot": true
+    },
+    "v_dc_1": {
+        "snapshot": true
+    },
+    "v_dc_2": {
+        "snapshot": true
+    },
+    "v_dc_3": {
+        "snapshot": true
+    },
+    "v_dc_4": {
+        "snapshot": true
+    },
+    "v_duplicates": {
+        "snapshot": true
+    },
+    "v_all_eligible_participants": {
+        "snapshot": true
+    },
+    "v_eligible_participants_ehr": {
+        "snapshot": true
+    },
+    "v_gc_1_standard": {
+        "snapshot": true
+    },
+    "v_physical_meas": {
+        "snapshot": true
+    },
+    "v_table_counts_with_upload_timestamp": {
+        "snapshot": true
+    },
+    "v_unit_route_failure": {
+        "snapshot": true
+    },
+    "v_visit_id_failure": {
+        "snapshot": true
+    },
+    "v_in_person_participants": {
+        "snapshot": true
+    }
+}
