@@ -59,6 +59,7 @@ class CreatCDRAnalysisTableJob(BaseAppCronJob):
         #   self.gcp_env: The app context helper class is stored in this property.
 
         # Ensure we are pointed at the dev environment if running locally.
+        # UNCOMMENT self.gcp_env.override_project('INSERT_PROJECT_ID_HERE')
         project = self.gcp_env.project
         client = bigquery.Client(project=project)
         app_config = self.gcp_env.get_app_config(project=project)

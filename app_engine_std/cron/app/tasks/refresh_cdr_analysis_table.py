@@ -28,13 +28,13 @@ class RefreshCDRAnalysisTableTask(BaseAppCloudTask):
         :returns: JSONResponse
         """
         # Ensure we are pointed at the dev environment if running locally.
+        # UNCOMMENT self.gcp_env.override_project('INSERT_PROJECT_ID_HERE')
         project = self.gcp_env.project
         client = bigquery.Client(project=project)
 
         dataset = self.payload.dataset
         table = self.payload.table
         query = self.payload.query
-        print(dataset, table)
 
         _logger.info(f'Creating of Updating table {dataset}.{table}')
         check_table_exists_query = f"""
