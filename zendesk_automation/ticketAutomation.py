@@ -287,11 +287,22 @@ def ticket_automation():
     # TODO ROLLOUT:
     hpo_test_list = ['nyc_cu']
 
+    latest_submission_job_config = bigquery.QueryJobConfig()
+    ls = open(f'latestSubmission.sql')
+    LS_QUERY = ls.read()
+    # API request
+    ls_query_job = bigquery_client.query(LS_QUERY, job_config=latest_submission_job_config)
+    latest_submission_hpos_df = ls_query_job.result().to_dataframe()
+    hpo_list = latest_submission_hpos_df['hpo_id'].values.tolist()
+    hpo_set = set(hpo_list)
+
     # get symmetric difference between hpo_list and list to exclude
     exclude = ['vcu', 'wash_u_stl']
+
     # TODO ROLLOUT:
     included_hpos = hpo_test_list
-    # included_hpos = set(hpo_list) ^ set(exclude)
+
+    # included_hpos = (set(hpo_list) ^ set(exclude)).intersection(hpo_set)
 
     metrics = ['gc1']
 
