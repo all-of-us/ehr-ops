@@ -539,10 +539,10 @@ WHERE vt.src_hpo_id in UNNEST(@included_hpos)
    FROM gc1_vars)
 
    SELECT * FROM gc1_calculated 
-   WHERE _gc1 < 0.9
-      OR gc1_calculated.condition_gc1 < 0.9
-      OR gc1_calculated.drug_gc1 < 0.9
-      OR gc1_calculated.measurement_gc1 < 0.9
-      OR gc1_calculated.observation_gc1 < 0.9
-      OR gc1_calculated.procedure_gc1 < 0.9
-      OR gc1_calculated.visit_gc1 < 0.9
+  --  WHERE _gc1 < 0.9
+  --     OR gc1_calculated.condition_gc1 < 0.9
+  --     OR gc1_calculated.drug_gc1 < 0.9
+  --     OR gc1_calculated.measurement_gc1 < 0.9
+  --     OR gc1_calculated.observation_gc1 < 0.9
+  --     OR gc1_calculated.procedure_gc1 < 0.9
+  --     OR gc1_calculated.visit_gc1 < 0.9
