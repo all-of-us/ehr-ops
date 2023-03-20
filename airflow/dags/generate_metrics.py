@@ -44,7 +44,6 @@ def generate_metrics():
 
     # Get list of metric views from variables
     view_list = Variable.get("bq_view_list", deserialize_json=True)
-    curation_project_id = Variable.get(curation_project_id)
 
     task_dict = {}
     for view in view_list:
