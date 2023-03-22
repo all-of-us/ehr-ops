@@ -6,9 +6,11 @@
 from .example_report import ExampleSheetReportJob
 from .create_view_tables import CreateViewsJob
 from .refresh_metric_materialized_views import RefreshMaterializedViewsJob
+from .create_cdr_analysis_table import CreatCDRAnalysisTableJob
 
 __all__ = (
     ExampleSheetReportJob,
     CreateViewsJob,
     RefreshMaterializedViewsJob,
+    CreatCDRAnalysisTableJob
 )
