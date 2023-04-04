@@ -72,7 +72,7 @@ class CreatCDRAnalysisTableJob(BaseAppCronJob):
         dataset = dataset_parameters['ehr_ops_staging_dataset']
 
         for i in cdr_queries:
-            cdr_table_name = os.path.basename(i).split('.')[0]
+            cdr_table_name = 'mv' + os.path.basename(i).split('.')[0]
             client.delete_table(f'{project}.{dataset}.{cdr_table_name}', not_found_ok=True)
             _logger.info("Deleted table '{}'.".format(cdr_table_name))
             query_script = open(i, 'r').read()

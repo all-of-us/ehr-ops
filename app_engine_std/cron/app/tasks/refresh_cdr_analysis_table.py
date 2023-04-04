@@ -49,7 +49,6 @@ class RefreshCDRAnalysisTableTask(BaseAppCloudTask):
         table_count = table_count.result()
         for row in table_count:
             table_exist = row.table_exists
-            print(table_exist)
         if table_exist == 0:
             create_table_job_config = bigquery.QueryJobConfig(destination=f'{project}.{dataset}.{table}')
             create_table = client.query(query, job_config=create_table_job_config)
