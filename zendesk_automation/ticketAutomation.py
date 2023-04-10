@@ -147,7 +147,7 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
         for ticket_id in search:
             ticket = zenpy_client.tickets(id=ticket_id)
             print(f'Commenting on Zendesk ticket with ID {ticket_id}...')
-            #ticket.comment = Comment(body=ticket_descr, public=False)
+            #ticket.comment = Comment(body=ticket_descr, public=True)
             #zenpy_client.tickets.update(ticket)
         return search
     
@@ -199,14 +199,13 @@ def evaluate_metrics(zenpy_client, scores, metric, src_hpo_id,
     for name, score in scores.items():
 
         # If the score is low (whole row is returned for the hpo_id) begin search & comment or create ticket workflow
-        # TODO ROLLOUT: Changing threshold to 1 for purpose of testing Columbia
         if score < 0.9:
             # search for pending and open tickets with GC-1 and hpo_id
             table_name = get_table_name(name, metric)
             if len(table_name) < 1 or metric != 'gc1':
-                tag_list = ["auto-test-tickets", src_hpo_id, metric, 'over-all']
+                tag_list = [src_hpo_id, metric, 'over-all'] 
             else:
-                tag_list = ["auto-test-tickets", src_hpo_id, metric, table_name]
+                tag_list = [src_hpo_id, metric, table_name]
 
             ticket_status = ['open', 'pending']
             search = tag_intersection(zenpy_client, ticket_status, tag_list)
@@ -220,6 +219,7 @@ def evaluate_metrics(zenpy_client, scores, metric, src_hpo_id,
 
             # If the search does not return a ticket then create a new ticket
             else:
+                tag_list.append('auto')
                 ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
                               site_contact_df, scores, metric, table_name,
                               tag_list)
