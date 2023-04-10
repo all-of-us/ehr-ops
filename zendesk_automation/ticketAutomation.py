@@ -118,7 +118,7 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     site_contact_row = site_contact_df.loc[site_contact_df['hpo_id'] ==
                                          src_hpo_id]
     
-    site_contact_email = str(site_contact_row['Point of Contact']).split('; ')[0]
+    site_contact_email = str(site_contact_row['Point of Contact'].values[0]).split('; ')[0]
     assignee_email = hpo_row['contact_email'] 
     assignee = list(zenpy_client.search(type='user', email=assignee_email))
     assignee_id = -1
@@ -147,21 +147,21 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
         for ticket_id in search:
             ticket = zenpy_client.tickets(id=ticket_id)
             print(f'Commenting on Zendesk ticket with ID {ticket_id}...')
-            #ticket.comment = Comment(body=ticket_descr, public=True)
-            #zenpy_client.tickets.update(ticket)
+            ticket.comment = Comment(body=ticket_descr, public=True)
+            zenpy_client.tickets.update(ticket)
         return search
     
 
     elif ticket_action == 'ticket':
         print('Creating Zendesk ticket...')
-        # ticket_audit = zenpy_client.tickets.create(
-        #     Ticket(
-        #         requester_id=requester_id,
-        #         assignee_id=assignee_id,
-        #         subject=f"{metric_upper} {table_name} Data Quality Issue Flagged",
-        #         description=ticket_descr,
-        #         tags=tag_list))
-        # return ticket_audit.ticket
+        ticket_audit = zenpy_client.tickets.create(
+            Ticket(
+                requester_id=requester_id,
+                assignee_id=assignee_id,
+                subject=f"{metric_upper} {table_name} Data Quality Issue Flagged",
+                description=ticket_descr,
+                tags=tag_list))
+        return ticket_audit.ticket
         return
 
 

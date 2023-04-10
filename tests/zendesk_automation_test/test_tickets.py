@@ -31,7 +31,7 @@ class TestBasicInput(unittest.TestCase):
             contact_data,
             columns=[
                 'Site Name', 'hpo_id',
-                'Point of Contact (mostly data stewards)\n*Use semi-colons to separate the email addresses*'
+                'Point of Contact'
             ])
         submission_data = [[
             'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
@@ -66,16 +66,16 @@ class TestBasicInput(unittest.TestCase):
         expected_subject = f"GC1 Condition Table Data Quality Issue Flagged"
         expected_body = f'''Hi Test, 
         
-        In your latest submission, your GC-1 rate was 0.94 for the Condition Table, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
+In your latest submission, your GC-1 rate was 0.94 for the Condition Table, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
         
-        There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365822-NIH-Grant-Award-Metrics-
+There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365822-NIH-Grant-Award-Metrics-
 
-        You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
+You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
 
-        Please fix this data quality issue and resubmit. 
+Please fix this data quality issue and resubmit. 
 
-        Thanks, 
-        EHR Ops Team'''
+Thanks, 
+EHR Ops Team'''
         self.cleanup.append(ticket_obj)
         self.assertTrue(ticket_subject == expected_subject)
         self.assertMultiLineEqual(ticket_body, expected_body)
