@@ -54,12 +54,12 @@ class TestBasicInput(unittest.TestCase):
         }
         table_name = 'condition'
         tag_list = [
-            'test_create_ticket', metric, table_name, 'auto-test-tickets'
+            'test_create_ticket', metric, table_name, 'auto'
         ]
-        ticket_obj = ta.create_ticket(self.zenpy_client,
+        ticket_obj = ta.ticket_update('ticket', self.zenpy_client,
                                       submission_tracking_df, src_hpo_id,
                                       site_contact_df, scores, metric,
-                                      table_name, tag_list, hpo_name)
+                                      table_name, tag_list)
         ticket_body = list(
             self.zenpy_client.tickets.comments(ticket=ticket_obj.id))[0].body
         ticket_subject = ticket_obj.subject
