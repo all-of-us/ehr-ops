@@ -74,6 +74,7 @@ class CreatCDRAnalysisTableJob(BaseAppCronJob):
         for i in cdr_queries:
             cdr_table_name = 'mv_' + os.path.basename(i).split('.')[0]
             client.delete_table(f'{project}.{dataset}.{cdr_table_name}', not_found_ok=True)
+            client.create_table(f'{project}.{dataset}.{cdr_table_name}')
             _logger.info("Deleted table '{}'.".format(cdr_table_name))
             query_script = open(i, 'r').read()
             t = Template(query_script)

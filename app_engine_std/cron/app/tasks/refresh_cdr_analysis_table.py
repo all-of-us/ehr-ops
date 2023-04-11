@@ -37,33 +37,11 @@ class RefreshCDRAnalysisTableTask(BaseAppCloudTask):
         query = self.payload.query
 
         _logger.info(f'Creating of Updating table {dataset}.{table}')
-        check_table_exists_query = f"""
-            SELECT
-                COUNT(1) AS table_exists
-            FROM
-               `{dataset}.__TABLES_SUMMARY__`
-            WHERE
-                table_id='{table}'
-        """
-        table_count = client.query(check_table_exists_query)
-        table_count = table_count.result()
-        for row in table_count:
-            table_exist = row.table_exists
-        if table_exist == 0:
-            create_table_job_config = bigquery.QueryJobConfig(destination=f'{project}.{dataset}.{table}')
-            create_table = client.query(query, job_config=create_table_job_config)
-            create_table.result()
-            _logger.info(f'Created table {dataset}.{table}')
-        else:
-            try:
-                append_table_job_config = bigquery.QueryJobConfig(destination=f'{project}.{dataset}.{table}',
-                                                                  write_disposition='WRITE_APPEND')
-                append_table = client.query(query, job_config=append_table_job_config)
-                append_table.result()
-                _logger.info(f'Updated table {dataset}.{table}')
-            except Exception as e:
-                _logger.info(f'Error updating table {dataset}.{table}')
-                raise e
+        append_table_job_config = bigquery.QueryJobConfig(destination=f'{project}.{dataset}.{table}',
+                                                          write_disposition='WRITE_APPEND')
+        append_table = client.query(query, job_config=append_table_job_config)
+        append_table.result()
+        _logger.info(f'Updated table {dataset}.{table}')
 
         return JSONResponse(status_code=status.HTTP_200_OK,
                             content=f'Cron task {self.gcp_env.project}.{self.task_name} has completed.')
