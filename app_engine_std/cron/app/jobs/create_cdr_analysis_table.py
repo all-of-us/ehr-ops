@@ -74,8 +74,9 @@ class CreatCDRAnalysisTableJob(BaseAppCronJob):
         for i in cdr_queries:
             cdr_table_name = 'mv_' + os.path.basename(i).split('.')[0]
             client.delete_table(f'{project}.{dataset}.{cdr_table_name}', not_found_ok=True)
-            client.create_table(f'{project}.{dataset}.{cdr_table_name}')
             _logger.info("Deleted table '{}'.".format(cdr_table_name))
+            client.create_table(f'{project}.{dataset}.{cdr_table_name}')
+            _logger.info("Created table '{}'.".format(cdr_table_name))
             query_script = open(i, 'r').read()
             t = Template(query_script)
             for u_ehr in cdr_dataset:
@@ -88,5 +89,5 @@ class CreatCDRAnalysisTableJob(BaseAppCronJob):
                 GCPCloudTask().execute('/task/refresh-cdr-analysis-table', queue='cron-default', payload=payload,
                                        project_id=self.gcp_env.project)
 
-            return JSONResponse(status_code=status.HTTP_200_OK,
+        return JSONResponse(status_code=status.HTTP_200_OK,
                                 content=f'Job {self.gcp_env.project}.{self.job_name} has completed.')
