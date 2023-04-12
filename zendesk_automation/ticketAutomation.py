@@ -23,9 +23,6 @@ DEFAULT_SCOPES = [
     'https://www.googleapis.com/auth/drive'
 ]
 
-# Set Google Application Credentials to key file
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('GOOGLE_APP_CREDS')
-
 
 def tag_intersection(zenpy_client, status_list, tag_list):
     # create set of ticket ids that will be intersected on each search
