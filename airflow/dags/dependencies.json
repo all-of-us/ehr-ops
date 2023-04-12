@@ -1,92 +1,92 @@
 {
-    "build_metrics_v_ehr_rdr_participant": {
+    "update_metrics_v_ehr_rdr_participant": {
         "depends_on": [
-            "build_metrics_v_ehr_flag"
+            "update_metrics_v_ehr_flag"
         ],
         "snapshot": false
     },
-    "build_metrics_v_ehr_gc_overall": {
+    "update_metrics_v_ehr_gc_overall": {
         "depends_on": [
-            "build_metrics_v_ehr_rdr_participant"
+            "update_metrics_v_ehr_rdr_participant"
         ],
         "snapshot": false
     },
-    "build_metrics_v_ehr_dc_overall": {
+    "update_metrics_v_ehr_dc_overall": {
         "depends_on": [
-            "build_metrics_v_ehr_rdr_participant"
+            "update_metrics_v_ehr_rdr_participant"
         ],
         "snapshot": false
     },
-    "build_metrics_v_nih_dc_1": {
+    "update_metrics_v_nih_dc_1": {
         "depends_on": [
-            "build_metrics_v_ehr_dc_overall"
+            "update_metrics_v_ehr_dc_overall"
         ],
         "snapshot": true
     },
-    "build_metrics_v_nih_dc_2": {
+    "update_metrics_v_nih_dc_2": {
         "depends_on": [
-            "build_metrics_v_ehr_dc_overall"
+            "update_metrics_v_ehr_dc_overall"
         ],
         "snapshot": true
     },
-    "build_metrics_v_nih_dc_3": {
+    "update_metrics_v_nih_dc_3": {
         "depends_on": [
-            "build_metrics_v_ehr_dc_overall"
+            "update_metrics_v_ehr_dc_overall"
         ],
         "snapshot": true
     },
-    "build_metrics_v_nih_dc_4": {
+    "update_metrics_v_nih_dc_4": {
         "depends_on": [
-            "build_metrics_v_ehr_dc_overall"
+            "update_metrics_v_ehr_dc_overall"
         ],
         "snapshot": true
     },
-    "build_metrics_v_nih_gc_1": {
+    "update_metrics_v_nih_gc_1": {
         "depends_on": [
-            "build_metrics_v_ehr_gc_overall"
+            "update_metrics_v_ehr_gc_overall"
         ],
         "snapshot": true
     },
-    "build_metrics_v_covid_mapping": {
+    "update_metrics_v_covid_mapping": {
         "snapshot": true
     },
-    "build_metrics_v_dc_1": {
+    "update_metrics_v_dc_1": {
         "snapshot": true
     },
-    "build_metrics_v_dc_2": {
+    "update_metrics_v_dc_2": {
         "snapshot": true
     },
-    "build_metrics_v_dc_3": {
+    "update_metrics_v_dc_3": {
         "snapshot": true
     },
-    "build_metrics_v_dc_4": {
+    "update_metrics_v_dc_4": {
         "snapshot": true
     },
-    "build_metrics_v_duplicates": {
+    "update_metrics_v_duplicates": {
         "snapshot": true
     },
-    "build_metrics_v_all_eligible_participants": {
+    "update_metrics_v_all_eligible_participants": {
         "snapshot": true
     },
-    "build_metrics_v_eligible_participants_ehr": {
+    "update_metrics_v_eligible_participants_ehr": {
         "snapshot": true
     },
-    "build_metrics_v_gc_1_standard": {
+    "update_metrics_v_gc_1_standard": {
         "snapshot": true
     },
-    "build_metrics_v_physical_meas": {
+    "update_metrics_v_physical_meas": {
         "snapshot": true
     },
-    "build_metrics_v_table_counts_with_upload_timestamp": {
+    "update_metrics_v_table_counts_with_upload_timestamp": {
         "snapshot": true
     },
-    "build_metrics_v_unit_route_failure": {
+    "update_metrics_v_unit_route_failure": {
         "snapshot": true
     },
-    "build_metrics_v_visit_id_failure": {
+    "update_metrics_v_visit_id_failure": {
         "snapshot": true
     },
-    "build_metrics_v_in_person_participants": {
+    "update_metrics_v_in_person_participants": {
         "snapshot": true
     }
 }

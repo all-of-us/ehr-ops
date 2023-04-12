@@ -1,5 +1,6 @@
-from airflow.decorators import dag, task
+from airflow.decorators import dag, task, task_group
 from airflow.providers.google.cloud.hooks import bigquery
+from airflow.providers.google.cloud.operators.pubsub import PubSubPublishMessageOperator
 from airflow.models import Variable
 import pendulum
 import networkx as nx
@@ -7,6 +8,10 @@ import json
 from pathlib import Path
 import re
 # from google.cloud import bigquery as python_client_bigquery
+
+import os
+
+os.environ["no_proxy"] = "*"
 
 DEPENDENCIES_FILE = Path(__file__).parent / 'dependencies.json'
 
@@ -41,74 +46,111 @@ def generate_metrics():
     EHR_OPS_RESOURCES_DATASET_ID = Variable.get('ehr_ops_resources_dataset_id')
     EHR_OPS_METRICS_STAGING_DATASET_ID = Variable.get(
         'ehr_ops_metrics_staging_dataset_id')
+    PUBSUB_SUCCESS_TOPIC = Variable.get('pubsub_success_topic')
+    PUBSUB_FAILURE_TOPIC = Variable.get('pubsub_failure_topic')
 
     # Get list of metric views from variables
     view_list = Variable.get("bq_view_list", deserialize_json=True)
 
-    task_dict = {}
-    for view in view_list:
-        view_id = view['view_name']
-        task_id = f'build_metrics_{view_id}'
+    @task_group()
+    def main_block():
+        task_group_dict = {}
+        for view in view_list:
+            view_id = view['view_name']
+            group_id = f'update_metrics_{view_id}'
 
-        @task(task_id=task_id)
-        def build_metrics():
-            materialized_view_id = f"mv_{re.match('v_(.+)', view_id)[1]}"
+            build_task_id = f'build_metrics_{view_id}'
+            snapshot_task_id = f'snapshot_metrics_{view_id}'
 
-            hook = bigquery.BigQueryHook(
-                gcp_conn_id='aou_ehr_ops_curation_test', use_legacy_sql=False)
+            # This was added intentionally to cause failure
+            # if view_id == 'v_ehr_rdr_participant':
+            #     view_id = view_id + '_bad_name_bad_name'
 
-            metrics_query_tmpl = """
-            SELECT
-                *
-            FROM `{project_id}.{dataset_id}.{view_id}`
-            """
+            @task(task_id=build_task_id)
+            def build_metrics(view_id):
+                materialized_view_id = f"mv_{re.match('v_(.+)', view_id)[1]}"
+                print('view_id ', view_id)
+                hook = bigquery.BigQueryHook(
+                    gcp_conn_id='aou_ehr_ops_curation_test',
+                    use_legacy_sql=False)
 
-            metrics_query = metrics_query_tmpl.format(
-                project_id=EHR_OPS_PROJECT_ID,
-                dataset_id=EHR_OPS_RESOURCES_DATASET_ID,
-                view_id=view_id)
+                metrics_query_tmpl = """
+                SELECT
+                    *
+                FROM `{project_id}.{dataset_id}.{view_id}`
+                """
 
-            destination_dataset_table = f'{EHR_OPS_METRICS_STAGING_DATASET_ID}.{materialized_view_id}'
-            hook.run_query(metrics_query,
-                           destination_dataset_table=destination_dataset_table,
-                           write_disposition='WRITE_TRUNCATE')
+                metrics_query = metrics_query_tmpl.format(
+                    project_id=EHR_OPS_PROJECT_ID,
+                    dataset_id=EHR_OPS_RESOURCES_DATASET_ID,
+                    view_id=view_id)
 
-        task_dict[task_id] = build_metrics()
+                destination_dataset_table = f'{EHR_OPS_METRICS_STAGING_DATASET_ID}.{materialized_view_id}'
+                hook.run_query(
+                    metrics_query,
+                    destination_dataset_table=destination_dataset_table,
+                    write_disposition='WRITE_TRUNCATE')
 
-    order_tasks(task_dict)
+            @task(task_id=snapshot_task_id)
+            def snapshot_metrics(view_id):
+                snapshot_table_id = f"snapshot_{re.match('v_(.+)', view_id)[1]}"
+                materialized_view_id = f"mv_{re.match('v_(.+)', view_id)[1]}"
 
-    # # Pull list of metric views
-    # @task(task_id=f'retrieve_metric_view_list')
-    # def retrieve_metric_view_list():
-    #     hook = bigquery.BigQueryHook(gcp_conn_id='aou_ehr_ops_curation_test',
-    #                                  use_legacy_sql=False)
+                hook = bigquery.BigQueryHook(
+                    gcp_conn_id='aou_ehr_ops_curation_test',
+                    use_legacy_sql=False)
 
-    #     client = python_client_bigquery.Client(
-    #         project=hook._get_field('project'),
-    #         credentials=hook._get_credentials())
+                snapshot_query_tmpl = """
+                SELECT
+                    *, current_timestamp() as snapshot_ts
+                FROM `{project_id}.{dataset_id}.{materialized_view_id}`
+                """
 
-    #     sql = """
-    #         SELECT
-    #             table_catalog, table_schema, table_name
-    #         FROM `{project_id}.{dataset_id}.INFORMATION_SCHEMA.TABLES`
-    #         WHERE table_type='VIEW'
-    #     """.format(project_id=EHR_OPS_PROJECT_ID,
-    #                dataset_id=EHR_OPS_RESOURCES_DATASET_ID)
+                snapshot_query = snapshot_query_tmpl.format(
+                    project_id=EHR_OPS_PROJECT_ID,
+                    dataset_id=EHR_OPS_METRICS_STAGING_DATASET_ID,
+                    materialized_view_id=materialized_view_id)
 
-    #     results = client.query(sql)
-    #     view_names = [row["table_name"] for row in results]
+                destination_dataset_table = f'{EHR_OPS_METRICS_STAGING_DATASET_ID}.{snapshot_table_id}'
+                hook.run_query(
+                    snapshot_query,
+                    destination_dataset_table=destination_dataset_table,
+                    write_disposition='WRITE_APPEND')
 
-    #     return view_names
+            @task_group(group_id=group_id)
+            def update_metrics(view_id):
+                t1 = build_metrics(view_id)
+                t2 = snapshot_metrics(view_id)
 
-    # Decide dependency order of views to execute
+                t1 >> t2
 
-    # Execute each view in `ehr_ops_resources` and save results as tables
+            task_group_dict[group_id] = update_metrics(view_id)
 
-    # build_metrics.expand(view_id=retrieve_metric_view_list())
+        order_tasks(task_group_dict)
 
-    # Message success or failure to `metric-load-completed` and `metric-load-failed` PubSub topics
+    #Uncomment for pubsub
 
-    # Snapshot tables com
+    pubsub_publish_success = PubSubPublishMessageOperator(
+        task_id="publish_success",
+        project_id=EHR_OPS_PROJECT_ID,
+        topic=PUBSUB_SUCCESS_TOPIC,
+        messages=[{
+            "data": b"success"
+        }],
+        trigger_rule="all_success")
+
+    pubsub_publish_failure = PubSubPublishMessageOperator(
+        task_id="publish_failure",
+        project_id=EHR_OPS_PROJECT_ID,
+        topic=PUBSUB_FAILURE_TOPIC,
+        messages=[{
+            "data": b"failed"
+        }],
+        trigger_rule="one_failed")
+
+    main_block() >> [pubsub_publish_success, pubsub_publish_failure]
+
+    # main_block()
 
 
 generate_metrics = generate_metrics()

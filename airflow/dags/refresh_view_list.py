@@ -8,6 +8,10 @@ from pathlib import Path
 import re
 from google.cloud import bigquery as python_client_bigquery
 
+import os
+
+os.environ["no_proxy"] = "*"
+
 
 @dag(schedule_interval=None,
      start_date=pendulum.datetime(2023, 1, 1, tz="UTC"))
@@ -21,17 +25,17 @@ def refresh_view_list():
         hook = bigquery.BigQueryHook(gcp_conn_id='aou_ehr_ops_curation_test',
                                      use_legacy_sql=False)
 
-        client = python_client_bigquery.Client(
-            project=hook._get_field('project'),
-            credentials=hook._get_credentials())
+        client = hook.get_client()
+        # client = python_client_bigquery.Client(
+        #     project=hook._get_field('project'),
+        #     credentials=hook._get_credentials())
 
-        sql = """
+        sql = f"""
             SELECT
                 table_catalog project_id, table_schema dataset_id, table_name view_name
-            FROM `{project_id}.{dataset_id}.INFORMATION_SCHEMA.TABLES`
+            FROM `{EHR_OPS_PROJECT_ID}.{EHR_OPS_RESOURCES_DATASET_ID}.INFORMATION_SCHEMA.TABLES`
             WHERE table_type='VIEW'
-        """.format(project_id=EHR_OPS_PROJECT_ID,
-                   dataset_id=EHR_OPS_RESOURCES_DATASET_ID)
+        """
 
         results = client.query(sql)
         views = [dict(row) for row in results]
