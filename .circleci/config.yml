@@ -46,7 +46,7 @@ commands:
       - run: 
           command: |
             echo "$KEYFILE_LOC" | base64 --decode > ./zendesk_automation/KEYFILE_LOC.txt
-            echo "$GOOGLE_APP_CREDS" | base64 --decode > ./zendesk_automation/GOOGLE_APP_CREDS.txt
+            echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode > ./zendesk_automation/GOOGLE_APPLICATION_CREDENTIALS.txt
       - run:
           name: Running Unittests
           command: .ci_scripts/run_unittests.sh
