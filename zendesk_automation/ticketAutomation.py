@@ -53,7 +53,7 @@ def get_ticket_body(action, table_name, metric, metric_value, hpo_name):
         
 In your latest submission, your GC-1 rate was {metric_value}{table_name}, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
         
-There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365822-NIH-Grant-Award-Metrics-
+There is additional information linked here, along with SQL queries to help you identify the issue: https://drc.aouanalytics.org/#/views/NIHGrantAwardMetrics/NIHGrantAwardMetrics?:iid=1
 
 You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
 
@@ -159,7 +159,6 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
                 description=ticket_descr,
                 tags=tag_list))
         return ticket_audit.ticket
-        return
 
 
 def get_hpo_list(filled_scores_df, metric, threshold):
@@ -273,10 +272,6 @@ def ticket_automation():
     bigquery_client = bigquery.Client()
 
     site_contact_df, submission_tracking_df = get_sheets()
-
-    # get list of hpo_ids
-    hpo_list = site_contact_df.loc[
-        site_contact_df['hpo_id'] != '']['hpo_id'].to_list()
     
 
     latest_submission_job_config = bigquery.QueryJobConfig()
@@ -292,7 +287,7 @@ def ticket_automation():
     exclude = ['waianae_coast_comprehensive', 'saou_hhsys', 'unc_chapel_hill', 'UPR_COMPREHENSIVE_CANCER_CENTER', 'CAL_PMC_USC_ALTAMED', 'wash_u_stl', 'vcu']
     exclude = list(map(str.lower,exclude))
 
-    included_hpos = (set(hpo_list) ^ set(exclude)).intersection(hpo_set)
+    included_hpos = set(hpo_list) - set(exclude)
 
     metrics = ['gc1']
 
