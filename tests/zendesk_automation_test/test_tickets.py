@@ -68,7 +68,7 @@ class TestBasicInput(unittest.TestCase):
         
 In your latest submission, your GC-1 rate was 0.94 for the Condition Table, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
         
-There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365822-NIH-Grant-Award-Metrics-
+There is additional information linked here, along with SQL queries to help you identify the issue: https://drc.aouanalytics.org/#/views/NIHGrantAwardMetrics/NIHGrantAwardMetrics?:iid=1
 
 You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
 
