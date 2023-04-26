@@ -1,0 +1,3 @@
+ZENPY_TOKEN = "DhwYyphs3UY1XuYFKmAAylgnZvdmew7cOiTuNmYN"
+SUBDOMAIN = "aou-ehr-ops"
+SUBMISSION_TRACK_ID = '1jn2UHlttx80exkpLpMRIe8MQmHqPnDkIWyrFz8twxSo'
