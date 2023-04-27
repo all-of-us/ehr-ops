@@ -41,7 +41,7 @@ def get_sheets():
     return submission_tracking_df
 
 # CALCULATE EACH METRIC
-def ticket_automation():
+def trigger_creation():
 
     zenpy_client = Zenpy(**CREDENTIALS)
 
@@ -74,7 +74,8 @@ def ticket_automation():
         # Create triggers for Chun Yee, Nripendra, and Gage
         trigger_audit = zenpy_client.triggers.create(
                         Trigger(actions=[{"field": "assignee_id", "value": user_id}],
-                                conditions=org_conditions
+                                conditions=org_conditions,
+                                active=False
                             ))
 
 
@@ -82,4 +83,4 @@ def ticket_automation():
     
 
 if __name__ == '__main__':
-    ticket_automation()
+    trigger_creation()
