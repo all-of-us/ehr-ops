@@ -52,7 +52,7 @@ def trigger_creation():
     submission_tracking_df = get_sheets()
 
     # Create mapping for organization to assignee
-    ticket_assignees = ['cl3777@cumc.columbia.edu', 'gage.rion@vumc.org', 'na2960@cumc.columbia.edu']
+    ticket_assignees = ['cl3777@cumc.columbia.edu', 'gage.rion@vumc.org', 'na2960@cumc.columbia.edu', 'michael.tokarz@vumc.org']
     assignee_map = {}
 
     for assignee in ticket_assignees:
