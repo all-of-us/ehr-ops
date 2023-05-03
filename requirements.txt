@@ -64,7 +64,7 @@ fastapi-utils==0.2.1
     # via -r app_engine_std/cron/requirements.in
 filelock==3.9.0
     # via virtualenv
-flask==2.2.2
+flask==2.2.5
     # via aou-cloud
 google-api-core[grpc]==2.11.0
     # via
