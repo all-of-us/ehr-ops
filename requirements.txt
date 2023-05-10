@@ -56,7 +56,7 @@ executing==1.2.0
     # via stack-data
 faker==16.7.0
     # via aou-cloud
-fastapi==0.90.0
+fastapi==0.93.0
     # via
     #   -r app_engine_std/cron/requirements.in
     #   fastapi-utils
@@ -64,7 +64,7 @@ fastapi-utils==0.2.1
     # via -r app_engine_std/cron/requirements.in
 filelock==3.9.0
     # via virtualenv
-flask==2.2.2
+flask==2.2.5
     # via aou-cloud
 google-api-core[grpc]==2.11.0
     # via
@@ -377,7 +377,7 @@ stack-data==0.6.2
     # via ipython
 starkbank-ecdsa==2.2.0
     # via sendgrid
-starlette==0.23.0
+starlette==0.25.0
     # via
     #   -r app_engine_std/cron/requirements.in
     #   fastapi
@@ -421,7 +421,7 @@ virtualenv==20.19.0
     # via pre-commit
 wcwidth==0.2.6
     # via prompt-toolkit
-werkzeug==2.2.2
+werkzeug==2.2.3
     # via
     #   aou-cloud
     #   flask
