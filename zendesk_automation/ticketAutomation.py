@@ -53,7 +53,7 @@ def get_ticket_body(action, table_name, metric, metric_value, hpo_name):
         
 In your latest submission, your GC-1 rate was {metric_value}{table_name}, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
         
-There is additional information linked here, along with SQL queries to help you identify the issue: https://drc.aouanalytics.org/#/views/NIHGrantAwardMetrics/NIHGrantAwardMetrics?:iid=1
+There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365822-NIH-Grant-Award-Metrics-#h_01F7AB48M32ZRGYAVQXWAX92W6
 
 You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
 
@@ -157,7 +157,8 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
                 assignee_id=assignee_id,
                 subject=f"{metric_upper} {table_name} Data Quality Issue Flagged",
                 description=ticket_descr,
-                tags=tag_list))
+                tags=tag_list,
+                status='pending'))
         return ticket_audit.ticket
 
 
