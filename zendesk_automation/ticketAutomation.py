@@ -162,12 +162,12 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
         return ticket_audit.ticket
 
 
-def get_hpo_list(filled_scores_df, metric, threshold):
+def get_hpo_list(filled_scores_df, metric, threshold, obs_threshold):
     hpo_list = filled_scores_df[
         (filled_scores_df[f'condition_{metric}'] < threshold) |
         (filled_scores_df[f'drug_{metric}'] < threshold) |
         (filled_scores_df[f'measurement_{metric}'] < threshold) |
-        (filled_scores_df[f'observation_{metric}'] < threshold) |
+        (filled_scores_df[f'observation_{metric}'] < obs_threshold) |
         (filled_scores_df[f'procedure_{metric}'] < threshold) |
         (filled_scores_df[f'visit_{metric}'] < threshold) |
         (filled_scores_df[f'_{metric}'] < threshold)]
@@ -315,7 +315,8 @@ def ticket_automation():
             # Find all hpos with scores below the threshold
             low_scores_df = get_hpo_list(filled_scores_df,
                                          metric,
-                                         threshold=0.9)
+                                         threshold=0.9,
+                                         obs_threshold=0.6)
 
             # For each hpo with a low score evaluate which table has the low metric
             for _, row in low_scores_df.iterrows():
