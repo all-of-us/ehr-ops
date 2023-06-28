@@ -1,6 +1,7 @@
 FROM registry.redhat.io/rhel7  AS build_stage
 ARG USER
 ARG PASS
+RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
 RUN subscription-manager register --username=$USER --password=$PASS --auto-attach
 RUN yum -y update
 RUN yum -y groupinstall 'Development Tools'
@@ -32,6 +33,7 @@ COPY --from=build_stage /app/ohdsi-build.tgz .
 FROM registry.redhat.io/rhel7  AS deploy_stage
 ARG USER
 ARG PASS
+RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
 RUN subscription-manager register --username=$USER --password=$PASS --auto-attach
 WORKDIR /app
 RUN yum -y update
