@@ -1,8 +1,8 @@
 FROM registry.redhat.io/rhel7  AS build_stage
-ARG USER
-ARG PASS
+ARG ORG_ID
+ARG ACTIVATION_KEY
 RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
-RUN subscription-manager register --username=$USER --password=$PASS --auto-attach
+RUN subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY
 RUN yum -y update
 RUN yum -y groupinstall 'Development Tools'
 RUN rm -fr /var/cache/yum/*
@@ -31,10 +31,10 @@ COPY --from=build_stage /app/ohdsi-build.tgz .
 
 # Final VM  
 FROM registry.redhat.io/rhel7  AS deploy_stage
-ARG USER
-ARG PASS
+ARG ORG_ID
+ARG ACTIVATION_KEY
 RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
-RUN subscription-manager register --username=$USER --password=$PASS --auto-attach
+RUN subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY
 WORKDIR /app
 RUN yum -y update
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
