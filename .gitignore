@@ -24,7 +24,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/
 develop-eggs/
 dist/
 downloads/
@@ -152,3 +152,6 @@ dmypy.json
 zendesk_automation/_utils.py
 
 KEYFILE_LOC.txt
+
+# DQD Environment
+config.yml

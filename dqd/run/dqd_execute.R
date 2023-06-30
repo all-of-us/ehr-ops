@@ -9,10 +9,29 @@
 # pathToDriver = ""
 # )
 
+myPaths <- .libPaths()
+myPaths <- c("/app/r-lib-local", myPaths)
+.libPaths(myPaths)
+
+
+
+library(DatabaseConnector)
+
+
+keyPath = "/app/gcp_key.json"
+
+config = config::get()
+server = config::get('server')
+project_id = config::get('project_id')
+o_auth_type = config::get('o_auth_type')
+o_auth_service_account_email = config::get('o_auth_service_account_email')
+
+
+connectionString <- glue("jdbc:bigquery://{server};ProjectId={project_id};OAuthType={o_auth_type};OAuthServiceAcctEmail={o_auth_service_account_email};OAuthPvtKeyPath={keyPath}")
 connectionDetails <- DatabaseConnector::createConnectionDetails(
     dbms = "bigquery",
-    connectionString = "",
-    pathToDriver = "",
+    connectionString = connectionString,
+    pathToDriver = "/app/bq_jdbc",
     user = "",
     password = ""
 )
@@ -73,7 +92,7 @@ csvFile <- "" # only needed if writeToCsv is set to TRUE
 checkLevels <- c("TABLE", "FIELD", "CONCEPT")
 
 # which DQ checks to run? ------------------------------------
-checkNames <- c() # Names can be found in inst/csv/OMOP_CDM_v5.3_Check_Descriptions.csv
+checkNames <- c("cdmTable") # Names can be found in inst/csv/OMOP_CDM_v5.3_Check_Descriptions.csv
 
 # which CDM tables to exclude? ------------------------------------
 tablesToExclude <- c("CONCEPT", "VOCABULARY", "CONCEPT_ANCESTOR", "CONCEPT_RELATIONSHIP", "CONCEPT_CLASS", "CONCEPT_SYNONYM", "RELATIONSHIP", "DOMAIN") # list of CDM table names to skip evaluating checks against; by default DQD excludes the vocab tables
@@ -97,9 +116,9 @@ DataQualityDashboard::executeDqChecks(connectionDetails = connectionDetails,
                             tablesToExclude = tablesToExclude,
                             checkNames = checkNames)
 
-# inspect logs ----------------------------------------------------------------------------
-ParallelLogger::launchLogViewer(logFileName = file.path(outputFolder, cdmSourceName, 
-                                                      sprintf("log_DqDashboard_%s.txt", cdmSourceName)))
+# # inspect logs ----------------------------------------------------------------------------
+# ParallelLogger::launchLogViewer(logFileName = file.path(outputFolder, cdmSourceName, 
+#                                                       sprintf("log_DqDashboard_%s.txt", cdmSourceName)))
 
 # (OPTIONAL) if you want to write the JSON file to the results table separately -----------------------------
 jsonFilePath <- ""

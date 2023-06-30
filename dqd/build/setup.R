@@ -10,6 +10,8 @@ install.packages("callr")
 install.packages("devtools")
 install.packages("drat")
 install.packages("rJava")
+install.packages("config")
+install.packages("glue")
 library(devtools)
 drat::addRepo("OHDSI")
 install_version("DatabaseConnector", version = "6.2.1", repos = "http://cran.us.r-project.org") # done because of bug in version 6.2.2
