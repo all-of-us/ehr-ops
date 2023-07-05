@@ -17,13 +17,18 @@ This stage is responsible for running the DQD using a [script](https://ohdsi.git
 
 **dqd_execute.R** - Script that runs the DQD. Desired parameters such as excluded tables or number of threads can be set within the script before execution.
 
-**results_uploads.sh** - Script to upload results of the DQD run to a storage bucket with the name `dqd_output/output-{current_date}/results.json`
+**results_upload.sh** - Script to upload results of the DQD run to a storage bucket with the name `dqd_output/output-{current_date}/results.json`
 
 ## Execution
 
 1. (If not done already) Copy the contents of `config.yml.example` to a file named `config.yml`
- `cp config.yml.example config.yml`
     * Fill in the necessary parameters in the copied file.
+```
+cp config.yml.example config.yml
+```
+    
 2. Execute the following command to build the Docker container, replacing the necessary arguments:
-`docker build . --build-arg SERVICE_ACCT_KEY "$(cat path/to/service_account_key.json)"`
+```
+docker build . --build-arg SERVICE_ACCT_KEY "$(cat path/to/service_account_key.json)"
+```
 3. Check google storage bucket to confirm that the DQD results.json file has been uploaded.
