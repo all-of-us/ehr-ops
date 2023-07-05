@@ -5,10 +5,12 @@ WORKDIR /app
 
 COPY dqd_execute.R .
 COPY config.yml .
+COPY results_upload.sh .
+
 RUN echo $SERVICE_ACCT_KEY > gcp_key.json
-# COPY $SERVICE_ACCT_KEY_PATH ./gcp_key.json
-RUN export $(xargs < .env)
 
-
-# RUN Rscript dqd_execute.R
+# Execute DQD
 RUN R CMD javareconf -e "R -f dqd_execute.R"
+
+# Push file to cloud
+RUN sh results_upload.sh

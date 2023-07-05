@@ -40,6 +40,7 @@ RUN curl -o SimbaJDBC.zip https://storage.googleapis.com/simba-bq-release/jdbc/S
 RUN unzip SimbaJDBC.zip -d bq_jdbc
 RUN tar czf ohdsi-build.tgz r-lib-local bq_jdbc
 
+
 # # copy to scratch -- NOTE: this might not be needed
 # FROM scratch AS artifact
 # COPY --from=build_stage /app/ohdsi-build.tgz .
@@ -63,16 +64,19 @@ RUN curl -O https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rp
 RUN yum -y install R-$R_VERSION-1-1.x86_64.rpm
 
 
+RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
+RUN ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
+
+
 
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/jre/
 ENV PATH="$PATH:$JAVA_HOME/bin"
 
-#
+# Install gcloud tools
+COPY gcloud_setup.sh .
+RUN sh gcloud_setup.sh .
+
+
 COPY --from=build_stage /app /app
-# COPY --from=build_stage /opt/R/${R_VERSION}/bin/R /opt/R/${R_VERSION}/bin/
-# COPY --from=build_stage /opt/R/${R_VERSION}/bin/Rscript /opt/R/${R_VERSION}/bin/
-# COPY --from=build_stage /opt/R/ /opt/R/
 
 
-RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
-RUN ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript

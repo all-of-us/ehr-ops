@@ -1,21 +1,11 @@
-# fill out the connection details -----------------------------------------------------------------------
-# connectionDetails <- DatabaseConnector::createConnectionDetails(
-# dbms = "", 
-# user = "", 
-# password = "", 
-# server = "", 
-# port = "", 
-# extraSettings = "",
-# pathToDriver = ""
-# )
-
 myPaths <- .libPaths()
 myPaths <- c("/app/r-lib-local", myPaths)
 .libPaths(myPaths)
 
 
-
 library(DatabaseConnector)
+library(glue)
+library(config)
 
 
 keyPath = "/app/gcp_key.json"
@@ -92,10 +82,13 @@ csvFile <- "" # only needed if writeToCsv is set to TRUE
 checkLevels <- c("TABLE", "FIELD", "CONCEPT")
 
 # which DQ checks to run? ------------------------------------
-checkNames <- c("cdmTable") # Names can be found in inst/csv/OMOP_CDM_v5.3_Check_Descriptions.csv
+checkNames <- c()
+# checkNames <- c("cdmTable", "measurePersonCompleteness", "cdmField") # Names can be found in inst/csv/OMOP_CDM_v5.3_Check_Descriptions.csv
 
 # which CDM tables to exclude? ------------------------------------
-tablesToExclude <- c("CONCEPT", "VOCABULARY", "CONCEPT_ANCESTOR", "CONCEPT_RELATIONSHIP", "CONCEPT_CLASS", "CONCEPT_SYNONYM", "RELATIONSHIP", "DOMAIN") # list of CDM table names to skip evaluating checks against; by default DQD excludes the vocab tables
+tablesToExclude <- c("CONCEPT", "VOCABULARY", "CONCEPT_ANCESTOR", "CONCEPT_RELATIONSHIP", "CONCEPT_CLASS", "CONCEPT_SYNONYM", "RELATIONSHIP", "DOMAIN",
+
+"DEATH", "COST", "PAYER_PLAN_PERIOD") # list of CDM table names to skip evaluating checks against; by default DQD excludes the vocab tables
 
 # run the job --------------------------------------------------------------------------------------
 DataQualityDashboard::executeDqChecks(connectionDetails = connectionDetails, 
