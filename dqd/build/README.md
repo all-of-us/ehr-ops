@@ -4,7 +4,7 @@ This stage is responsible for building an R-containing RedHat environment in a D
 
 ## Prerequisites
 
-1. [A RedHat account](https://www.redhat.com/en) must be created to obtain an activation key for the RedHat instance. Follow instructions, follow [Registry Authentication](https://access.redhat.com/RegistryAuthentication).
+1. [A RedHat account](https://www.redhat.com/en) must be created to obtain an activation key for the RedHat instance. Follow instructions for [Registry Authentication](https://access.redhat.com/RegistryAuthentication).
  
 ## Contents
 
