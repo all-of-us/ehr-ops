@@ -1,0 +1,6 @@
+default:
+  server:
+  project_id:
+  o_auth_type:
+  o_auth_service_account_email:
+  
