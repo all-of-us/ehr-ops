@@ -141,25 +141,25 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
                                    round(metric_value, 2), hpo_name)
     
     if ticket_action == 'comment':
-        # for ticket_id in search:
-        #     ticket = zenpy_client.tickets(id=ticket_id)
-        #     print(f'Commenting on Zendesk ticket with ID {ticket_id}...')
-        #     ticket.comment = Comment(body=ticket_descr, public=True)
-        #     zenpy_client.tickets.update(ticket)
+        for ticket_id in search:
+            ticket = zenpy_client.tickets(id=ticket_id)
+            print(f'Commenting on Zendesk ticket with ID {ticket_id}...')
+            ticket.comment = Comment(body=ticket_descr, public=True)
+            zenpy_client.tickets.update(ticket)
         return search
     
 
     elif ticket_action == 'ticket':
         print('Creating Zendesk ticket...')
-        # ticket_audit = zenpy_client.tickets.create(
-        #     Ticket(
-        #         requester_id=requester_id,
-        #         assignee_id=assignee_id,
-        #         subject=f"{metric_upper} {table_name} Data Quality Issue Flagged",
-        #         description=ticket_descr,
-        #         tags=tag_list,
-        #         status='pending'))
-        # return ticket_audit.ticket
+        ticket_audit = zenpy_client.tickets.create(
+            Ticket(
+                requester_id=requester_id,
+                assignee_id=assignee_id,
+                subject=f"{metric_upper} {table_name} Data Quality Issue Flagged",
+                description=ticket_descr,
+                tags=tag_list,
+                status='pending'))
+        return ticket_audit.ticket
 
 
 def get_hpo_list(filled_scores_df, metric, threshold, obs_threshold):
