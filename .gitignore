@@ -152,3 +152,5 @@ dmypy.json
 zendesk_automation/_utils.py
 
 KEYFILE_LOC.txt
+
+zendesk_triggers/
