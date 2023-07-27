@@ -43,7 +43,7 @@ def tag_intersection(zenpy_client, status_list, tag_list):
     return list(ticket_intersection)
 
 
-def get_ticket_body(action, table_name, metric, metric_value, hpo_name):
+def get_ticket_body(action, hpo_name, metric, metric_value=None, table_name=None, ids=None):
     # gc1, pysical measurement, covid mapping, measurement integration
     # only gc1 is by table
     ticket_body = ""
@@ -60,7 +60,7 @@ You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/
 Please fix this data quality issue and resubmit. 
 
 Thanks, 
-EHR Ops Team 
+EHR Ops Team
         '''
 
         return ticket_body
@@ -77,44 +77,56 @@ EHR Ops Team
         return comment_body
 
     elif metric == 'physical_measurement':
-        ticket_body = f'''
-        Hi {hpo_name},
+        ticket_body = f'''Hi {hpo_name},
         
-        In your latest submission, the physical measurements you submitted were either marked as missing or fell below our threshold. 
-        This is a high priority data quality metric: particularly height, weight, blood pressure, and heart rate. 
-        
-        There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365842-Physical-measurements
-        
-        You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
-        
-        Please fix this data quality issue and resubmit. 
-        
-        Thanks,
-        EHR Ops Team 
+In your latest submission, the physical measurements you submitted were either marked as missing or fell below our threshold. 
+This is a high priority data quality metric: particularly height, weight, blood pressure, and heart rate. 
 
+There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365842-Physical-measurements
+
+You can access our EHR Ops dashboard here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard/Home
+
+Please fix this data quality issue and resubmit. 
+
+Thanks,
+EHR Ops Team
         '''
 
     elif metric == 'covid_mapping':
-        ticket_body = f'''
-        Hi {hpo_name}, 
+        ticket_body = f'''Hi {hpo_name}, 
         
-        Thanks, 
-        EHR Ops Team 
-        
+Thanks, 
+EHR Ops Team
         '''
+
+    elif metric == 'ehr_consent_status':
+        joined_list = '\n'.join(ids)
+        ticket_body = f'''Hi {hpo_name},
+
+Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
+{joined_list}
+
+Thanks,
+EHR Ops Team
+'''
 
     return
 
 
 def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_id,
-                  site_contact_df, scores, metric, table_name, tag_list, search=None):
+                  site_contact_df, metric, tag_list, scores=None, table_name=None, search=None, ids=None):
+
+    # Get submission tracking information to internall assign the ticket
     hpo_row = submission_tracking_df.loc[submission_tracking_df['hpo_id'] ==
                                          src_hpo_id]
     hpo_row = submission_tracking_df.loc[submission_tracking_df['hpo_id'] ==
                                          src_hpo_id]
+    
+
     site_contact_row = site_contact_df.loc[site_contact_df['hpo_id'] ==
                                          src_hpo_id]
     
+    # Get site contact information to externally assign the ticket
     site_contact_email = str(site_contact_row['Point of Contact'].values[0]).split('; ')[0]
     assignee_email = hpo_row['contact_email'] 
     assignee = list(zenpy_client.search(type='user', email=assignee_email))
@@ -129,17 +141,30 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     # requester_id = list(requester)[0].id
     hpo_name = list(site_contact_df[site_contact_df['hpo_id'] == src_hpo_id]
                     ['Site Name'])[0]
-    if table_name == '':
+
+    if table_name is not None and table_name == '':
         metric_value = scores[f'_{metric}']
         table_phrase = table_name
-    else:
+    elif table_name is not None:
         metric_value = scores[table_name]
         table_name = table_name.title() + " Table"
         table_phrase = " for the " + table_name
-    metric_upper = metric.upper()
-    ticket_descr = get_ticket_body(ticket_action, table_phrase, metric_upper,
-                                   round(metric_value, 2), hpo_name)
+    metric_upper = metric.replace('_', ' ').upper()
+
+    #Define subject line text and ticket description
+    subject_line = ''
+    ticket_descr = ''
     
+    if 'ehr_consent_status' in tag_list:
+        subject_line = f"{metric_upper} Issue Flagged"
+        ticket_descr = get_ticket_body(ticket_action, metric_upper, hpo_name, ids)
+
+    else:
+        subject_line = f"{metric_upper} {table_name} Data Quality Issue Flagged"
+        ticket_descr = get_ticket_body(ticket_action, hpo_name, metric_upper,
+                                   round(metric_value, 2), table_phrase)
+
+
     if ticket_action == 'comment':
         for ticket_id in search:
             ticket = zenpy_client.tickets(id=ticket_id)
@@ -155,7 +180,7 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
             Ticket(
                 requester_id=requester_id,
                 assignee_id=assignee_id,
-                subject=f"{metric_upper} {table_name} Data Quality Issue Flagged",
+                subject=subject_line,
                 description=ticket_descr,
                 tags=tag_list,
                 status='pending'))
@@ -191,36 +216,57 @@ def get_table_name(name, metric):
     return name.split(f'_{metric}')[0]
 
 
-def evaluate_metrics(zenpy_client, scores, metric, src_hpo_id,
-                     submission_tracking_df, site_contact_df):
-    for name, score in scores.items():
+def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
+                     submission_tracking_df=None, scores=None, ids=None):
+    # Ticket status array
+    ticket_status = ['open', 'pending']
+    tag_list = [src_hpo_id, metric]
 
-        # If the score is low (whole row is returned for the hpo_id) begin search & comment or create ticket workflow
-        if ('observation' not in name and score < 0.9) or ('observation' in name and score < 0.6):
-            # search for pending and open tickets with GC-1 and hpo_id
-            table_name = get_table_name(name, metric)
-            if len(table_name) < 1 or metric != 'gc1':
-                tag_list = [src_hpo_id, metric, 'over-all'] 
-            else:
-                tag_list = [src_hpo_id, metric, table_name]
+    if metric == 'ehr_consent_status':
+        # Check for existing ticket
+        search = tag_intersection(zenpy_client, ticket_status, tag_list)
 
-            ticket_status = ['open', 'pending']
-            search = tag_intersection(zenpy_client, ticket_status, tag_list)
+        # If a ticket exists comment
+        if search is not None and len(search) > 0:
+            ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
+                        site_contact_df, metric,tag_list, search=search, ids=ids)
 
-            # TODO: Decide what to do if multiple tickets are returned by the search
-            # If the search does return a ticket then add a comment to the existing ticket
-            if search is not None and len(search) > 0:
-                ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
-                                site_contact_df, scores, metric, table_name,
-                                tag_list, search=search)
+        # If the search does not return a ticket then create a new ticket
+        else:
+            tag_list.append('auto')
+            ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
+                        site_contact_df, metric, tag_list, ids=ids)
 
-            # If the search does not return a ticket then create a new ticket
-            else:
-                tag_list.append('auto')
-                ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
-                              site_contact_df, scores, metric, table_name,
-                              tag_list)
+
+    else:
+        for name, score in scores.items():
+
+            # If the score is low (whole row is returned for the hpo_id) begin search & comment or create ticket workflow
+            if ('observation' not in name and score < 0.9) or ('observation' in name and score < 0.6):
+                # search for pending and open tickets with GC-1 and hpo_id
+                table_name = get_table_name(name, metric)
+                if len(table_name) < 1 or metric != 'gc1':
+                    tag_list.append('over-all') 
+                else:
+                    tag_list.append(table_name)
+
                 
+                search = tag_intersection(zenpy_client, ticket_status, tag_list)
+
+                # TODO: Decide what to do if multiple tickets are returned by the search
+                # If the search does return a ticket then add a comment to the existing ticket
+                if search is not None and len(search) > 0:
+                    ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
+                                    site_contact_df, scores, metric, table_name,
+                                    tag_list, search=search)
+
+                # If the search does not return a ticket then create a new ticket
+                else:
+                    tag_list.append('auto')
+                    ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
+                                site_contact_df, scores, metric, table_name,
+                                tag_list)
+                    
 
     return
 
@@ -290,7 +336,7 @@ def ticket_automation():
 
     included_hpos = set(hpo_list) - set(exclude)
 
-    metrics = ['gc1']
+    metrics = ['gc1', 'ehr_consent_status']
 
     for metric in metrics:
 
@@ -304,30 +350,51 @@ def ticket_automation():
         # API request
         query_job = bigquery_client.query(QUERY, job_config=job_config)
         scores_df = query_job.result().to_dataframe()
-        filled_scores_df = scores_df.fillna(0)
 
+        if metric == 'ehr_consent_status' and scores_df.shape[0] > 0:
+            hpo_ehr_consent_issues = []
 
-        # If metrics are returned
-        if filled_scores_df.shape[0] > 0:
-            # TODO: should I just remove the metric name from the column names so the variables can be generic for each metric?
-            # TODO: do I need this anymore - I think this is included in the initial query
-            # TODO ROLLOUT: need to increase threshold to test with columbia - set back to 0.9 for production
-            # Find all hpos with scores below the threshold
-            low_scores_df = get_hpo_list(filled_scores_df,
-                                         metric,
-                                         threshold=0.9,
-                                         obs_threshold=0.6)
+            # Group returned values by HPO
+            for hpo, hpo_df in scores_df.groupby('HPO_ID'):
+                hpo_ehr_consent_issues.append(hpo_df)
 
-            # For each hpo with a low score evaluate which table has the low metric
-            for _, row in low_scores_df.iterrows():
-                src_hpo_id = row['src_hpo_id']
+            # Handle each HPO with consent issues
+            for hpo in hpo_ehr_consent_issues:
+                # Get HPO id
+                hpo_id = hpo['HPO_ID'][0]
 
-                # Dictionary of current hpo's tables and respective calculation
-                scores = get_table_metric(row, metric)
+                # Get PMID list
+                ids = hpo['participant_id']
 
+                # Evaluate results of EHR consent query
+                evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
+                                 submission_tracking_df, ids=ids)
 
-                evaluate_metrics(zenpy_client, scores, metric, src_hpo_id,
-                                 submission_tracking_df, site_contact_df)
+        else:
+            
+            filled_scores_df = scores_df.fillna(0)
+
+            # If metrics are returned
+            if filled_scores_df.shape[0] > 0:
+                # TODO: should I just remove the metric name from the column names so the variables can be generic for each metric?
+                # TODO: do I need this anymore - I think this is included in the initial query
+                # TODO ROLLOUT: need to increase threshold to test with columbia - set back to 0.9 for production
+                # Find all hpos with scores below the threshold
+                low_scores_df = get_hpo_list(filled_scores_df,
+                                            metric,
+                                            threshold=0.9,
+                                            obs_threshold=0.6)
+
+                # For each hpo with a low score evaluate which table has the low metric
+                for _, row in low_scores_df.iterrows():
+                    src_hpo_id = row['src_hpo_id']
+
+                    # Dictionary of current hpo's tables and respective calculation
+                    scores = get_table_metric(row, metric)
+
+                    # 
+                    evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
+                                    submission_tracking_df, scores)
 
 
 if __name__ == '__main__':
