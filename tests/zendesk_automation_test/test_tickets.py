@@ -58,8 +58,8 @@ class TestBasicInput(unittest.TestCase):
         ]
         ticket_obj = ta.ticket_update('ticket', self.zenpy_client,
                                       submission_tracking_df, src_hpo_id,
-                                      site_contact_df, scores, metric,
-                                      table_name, tag_list)
+                                      site_contact_df, metric, 
+                                      tag_list, scores, table_name)
         ticket_body = list(
             self.zenpy_client.tickets.comments(ticket=ticket_obj.id))[0].body
         ticket_subject = ticket_obj.subject
