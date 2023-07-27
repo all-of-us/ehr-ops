@@ -257,15 +257,15 @@ def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
                 # If the search does return a ticket then add a comment to the existing ticket
                 if search is not None and len(search) > 0:
                     ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
-                                    site_contact_df, scores, metric, table_name,
-                                    tag_list, search=search)
+                                    site_contact_df, metric, tag_list, scores,
+                                    table_name, search=search)
 
                 # If the search does not return a ticket then create a new ticket
                 else:
                     tag_list.append('auto')
                     ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
-                                site_contact_df, scores, metric, table_name,
-                                tag_list)
+                                site_contact_df, metric, tag_list, scores,
+                                    table_name)
                     
 
     return
