@@ -76,7 +76,7 @@ EHR Ops Team
 
         return comment_body
 
-    elif metric == 'physical_measurement':
+    elif metric == 'PHYSICAL MEASUREMENT':
         ticket_body = f'''Hi {hpo_name},
         
 In your latest submission, the physical measurements you submitted were either marked as missing or fell below our threshold. 
@@ -92,15 +92,17 @@ Thanks,
 EHR Ops Team
         '''
 
-    elif metric == 'covid_mapping':
+    elif metric == 'COVID MAPPING':
         ticket_body = f'''Hi {hpo_name}, 
         
 Thanks, 
 EHR Ops Team
         '''
 
-    elif metric == 'ehr_consent_status':
-        joined_list = '\n'.join(ids)
+    elif metric == 'EHR CONSENT STATUS' and action=='ticket':
+        joined_list += '\n'
+        joined_list = '\n'.join(str(id) for id in ids)
+        joined_list += '\n'
         ticket_body = f'''Hi {hpo_name},
 
 Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
@@ -109,13 +111,28 @@ Please remove the following PMIDs from your next submission as these participant
 Thanks,
 EHR Ops Team
 '''
+        return ticket_body
+    
+    elif metric == 'EHR CONSENT STATUS' and action=='comment':
+        joined_list = '\n'.join(str(id) for id in ids)
+        joined_list += '\n'
+        ticket_body = f'''Hi {hpo_name},
+
+Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
+
+{joined_list}
+
+Thanks,
+EHR Ops Team
+'''
+        return ticket_body
 
     return
 
 
 def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_id,
                   site_contact_df, metric, tag_list, scores=None, table_name=None, search=None, ids=None):
-
+    
     # Get submission tracking information to internall assign the ticket
     hpo_row = submission_tracking_df.loc[submission_tracking_df['hpo_id'] ==
                                          src_hpo_id]
@@ -137,8 +154,6 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     requester_id = -1
     if len(requester) > 0:
        requester_id = requester[0].id
-    # requester = zenpy_client.search(type='user', email=os.environ['EMAIL'])
-    # requester_id = list(requester)[0].id
     hpo_name = list(site_contact_df[site_contact_df['hpo_id'] == src_hpo_id]
                     ['Site Name'])[0]
 
@@ -157,12 +172,12 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     
     if 'ehr_consent_status' in tag_list:
         subject_line = f"{metric_upper} Issue Flagged"
-        ticket_descr = get_ticket_body(ticket_action, metric_upper, hpo_name, ids)
+        ticket_descr = get_ticket_body(ticket_action, hpo_name, metric_upper, ids=ids)
 
     else:
         subject_line = f"{metric_upper} {table_name} Data Quality Issue Flagged"
         ticket_descr = get_ticket_body(ticket_action, hpo_name, metric_upper,
-                                   round(metric_value, 2), table_phrase)
+                                   metric_value=round(metric_value, 2), table_name=table_phrase)
 
 
     if ticket_action == 'comment':
@@ -175,6 +190,8 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     
 
     elif ticket_action == 'ticket':
+        #tester = zenpy_client.search(type='user', email='em3697@cumc.columbia.edu')
+        #tester_id = list(tester)[0].id
         print('Creating Zendesk ticket...')
         ticket_audit = zenpy_client.tickets.create(
             Ticket(
@@ -218,6 +235,7 @@ def get_table_name(name, metric):
 
 def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
                      submission_tracking_df=None, scores=None, ids=None):
+
     # Ticket status array
     ticket_status = ['open', 'pending']
     tag_list = [src_hpo_id, metric]
@@ -257,15 +275,15 @@ def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
                 # If the search does return a ticket then add a comment to the existing ticket
                 if search is not None and len(search) > 0:
                     ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
-                                    site_contact_df, metric, tag_list, scores,
-                                    table_name, search=search)
+                                    site_contact_df, metric, tag_list, scores=scores,
+                                    table_name=table_name, search=search)
 
                 # If the search does not return a ticket then create a new ticket
                 else:
                     tag_list.append('auto')
                     ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
-                                site_contact_df, metric, tag_list, scores,
-                                    table_name)
+                                site_contact_df, metric, tag_list, scores=scores,
+                                    table_name=table_name)
                     
 
     return
@@ -334,9 +352,9 @@ def ticket_automation():
     exclude = ['waianae_coast_comprehensive', 'saou_hhsys', 'unc_chapel_hill', 'UPR_COMPREHENSIVE_CANCER_CENTER', 'CAL_PMC_USC_ALTAMED', 'wash_u_stl', 'vcu']
     exclude = list(map(str.lower,exclude))
 
-    included_hpos = set(hpo_list) - set(exclude)
+    included_hpos = list(set(hpo_list) - set(exclude))
 
-    metrics = ['gc1', 'ehr_consent_status']
+    metrics = ['ehr_consent_status']
 
     for metric in metrics:
 
@@ -358,20 +376,21 @@ def ticket_automation():
             for hpo, hpo_df in scores_df.groupby('HPO_ID'):
                 hpo_ehr_consent_issues.append(hpo_df)
 
+
             # Handle each HPO with consent issues
             for hpo in hpo_ehr_consent_issues:
                 # Get HPO id
                 hpo_id = hpo['HPO_ID'][0]
 
                 # Get PMID list
-                ids = hpo['participant_id']
+                ids = list(hpo['participant_id'])
 
                 # Evaluate results of EHR consent query
-                evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
-                                 submission_tracking_df, ids=ids)
+                evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
+                                 submission_tracking_df=submission_tracking_df, ids=ids)
 
         else:
-            
+
             filled_scores_df = scores_df.fillna(0)
 
             # If metrics are returned
@@ -394,7 +413,7 @@ def ticket_automation():
 
                     # 
                     evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
-                                    submission_tracking_df, scores)
+                                    submission_tracking_df=submission_tracking_df, scores=scores)
 
 
 if __name__ == '__main__':
