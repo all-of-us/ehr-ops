@@ -45,7 +45,7 @@ class TestBasicInput(unittest.TestCase):
         metric = 'gc1'
         scores = {
             f'_{metric}': 0.97510765,
-            'condition': 0.940730566,
+            'condition': 0.897030566,
             'drug': 0.825231502,
             'measurement': 0,
             'observation': 1,
@@ -66,7 +66,7 @@ class TestBasicInput(unittest.TestCase):
         expected_subject = f"GC1 Condition Table Data Quality Issue Flagged"
         expected_body = f'''Hi Test, 
         
-In your latest submission, your GC-1 rate was 0.94 for the Condition Table, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
+In your latest submission, your GC-1 rate was 0.89 for the Condition Table, which is below our acceptance threshold. GC-1 measures conformance to OMOP standard concepts and is a priority for data quality. 
         
 There is additional information linked here, along with SQL queries to help you identify the issue: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012365822-NIH-Grant-Award-Metrics-#h_01F7AB48M32ZRGYAVQXWAX92W6
 
