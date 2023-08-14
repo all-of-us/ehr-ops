@@ -81,5 +81,63 @@ EHR Ops Team'''
         self.assertMultiLineEqual(ticket_body, expected_body)
 
 
+    def test_ehr_consent_ticket(self):
+        # provide data that would generate an EHR consent issue
+        zenpy_client = self.zenpy_client
+        contact_data = [['Test', 'test_create_ticket', os.environ['EMAIL']]]
+        site_contact_df = site_contact_df = pd.DataFrame(
+            contact_data,
+            columns=[
+                'Site Name', 'hpo_id',
+                'Point of Contact'
+            ])
+        submission_data = [[
+            'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
+        ]]
+        submission_tracking_df = pd.DataFrame(
+            submission_data,
+            columns=['Site Name', 'contact', 'contact_email', 'hpo_id'])
+
+        hpo_id = 'test_create_ticket'
+        hpo_name = 'Test'
+        metric = 'ehr_consent_status'
+        ids = [123456, 234567, 345678, 456789]
+        tag_list = [
+            'test_create_ticket', metric, 'auto'
+        ]
+        ta.evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
+                                 submission_tracking_df=submission_tracking_df, ids=ids)
+
+        results = ta.tag_intersection(zenpy_client, status_list=['open', 'pending'], tag_list=tag_list)
+
+        self.assertTrue(len(results) > 0)
+
+        tag_result_id = results[0]
+        ticket = zenpy_client.tickets(id=tag_result_id)
+                                          
+        
+        ticket_body = ticket.description
+        ticket_subject = ticket.subject
+        expected_subject = f"EHR CONSENT STATUS Issue Flagged"
+        expected_body = '''Hi Test,
+
+Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
+
+123456
+234567
+345678
+456789
+
+
+Thanks,
+EHR Ops Team
+'''
+        self.cleanup.append(ticket)
+        self.assertTrue(ticket_subject == expected_subject)
+        self.assertMultiLineEqual(ticket_body, expected_body)
+
+
+        
+
 if __name__ == '__main__':
     unittest.main()
