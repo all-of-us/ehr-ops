@@ -190,8 +190,6 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     
 
     elif ticket_action == 'ticket':
-        #tester = zenpy_client.search(type='user', email='em3697@cumc.columbia.edu')
-        #tester_id = list(tester)[0].id
         print('Creating Zendesk ticket...')
         ticket_audit = zenpy_client.tickets.create(
             Ticket(
@@ -354,7 +352,7 @@ def ticket_automation():
 
     included_hpos = list(set(hpo_list) - set(exclude))
 
-    metrics = ['ehr_consent_status']
+    metrics = ['gc1', 'ehr_consent_status']
 
     for metric in metrics:
 
