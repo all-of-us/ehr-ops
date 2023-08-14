@@ -238,6 +238,7 @@ def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
     # Ticket status array
     ticket_status = ['open', 'pending']
     tag_list = [src_hpo_id, metric]
+    audit = None
 
     if metric == 'ehr_consent_status':
         # Check for existing ticket
@@ -245,13 +246,13 @@ def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
 
         # If a ticket exists comment
         if search is not None and len(search) > 0:
-            ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
+            audit = ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
                         site_contact_df, metric,tag_list, search=search, ids=ids)
 
         # If the search does not return a ticket then create a new ticket
         else:
             tag_list.append('auto')
-            ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
+            audit = ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
                         site_contact_df, metric, tag_list, ids=ids)
 
 
@@ -273,19 +274,19 @@ def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
                 # TODO: Decide what to do if multiple tickets are returned by the search
                 # If the search does return a ticket then add a comment to the existing ticket
                 if search is not None and len(search) > 0:
-                    ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
+                    audit = ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
                                     site_contact_df, metric, tag_list, scores=scores,
                                     table_name=table_name, search=search)
 
                 # If the search does not return a ticket then create a new ticket
                 else:
                     tag_list.append('auto')
-                    ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
+                    audit = ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
                                 site_contact_df, metric, tag_list, scores=scores,
                                     table_name=table_name)
                     
 
-    return
+    return audit
 
 
 def get_sheets():
