@@ -100,12 +100,13 @@ EHR Ops Team
         '''
 
     elif metric == 'EHR CONSENT STATUS' and action=='ticket':
-        joined_list += '\n'
+
         joined_list = '\n'.join(str(id) for id in ids)
         joined_list += '\n'
         ticket_body = f'''Hi {hpo_name},
 
 Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
+
 {joined_list}
 
 Thanks,
