@@ -99,12 +99,9 @@ EHR Ops Team'''
             columns=['Site Name', 'contact', 'contact_email', 'hpo_id'])
 
         hpo_id = 'test_create_ticket'
-        hpo_name = 'Test'
         metric = 'ehr_consent_status'
         ids = [123456, 234567, 345678, 456789]
-        tag_list = [
-            'test_create_ticket', metric, 'auto'
-        ]
+
         audit = ta.evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
                                  submission_tracking_df=submission_tracking_df, ids=ids)
 
