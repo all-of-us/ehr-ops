@@ -109,13 +109,9 @@ EHR Ops Team'''
                                  submission_tracking_df=submission_tracking_df, ids=ids)
 
         results = ta.tag_intersection(zenpy_client, status_list=['open', 'pending'], tag_list=tag_list)
-
         self.assertTrue(len(results) > 0)
-
         tag_result_id = results[0]
-        ticket = zenpy_client.tickets(id=tag_result_id)
-                                          
-        
+        ticket = zenpy_client.tickets(id=tag_result_id)             
         ticket_body = ticket.description
         ticket_subject = ticket.subject
         expected_subject = f"EHR CONSENT STATUS Issue Flagged"
