@@ -1,4 +1,4 @@
-FROM registry.redhat.io/rhel7  AS build_stage
+FROM registry.access.redhat.com/rhel7  AS build_stage
 ARG ORG_ID
 ARG ACTIVATION_KEY
 RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
@@ -46,7 +46,7 @@ RUN tar czf ohdsi-build.tgz r-lib-local bq_jdbc
 # COPY --from=build_stage /app/ohdsi-build.tgz .
 
 # Final VM  
-FROM registry.redhat.io/rhel7  AS deploy_stage
+FROM registry.access.redhat.com/rhel7  AS deploy_stage
 ARG ORG_ID
 ARG ACTIVATION_KEY
 RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
