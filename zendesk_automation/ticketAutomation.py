@@ -137,8 +137,8 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
         table_name = table_name.title() + " Table"
         table_phrase = " for the " + table_name
     metric_upper = metric.upper()
-    ticket_descr = get_ticket_body(ticket_action, table_phrase, metric_upper,
-                                   round(metric_value, 2), hpo_name)
+    ticket_descr = get_ticket_body(ticket_action, table_phrase, metric_upper, 
+                                  float(str(metric_value)[:4]), hpo_name)
     
     if ticket_action == 'comment':
         for ticket_id in search:
