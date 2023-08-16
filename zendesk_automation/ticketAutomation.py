@@ -165,11 +165,13 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
         metric_value = scores[table_name]
         table_name = table_name.title() + " Table"
         table_phrase = " for the " + table_name
+
     metric_upper = metric.replace('_', ' ').upper()
 
     #Define subject line text and ticket description
     subject_line = ''
     ticket_descr = ''
+
     
     if 'ehr_consent_status' in tag_list:
         subject_line = f"{metric_upper} Issue Flagged"
@@ -178,7 +180,7 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     else:
         subject_line = f"{metric_upper} {table_name} Data Quality Issue Flagged"
         ticket_descr = get_ticket_body(ticket_action, hpo_name, metric_upper,
-                                   metric_value=round(metric_value, 2), table_name=table_phrase)
+                                   metric_value=float(str(metric_value)[:4]), table_name=table_phrase)
 
 
     if ticket_action == 'comment':
