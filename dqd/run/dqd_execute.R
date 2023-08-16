@@ -14,10 +14,10 @@ config = config::get()
 server = config::get('server')
 project_id = config::get('project_id')
 o_auth_type = config::get('o_auth_type')
-o_auth_service_account_email = config::get('o_auth_service_account_email')
+# o_auth_service_account_email = config::get('o_auth_service_account_email')
 
 
-connectionString <- glue("jdbc:bigquery://{server};ProjectId={project_id};OAuthType={o_auth_type};OAuthServiceAcctEmail={o_auth_service_account_email};OAuthPvtKeyPath={keyPath}")
+connectionString <- glue("jdbc:bigquery://{server};ProjectId={project_id};OAuthType={o_auth_type}")
 connectionDetails <- DatabaseConnector::createConnectionDetails(
     dbms = "bigquery",
     connectionString = connectionString,
