@@ -58,8 +58,8 @@ class TestBasicInput(unittest.TestCase):
         ]
         ticket_obj = ta.ticket_update('ticket', self.zenpy_client,
                                       submission_tracking_df, src_hpo_id,
-                                      site_contact_df, scores, metric,
-                                      table_name, tag_list)
+                                      site_contact_df, metric, 
+                                      tag_list, scores, table_name)
         ticket_body = list(
             self.zenpy_client.tickets.comments(ticket=ticket_obj.id))[0].body
         ticket_subject = ticket_obj.subject
@@ -80,6 +80,54 @@ EHR Ops Team'''
         self.assertTrue(ticket_subject == expected_subject)
         self.assertMultiLineEqual(ticket_body, expected_body)
 
+
+    def test_ehr_consent_ticket(self):
+        # provide data that would generate an EHR consent issue
+        zenpy_client = self.zenpy_client
+        contact_data = [['Test', 'test_create_ticket', os.environ['EMAIL']]]
+        site_contact_df = site_contact_df = pd.DataFrame(
+            contact_data,
+            columns=[
+                'Site Name', 'hpo_id',
+                'Point of Contact'
+            ])
+        submission_data = [[
+            'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
+        ]]
+        submission_tracking_df = pd.DataFrame(
+            submission_data,
+            columns=['Site Name', 'contact', 'contact_email', 'hpo_id'])
+
+        hpo_id = 'test_create_ticket'
+        metric = 'ehr_consent_status'
+        ids = [123456, 234567, 345678, 456789]
+
+        audit = ta.evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
+                                 submission_tracking_df=submission_tracking_df, ids=ids)
+
+          
+        ticket_body = audit.description
+        ticket_subject = audit.subject
+        expected_subject = f"EHR CONSENT STATUS Issue Flagged"
+        expected_body = '''Hi Test,
+
+Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
+
+123456
+234567
+345678
+456789
+
+
+Thanks,
+EHR Ops Team
+'''
+        self.cleanup.append(audit)
+        self.assertTrue(ticket_subject == expected_subject)
+        self.assertMultiLineEqual(ticket_body, expected_body)
+
+
+        
 
 if __name__ == '__main__':
     unittest.main()
