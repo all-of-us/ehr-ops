@@ -6,11 +6,10 @@ WORKDIR /app
 COPY dqd_execute.R .
 COPY config.yml .
 COPY results_upload.sh .
+COPY run.sh .
 
 # RUN echo $SERVICE_ACCT_KEY > gcp_key.json
 
-# Execute DQD
-RUN R CMD javareconf -e "R -f dqd_execute.R"
-
-# Push file to cloud
-RUN sh results_upload.sh
+# Execute DQD and push file to cloud
+RUN ["chmod", "+x", "run.sh"]
+ENTRYPOINT [ "sh", "run.sh" ]
