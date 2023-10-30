@@ -49,7 +49,7 @@ with
     FROM
        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_visit_occurrence` AS t1
     INNER JOIN
-        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
     ON
         t1.person_id=t2.person_id
     GROUP BY
@@ -65,7 +65,7 @@ with
     FROM
        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_condition_occurrence` AS t1
     INNER JOIN
-        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
         ON
             t1.person_id=t2.person_id
     GROUP BY
@@ -81,7 +81,7 @@ with
     FROM
        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` AS t1
     INNER JOIN
-        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
         ON
             t1.person_id=t2.person_id
     GROUP BY
@@ -95,7 +95,7 @@ with
     FROM
        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` AS t1
     INNER JOIN
-       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
         ON
             t1.person_id=t2.person_id
     GROUP BY
@@ -109,7 +109,7 @@ with
     FROM
        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` AS t1
     INNER JOIN
-        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
         ON
             t1.person_id=t2.person_id
     GROUP BY
@@ -123,7 +123,7 @@ with
     FROM
         `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` AS t1
     INNER JOIN
-         `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+         `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
         ON
             t1.person_id=t2.person_id
     GROUP BY
@@ -138,7 +138,7 @@ with
     FROM
        `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` AS t1
     INNER JOIN
-       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` AS t2
+       `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` AS t2
         ON
             t1.person_id=t2.person_id
     GROUP BY

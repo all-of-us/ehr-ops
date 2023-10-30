@@ -5,7 +5,7 @@ WITH person_list AS
  SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_measurement` UNION DISTINCT
  SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_drug_exposure` UNION DISTINCT
  SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_device_exposure` UNION DISTINCT
- SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death` UNION DISTINCT
+ SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death` UNION DISTINCT
  SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_procedure_occurrence` UNION DISTINCT
  SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_observation` UNION DISTINCT
  SELECT person_id FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_specimen` UNION DISTINCT
@@ -42,7 +42,7 @@ GROUP BY 1, 2
 ),
 
 death AS (
-SELECT person_id, src_hpo_id, 1 as death_flag FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_death`
+SELECT person_id, src_hpo_id, 1 as death_flag FROM `{{curation_project}}.{{ehr_ops_dataset}}.unioned_ehr_aou_death`
 JOIN `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person`
 USING (person_id)
 GROUP BY 1, 2
