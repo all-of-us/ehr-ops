@@ -381,6 +381,8 @@ def ticket_automation():
         query_job = bigquery_client.query(QUERY, job_config=job_config)
         scores_df = query_job.result().to_dataframe()
 
+        print(scores_df)
+
         if metric == 'ehr_consent_status' and scores_df.shape[0] > 0:
             hpo_ehr_consent_issues = []
 
@@ -403,7 +405,7 @@ def ticket_automation():
                 
         elif metric == 'covid_mapping' and scores_df.shape[0] > 0:
             # Handle each HPO with covid mapping issues
-            for hpo in scores_df:
+            for i, hpo in scores_df.iterrows():
                 # Get HPO id
                 hpo_id = hpo['HPO_ID']
 
