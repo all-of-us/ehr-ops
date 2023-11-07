@@ -29,12 +29,6 @@ RUN dnf \
     openssl-devel libcurl-devel harfbuzz-devel fribidi-devel \
     freetype-devel libpng-devel libtiff-devel libjpeg-devel
 
-ENV R_VERSION=4.2.3
-
-# RUN dnf \
-#    -y install \
-#    --disableplugin subscription-manager \
-#    https://cdn.rstudio.com/r/rhel-9/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
 
 RUN dnf \
     --enablerepo ubi-9-appstream-rpms \
@@ -44,12 +38,6 @@ RUN dnf \
     --enablerepo codeready-builder-for-rhel-9-x86_64-rpms \
     install -y R-core-devel R-devel R-java-devel libRmath-devel
 
-#RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
-#RUN ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
-
-RUN java --version
-
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/jre/
 ENV PATH="$PATH:$JAVA_HOME/bin"
 
 RUN dnf clean all
@@ -96,15 +84,7 @@ RUN dnf \
     --enablerepo codeready-builder-for-rhel-9-x86_64-rpms \
     install -y \
     openssl-devel libcurl-devel harfbuzz-devel fribidi-devel \
-    freetype-devel libpng-devel libtiff-devel libjpeg-devel # required by ragg
-
-ENV R_VERSION=4.2.3
-
-#RUN dnf \
-#    -y install \
-#    --disableplugin subscription-manager \
-#    https://cdn.rstudio.com/r/rhel-9/pkgs/R-${R_VERSION}-1-1.x86_64.rpm
-
+    freetype-devel libpng-devel libtiff-devel libjpeg-devel
 
 RUN dnf \
     --enablerepo ubi-9-appstream-rpms \
@@ -113,14 +93,6 @@ RUN dnf \
     --enablerepo rhel-9-for-x86_64-appstream-rpms \
     --enablerepo codeready-builder-for-rhel-9-x86_64-rpms \
     install -y R-core-devel R-devel R-java-devel libRmath-devel
-
-#RUN ln -s /opt/R/${R_VERSION}/bin/R /usr/local/bin/R
-#RUN ln -s /opt/R/${R_VERSION}/bin/Rscript /usr/local/bin/Rscript
-
-RUN java --version
-
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/jre/
-ENV PATH="$PATH:$JAVA_HOME/bin"
 
 # Install gcloud tools
 COPY gcloud_setup.sh .
