@@ -109,7 +109,7 @@ EHR Ops Team
 '''
         return ticket_body
     
-    elif metric == 'EHR CONSENT STATUS' and action=='comment':
+    elif metric == 'EHR CONSENT STATUS':
         joined_list = '\n'.join(str(id) for id in ids)
         joined_list += '\n'
         ticket_body = f'''Hi {hpo_name},
