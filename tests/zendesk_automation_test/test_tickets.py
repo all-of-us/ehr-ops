@@ -127,6 +127,52 @@ EHR Ops Team
         self.assertMultiLineEqual(ticket_body, expected_body)
 
 
+    def test_covid_mapping_ticket(self):
+        # provide data that would generate an EHR consent issue
+        zenpy_client = self.zenpy_client
+        contact_data = [['Test', 'test_create_ticket', os.environ['EMAIL']]]
+        site_contact_df = site_contact_df = pd.DataFrame(
+            contact_data,
+            columns=[
+                'Site Name', 'hpo_id',
+                'Point of Contact'
+            ])
+        submission_data = [[
+            'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
+        ]]
+        submission_tracking_df = pd.DataFrame(
+            submission_data,
+            columns=['Site Name', 'contact', 'contact_email', 'hpo_id'])
+
+        hpo_id = 'test_create_ticket'
+        metric = 'covid_mapping'
+
+        audit = ta.evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
+                                 submission_tracking_df=submission_tracking_df)
+
+          
+        ticket_body = audit.description
+        ticket_subject = audit.subject
+        expected_subject = f"COVID MAPPING Issue Flagged"
+        expected_body = '''Hi Test,
+
+In your latest submission, the COVID-19 mappings you submitted were either missing or mapped incorrectly. This is a high-priority data quality metric. 
+
+To find these errors, use the SQL query here: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012461581-COVID-Mapping. 
+
+You can see the total counts of the mappings here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard_16795059942430/COVIDMappingTab?:iid=1. 
+
+Please fix your COVID-19 mappings in the measurement table and resubmit all tables.
+
+Thanks, 
+
+EHR Ops Team
+'''
+        self.cleanup.append(audit)
+        self.assertTrue(ticket_subject == expected_subject)
+        self.assertMultiLineEqual(ticket_body, expected_body)
+
+
         
 
 if __name__ == '__main__':

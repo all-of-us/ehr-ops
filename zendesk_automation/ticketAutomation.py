@@ -93,28 +93,23 @@ EHR Ops Team
         '''
 
     elif metric == 'COVID MAPPING':
-        ticket_body = f'''Hi {hpo_name}, 
-        
-Thanks, 
-EHR Ops Team
-        '''
-
-    elif metric == 'EHR CONSENT STATUS' and action=='ticket':
-
-        joined_list = '\n'.join(str(id) for id in ids)
-        joined_list += '\n'
         ticket_body = f'''Hi {hpo_name},
 
-Please remove the following PMIDs from your next submission as these participants do not have EHR consent:
+In your latest submission, the COVID-19 mappings you submitted were either missing or mapped incorrectly. This is a high-priority data quality metric. 
 
-{joined_list}
+To find these errors, use the SQL query here: https://aou-ehr-ops.zendesk.com/hc/en-us/articles/1500012461581-COVID-Mapping. 
 
-Thanks,
+You can see the total counts of the mappings here: https://drc.aouanalytics.org/#/views/EHROpsGeneralDataQualityDashboard_16795059942430/COVIDMappingTab?:iid=1. 
+
+Please fix your COVID-19 mappings in the measurement table and resubmit all tables.
+
+Thanks, 
+
 EHR Ops Team
 '''
         return ticket_body
     
-    elif metric == 'EHR CONSENT STATUS' and action=='comment':
+    elif metric == 'EHR CONSENT STATUS':
         joined_list = '\n'.join(str(id) for id in ids)
         joined_list += '\n'
         ticket_body = f'''Hi {hpo_name},
@@ -176,6 +171,10 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     if 'ehr_consent_status' in tag_list:
         subject_line = f"{metric_upper} Issue Flagged"
         ticket_descr = get_ticket_body(ticket_action, hpo_name, metric_upper, ids=ids)
+
+    elif 'covid_mapping' in tag_list:
+        subject_line = f"{metric_upper} Issue Flagged"
+        ticket_descr = get_ticket_body(ticket_action, hpo_name, metric_upper)
 
     else:
         subject_line = f"{metric_upper} {table_name} Data Quality Issue Flagged"
@@ -242,20 +241,31 @@ def evaluate_metrics(zenpy_client, site_contact_df, metric, src_hpo_id,
     tag_list = [src_hpo_id, metric]
     audit = None
 
-    if metric == 'ehr_consent_status':
+    if metric == 'ehr_consent_status' or metric == 'covid_mapping':
         # Check for existing ticket
         search = tag_intersection(zenpy_client, ticket_status, tag_list)
 
         # If a ticket exists comment
         if search is not None and len(search) > 0:
-            audit = ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
-                        site_contact_df, metric,tag_list, search=search, ids=ids)
-
+            if metric == 'ehr_consent_status':
+                audit = ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
+                            site_contact_df, metric,tag_list, search=search, ids=ids)
+                
+            else:
+                audit = ticket_update('comment', zenpy_client, submission_tracking_df, src_hpo_id,
+                            site_contact_df, metric,tag_list, search=search)
+                
         # If the search does not return a ticket then create a new ticket
         else:
             tag_list.append('auto')
-            audit = ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
-                        site_contact_df, metric, tag_list, ids=ids)
+
+            if metric == 'ehr_consent_status':
+                audit = ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
+                            site_contact_df, metric, tag_list, ids=ids)
+            
+            else:     
+                audit = ticket_update('ticket', zenpy_client, submission_tracking_df, src_hpo_id,
+                            site_contact_df, metric, tag_list)
 
 
     else:
@@ -356,7 +366,7 @@ def ticket_automation():
 
     included_hpos = list(set(hpo_list) - set(exclude))
 
-    metrics = ['gc1', 'ehr_consent_status']
+    metrics = ['gc1', 'ehr_consent_status', 'covid_mapping']
 
     for metric in metrics:
 
@@ -370,6 +380,8 @@ def ticket_automation():
         # API request
         query_job = bigquery_client.query(QUERY, job_config=job_config)
         scores_df = query_job.result().to_dataframe()
+
+        print(scores_df)
 
         if metric == 'ehr_consent_status' and scores_df.shape[0] > 0:
             hpo_ehr_consent_issues = []
@@ -390,6 +402,16 @@ def ticket_automation():
                 # Evaluate results of EHR consent query
                 evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
                                  submission_tracking_df=submission_tracking_df, ids=ids)
+                
+        elif metric == 'covid_mapping' and scores_df.shape[0] > 0:
+            # Handle each HPO with covid mapping issues
+            for i, hpo in scores_df.iterrows():
+                # Get HPO id
+                hpo_id = hpo['HPO_ID']
+
+                # Evaluate results of EHR consent query
+                evaluate_metrics(zenpy_client, site_contact_df, metric, hpo_id,
+                                 submission_tracking_df=submission_tracking_df)
 
         else:
 
