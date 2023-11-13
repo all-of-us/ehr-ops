@@ -140,7 +140,7 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
                                          src_hpo_id]
     
     # Get site contact information to externally assign the ticket
-    site_contact_email = str(site_contact_row['Point of Contact'].values[0]).split('; ')[0]
+    site_contact_email = str(site_contact_row['contact_email'].values[0]).split('; ')[0]
     assignee_email = hpo_row['contact_email'] 
     assignee = list(zenpy_client.search(type='user', email=assignee_email))
     assignee_id = -1
@@ -151,7 +151,7 @@ def ticket_update(ticket_action, zenpy_client, submission_tracking_df, src_hpo_i
     if len(requester) > 0:
        requester_id = requester[0].id
     hpo_name = list(site_contact_df[site_contact_df['hpo_id'] == src_hpo_id]
-                    ['Site Name'])[0]
+                    ['site_name'])[0]
 
     if table_name is not None and table_name == '':
         metric_value = scores[f'_{metric}']
