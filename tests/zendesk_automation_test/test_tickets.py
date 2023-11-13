@@ -30,8 +30,8 @@ class TestBasicInput(unittest.TestCase):
         site_contact_df = pd.DataFrame(
             contact_data,
             columns=[
-                'Site Name', 'hpo_id',
-                'Point of Contact'
+                'site_name', 'hpo_id',
+                'contact_email'
             ])
         submission_data = [[
             'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
@@ -88,15 +88,15 @@ EHR Ops Team'''
         site_contact_df = site_contact_df = pd.DataFrame(
             contact_data,
             columns=[
-                'Site Name', 'hpo_id',
-                'Point of Contact'
+                'site_name', 'hpo_id',
+                'contact_email'
             ])
         submission_data = [[
             'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
         ]]
         submission_tracking_df = pd.DataFrame(
             submission_data,
-            columns=['Site Name', 'contact', 'contact_email', 'hpo_id'])
+            columns=['site_name', 'contact', 'contact_email', 'hpo_id'])
 
         hpo_id = 'test_create_ticket'
         metric = 'ehr_consent_status'
@@ -134,15 +134,15 @@ EHR Ops Team
         site_contact_df = site_contact_df = pd.DataFrame(
             contact_data,
             columns=[
-                'Site Name', 'hpo_id',
-                'Point of Contact'
+                'site_name', 'hpo_id',
+                'contact_email'
             ])
         submission_data = [[
             'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
         ]]
         submission_tracking_df = pd.DataFrame(
             submission_data,
-            columns=['Site Name', 'contact', 'contact_email', 'hpo_id'])
+            columns=['site_name', 'contact', 'contact_email', 'hpo_id'])
 
         hpo_id = 'test_create_ticket'
         metric = 'covid_mapping'

@@ -22,3 +22,4 @@ select covid.src_hpo_id as HPO_ID, covid_mapping_issue_count, total_covid_measur
 from covid
     left join covid_result_mapping_issue on covid.src_hpo_id = covid_result_mapping_issue.src_hpo_id
 where LOWER(covid.src_hpo_id) in UNNEST(@included_hpos)
+and covid_result_mapping_issue.covid_mapping_issue_count is not null
