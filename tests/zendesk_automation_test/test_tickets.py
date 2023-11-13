@@ -30,8 +30,8 @@ class TestBasicInput(unittest.TestCase):
         site_contact_df = pd.DataFrame(
             contact_data,
             columns=[
-                'Site Name', 'hpo_id',
-                'Point of Contact'
+                'site_name', 'hpo_id',
+                'contact_email'
             ])
         submission_data = [[
             'Test', 'Elise', os.environ['EMAIL'], 'test_create_ticket'
