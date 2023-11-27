@@ -7,11 +7,39 @@
     },
     "v_ehr_gc_overall": {
         "depends_on": [
+            "v_ehr_rdr_participant",
+            "v_ce_gc_overall",
+            "v_hpo_gc_overall"
+        ],
+        "snapshot": false
+    },
+    "v_ce_gc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant"
+        ],
+        "snapshot": false
+    },
+    "v_hpo_gc_overall": {
+        "depends_on": [
             "v_ehr_rdr_participant"
         ],
         "snapshot": false
     },
     "v_ehr_dc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant",
+            "v_ce_dc_overall",
+            "v_hpo_dc_overall"
+        ],
+        "snapshot": false
+    },
+    "v_ce_dc_overall": {
+        "depends_on": [
+            "v_ehr_rdr_participant"
+        ],
+        "snapshot": false
+    },
+    "v_hpo_dc_overall": {
         "depends_on": [
             "v_ehr_rdr_participant"
         ],
