@@ -1,4 +1,3 @@
---TODO: Create a separate table to host CE data only
 WITH most_recent_submission as (
   SELECT *
   FROM
