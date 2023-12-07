@@ -19,9 +19,9 @@ SELECT
   m.Display_Order,
   b.bucket_created_timestamp AS On_Boarding_Time
 FROM
-  `{{pdr_project}}.{{rdr_ops_dataset}}.hpo_site_id_mappings` m
+  `{{pdr_project}}.{{lookup_dataset}}.hpo_site_id_mappings` m
 LEFT JOIN
-  `{{curation_project}}.{{lookup_dataset}}.v_organization` o
+  `{{curation_project}}.{{rdr_ops_dataset}}.v_organization` o
 ON
   o.external_id = m.Org_ID
 LEFT JOIN
