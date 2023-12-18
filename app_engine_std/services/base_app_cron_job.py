@@ -60,7 +60,7 @@ class ManagedAppCronJob(BaseAppCronJob):
     publish_response: bool = False
     pub_sub_success_topic: str = None
     pub_sub_failed_topic: str = None
-    timeout: int = 600
+    timeout: int = 3600
 
     def __init__(
         self,
