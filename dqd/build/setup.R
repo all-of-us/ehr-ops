@@ -14,6 +14,10 @@ install.packages("config")
 install.packages("glue")
 library(devtools)
 drat::addRepo("OHDSI")
-install_version("DatabaseConnector", version = "6.2.1", repos = "http://cran.us.r-project.org") # done because of bug in version 6.2.2
+# install_version("DatabaseConnector", version = "6.2.1", repos = "http://cran.us.r-project.org") # done because of bug in version 6.2.2
+install.packages("DatabaseConnector")
 devtools::install_github("OHDSI/DataQualityDashboard")
 devtools::install_github("OHDSI/Tantalus")
+
+# library(DatabaseConnector)
+# downloadJdbcDrivers("bigquery", pathToDriver= "/app/bq_jdbc")

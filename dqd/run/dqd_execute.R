@@ -26,8 +26,8 @@ connectionDetails <- DatabaseConnector::createConnectionDetails(
     password = ""
 )
 
-cdmDatabaseSchema <- "omop" # the fully qualified database schema name of the CDM
-resultsDatabaseSchema <- "omop" # the fully qualified database schema name of the results schema (that you can write to)
+cdmDatabaseSchema <- glue("{project_id}.omop") # the fully qualified database schema name of the CDM
+resultsDatabaseSchema <- glue("{project_id}.omop") # the fully qualified database schema name of the results schema (that you can write to)
 cdmSourceName <- "" # a human readable name for your CDM source
 cdmVersion <- "5.3" # the CDM version you are targetting. Currently supports 5.2, 5.3, and 5.4
 
@@ -82,7 +82,7 @@ csvFile <- "" # only needed if writeToCsv is set to TRUE
 checkLevels <- c("TABLE", "FIELD", "CONCEPT")
 
 # which DQ checks to run? ------------------------------------
-checkNames <- c("cdmTable")
+checkNames <- c("cdmTable", "cdmField", "measureValueCompleteness")
 # checkNames <- c("cdmTable", "measurePersonCompleteness", "cdmField") # Names can be found in inst/csv/OMOP_CDM_v5.3_Check_Descriptions.csv
 
 # which CDM tables to exclude? ------------------------------------
