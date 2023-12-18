@@ -45,11 +45,11 @@ ON ppa.participant_id = bio.participant_id
 LEFT JOIN
 (SELECT
    pdr_cons.participant_id,
-   CASE WHEN consent_value = 'ConsentPermission_Yes' THEN 1 ELSE 0 END AS ehr_consent_yes_flag,
-   CASE WHEN consent_expired IS NOT NULL THEN 1 ELSE 0 END AS ehr_expired_consent_flag,
-   rank() over (partition by pdr_cons.participant_id order by consent_module_authored desc) d_order
-   FROM `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_consent` pdr_cons
-   WHERE consent_module = 'EHRConsentPII'
+   CASE WHEN mod_consent_value = 'ConsentPermission_Yes' THEN 1 ELSE 0 END AS ehr_consent_yes_flag,
+   CASE WHEN mod_consent_expired IS NOT NULL THEN 1 ELSE 0 END AS ehr_expired_consent_flag,
+   rank() over (partition by pdr_cons.participant_id order by mod_authored desc) d_order
+   FROM `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_module` pdr_cons
+   WHERE mod_module = 'EHRConsentPII'
 ) consent
 ON ppa.participant_id = consent.participant_id AND d_order = 1
 LEFT JOIN
