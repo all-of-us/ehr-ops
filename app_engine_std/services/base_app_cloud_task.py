@@ -61,7 +61,7 @@ class ManagedAppCloudTask(BaseAppCloudTask):
     task_name: str = 'unknown'
     gcp_env: AppEnvContextBase = None
     payload: JSONObject = None
-    timeout: int = 600
+    timeout: int = 3600
 
     def __init__(self, gcp_env, payload: GenericJSONStructure = None):
         """
