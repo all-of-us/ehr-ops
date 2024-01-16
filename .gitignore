@@ -1,6 +1,7 @@
 .compiled
 .DS_Store
 .cipher
+.history/
 
 # PDR excludes
 .datastore

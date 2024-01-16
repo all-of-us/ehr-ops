@@ -9,5 +9,5 @@ gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOM
 
 
-yum -y install google-cloud-cli
+microdnf -y install google-cloud-cli
 
