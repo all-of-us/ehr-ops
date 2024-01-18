@@ -126,9 +126,10 @@ ON
   ppa.participant_id = pss.participant_id
   AND ps_order = 1
 LEFT JOIN
-  `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_pm` pm
+    `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_pm` pm
 ON
   ppa.participant_id = pm.participant_id
+  AND pm.pm_status = 'COMPLETED'
 LEFT JOIN
   `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_biospec` bio
 ON
