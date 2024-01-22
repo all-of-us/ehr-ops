@@ -161,7 +161,7 @@ LEFT JOIN
   `{{ehr_ops_project}}.{{ehr_ops_resources_dataset}}.v_ehr_flag` ef
 ON
   ppa.participant_id = ef.person_id
-  AND ((ppa.ORGANIZATION != 'CARE_EVOLUTION_OMOP_DV')
+  AND ((ppa.ORGANIZATION != 'CARE_EVOLUTION_OMOP_DV' AND ef.ORG_ID != 'CARE_EVOLUTION_OMOP_DV')
   OR (ppa.ORGANIZATION = 'CARE_EVOLUTION_OMOP_DV' AND ppa.ORGANIZATION = ef.ORG_ID))
 LEFT JOIN
   `{{pdr_project}}.{{rdr_ops_dataset}}.v_hpo` h
