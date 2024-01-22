@@ -56,6 +56,9 @@ class RefreshMaterializedViewTask(ManagedAppCloudTask):
         if "snapshot" in self.payload.to_dict():
             snapshot = self.payload.snapshot
 
+        _logger.info("TASK PAYLOAD")
+        _logger.info(self.payload)
+
         # Refresh metric from view
 
         _logger.info(f'Refreshing view {resources_dataset}.{view}')
