@@ -3,11 +3,10 @@
 # file 'LICENSE', which is part of this source code package.
 #
 import logging
-import os
 from typing import Any, Dict, AnyStr, List, Union
 
 from aou_cloud.services.gcp_logging_fastapi import format_traceback
-
+from aou_cloud.services.gcp_cloud_app_config import GAE_PROJECT
 from ._app_context_async_database_mixin import AppContextAsyncDatabase
 from ._app_context_database_mixin import AppContextDatabaseMixin
 
@@ -19,18 +18,6 @@ _logger = logging.getLogger('aou_cloud')
 GenericJSONObject = Dict[AnyStr, Any]
 GenericJSONArray = List[Any]
 GenericJSONStructure = Union[GenericJSONArray, GenericJSONObject]
-
-
-# Get project name and credentials
-if os.getenv('GAE_ENV', '').startswith('standard'):
-    # Production in the standard environment
-    import google.auth
-    GAE_CREDENTIALS, GAE_PROJECT = google.auth.default()
-    GAE_VERSION_ID = os.environ.get('GAE_VERSION')
-else:
-    GAE_CREDENTIALS = 'local@localhost.net'
-    GAE_PROJECT = 'localhost'
-    GAE_VERSION_ID = 'develop'
 
 
 def get_gcp_project():
