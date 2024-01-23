@@ -131,7 +131,12 @@ ON
   ppa.participant_id = pm.participant_id
   AND pm.pm_status = 'COMPLETED'
 LEFT JOIN
-  `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_biospec` bio
+-- find the max number of biospecimen tests finalized for each participant to avoid duplicates
+     (SELECT participant_id,
+             MAX(biosp_baseline_tests_confirmed) AS biosp_baseline_tests_confirmed
+      FROM `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_biospec`
+      GROUP BY 1
+      ) bio
 ON
   ppa.participant_id = bio.participant_id
 LEFT JOIN (
