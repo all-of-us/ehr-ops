@@ -93,7 +93,7 @@ END
   ppa.withdrawal_status,
   pss.patient_status,
   pm.pm_status,
-  bio.biosp_baseline_tests_confirmed AS onsite_collections,
+  bio.bbo_collection_method,
   ppa.withdrawal_time,
   CASE
     WHEN ppa.withdrawal_time IS NOT NULL THEN 1
@@ -131,11 +131,10 @@ ON
   ppa.participant_id = pm.participant_id
   AND pm.pm_status = 'COMPLETED'
 LEFT JOIN
--- find the max number of biospecimen tests finalized for each participant to avoid duplicates
+-- find the biobank collection method
      (SELECT participant_id,
-             MAX(biosp_baseline_tests_confirmed) AS biosp_baseline_tests_confirmed
-      FROM `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_biospec`
-      GROUP BY 1
+             bbo_collection_method
+      FROM `{{pdr_project}}.{{rdr_ops_dataset}}.v_pdr_participant_biobank_order`
       ) bio
 ON
   ppa.participant_id = bio.participant_id
