@@ -116,5 +116,17 @@
     },
     "v_in_person_participants": {
         "snapshot": true
+    },
+    "v_table_counts_with_upload_timestamp_for_hpo_sites": {
+        "snapshot": true
+    },
+    "v_highest_level_components": {
+        "snapshot": true
+    },
+    "v_highest_level_components_drilldown": {
+        "snapshot": true
+    },
+    "v_highest_level_components_measurement_based": {
+        "snapshot": true
     }
 }
