@@ -11,6 +11,10 @@
     #   -r requirements.in
 anyio==3.6.2
     # via starlette
+appnope==0.1.3
+    # via
+    #   ipykernel
+    #   ipython
 astroid==2.14.1
     # via pylint
 asttokens==2.2.1
@@ -33,7 +37,6 @@ charset-normalizer==3.0.1
     # via requests
 click==8.1.3
     # via
-    #   flask
     #   pip-tools
     #   uvicorn
 comm==0.1.2
@@ -64,8 +67,6 @@ fastapi-utils==0.2.1
     # via -r app_engine_std/cron/requirements.in
 filelock==3.9.0
     # via virtualenv
-flask==2.2.5
-    # via aou-cloud
 google-api-core[grpc]==2.11.0
     # via
     #   google-api-python-client
@@ -156,23 +157,17 @@ idna==3.4
     #   anyio
     #   requests
 importlib-metadata==6.0.0
-    # via
-    #   flask
-    #   jupyter-client
+    # via jupyter-client
 ipykernel==6.21.1
     # via -r requirements.in
 ipython==8.9.0
     # via ipykernel
 isort==5.12.0
     # via pylint
-itsdangerous==2.1.2
-    # via flask
 jedi==0.18.2
     # via ipython
 jinja2==3.1.2
-    # via
-    #   -r requirements.in
-    #   flask
+    # via -r requirements.in
 jira==3.4.1
     # via aou-cloud
 jupyter-client==8.0.2
@@ -189,12 +184,6 @@ markupsafe==2.1.2
     # via
     #   jinja2
     #   werkzeug
-marshmallow==3.19.0
-    # via
-    #   aou-cloud
-    #   marshmallow-jsonschema
-marshmallow-jsonschema==0.13.0
-    # via aou-cloud
 matplotlib-inline==0.1.6
     # via
     #   ipykernel
@@ -221,7 +210,6 @@ packaging==23.0
     #   google-cloud-bigquery
     #   ipykernel
     #   jira
-    #   marshmallow
 pandas==1.5.3
     # via
     #   -r app_engine_std/cron/requirements.in
@@ -239,7 +227,6 @@ platformdirs==3.0.0
     #   jupyter-core
     #   pylint
     #   virtualenv
-plotly==5.13.1
 pre-commit==3.0.4
     # via -r requirements.in
 prompt-toolkit==3.0.36
@@ -315,7 +302,7 @@ python-dateutil==2.8.2
     #   zenpy
 python-dotenv==0.21.1
     # via -r requirements.in
-python-easy-json==1.0.12
+python-easy-json==1.1.10
     # via
     #   -r requirements.in
     #   aou-cloud
@@ -353,8 +340,6 @@ rsa==4.9
     # via
     #   google-auth
     #   oauth2client
-scikit-learn==1.2.0
-seaborn==0.12.2
 sendgrid==6.9.7
     # via
     #   -r app_engine_std/cron/requirements.in
@@ -380,6 +365,7 @@ starkbank-ecdsa==2.2.0
 starlette==0.25.0
     # via
     #   -r app_engine_std/cron/requirements.in
+    #   aou-cloud
     #   fastapi
 supervisor==4.2.5
     # via -r app_engine_std/cron/requirements.in
@@ -410,7 +396,6 @@ typing-extensions==4.4.0
     #   pydantic
     #   pylint
     #   starlette
-umap-learn==0.5.3
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==1.26.14
@@ -422,9 +407,7 @@ virtualenv==20.19.0
 wcwidth==0.2.6
     # via prompt-toolkit
 werkzeug==2.2.3
-    # via
-    #   aou-cloud
-    #   flask
+    # via aou-cloud
 wheel==0.38.4
     # via pip-tools
 wrapt==1.14.1
