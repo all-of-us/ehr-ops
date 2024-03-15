@@ -88,3 +88,22 @@ q2 = f"""
 
 results2 = client.query(q2).to_dataframe()
 results2
+
+
+# Description: Lists all participantIds mapped to the given FhirPatientID
+FhirPatientID = ''
+q3 = f'''
+  SELECT * 
+  FROM
+  (SELECT
+    *, identifier.other
+  FROM `{EHR_OPS_PROJECT_ID}.{EXPORT_DATASET2_ID}.Patient` p,
+  UNNEST(p.link) AS identifier
+  WHERE p.id IN ('{FhirPatientID}'
+    --SELECT FhirPatientID FROM `aou-ehr-ops-curation-prod.dv_loose_20230701_20231001.FhirBulkParticipantIdentifiersMapping`
+  )
+  ) p2
+'''
+
+results3 = client.query(q3).to_dataframe()
+results3
