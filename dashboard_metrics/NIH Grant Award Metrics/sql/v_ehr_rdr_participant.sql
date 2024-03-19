@@ -1,13 +1,18 @@
 WITH
   most_recent_submission AS (
   SELECT
-    *
+    p.person_id,
+    org.external_id,
+    tc.person_upload_time
   FROM
+    `{{curation_project}}.{{ehr_ops_dataset}}._mapping_person` p ---making sure each person is linked to the submitted hpo bucket
+  JOIN
     `{{ehr_ops_project}}.{{ehr_ops_staging_dataset}}.mv_org_hpo_mapping` org
+  ON p.src_hpo_id = lower(org.HPO_ID)
   LEFT JOIN
     `{{curation_project}}.{{operations_analytics_dataset}}.table_counts_with_upload_timestamp_for_hpo_sites` tc
   ON
-    tc.org_id = org.external_id
+    tc.hpo_id = org.hpo_id
     AND tc.hpo_id IS NOT NULL
     AND tc.hpo_id != 'COOK_COUNTY' ),
   care_evolution_person_list AS (
@@ -178,4 +183,4 @@ ON
 LEFT JOIN
   most_recent_submission ms
 ON
-  o.external_id = ms.external_id
+  o.external_id = ms.external_id AND ppa.participant_id = ms.person_id ---making sure the person upload datetime is from the correct bucket to avoid dups
