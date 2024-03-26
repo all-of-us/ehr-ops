@@ -19,6 +19,10 @@
 # Add any needed packages
 
 from google.cloud import bigquery
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 # -
 
 # # Setup Connection
@@ -26,7 +30,7 @@ from google.cloud import bigquery
 # +
 # Fill in identifiers
 
-EHR_OPS_PROJECT_ID = ""
+EHR_OPS_PROJECT_ID = config['project']['EHR_OPS_PROJECT_ID']
 EXPORT_DATASET_ID = ""
 
 # Add any other needed identifiers
@@ -100,7 +104,7 @@ q3 = f'''
   FROM `{EHR_OPS_PROJECT_ID}.{EXPORT_DATASET2_ID}.Patient` p,
   UNNEST(p.link) AS identifier
   WHERE p.id IN ('{FhirPatientID}'
-    --SELECT FhirPatientID FROM `aou-ehr-ops-curation-prod.dv_loose_20230701_20231001.FhirBulkParticipantIdentifiersMapping`
+    --SELECT FhirPatientID FROM `{EHR_OPS_PROJECT_ID}.{EXPORT_DATASET2_ID}.FhirBulkParticipantIdentifiersMapping`
   )
   ) p2
 '''

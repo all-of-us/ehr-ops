@@ -19,6 +19,10 @@
 # Add any needed packages
 
 from google.cloud import bigquery
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 # -
 
 # # Setup Connection
@@ -26,8 +30,8 @@ from google.cloud import bigquery
 # +
 # Fill in identifiers
 
-EHR_OPS_PROJECT_ID = ""
-EHR_OPS_DATASET_ID = ""
+EHR_OPS_PROJECT_ID = config['project']['EHR_OPS_PROJECT_ID']
+EHR_OPS_DATASET_ID = config['project']['EHR_OPS_DATASET_ID']
 
 # Add any other needed identifiers
 # -

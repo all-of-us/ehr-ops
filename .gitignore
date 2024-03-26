@@ -156,3 +156,4 @@ KEYFILE_LOC.txt
 zendesk_triggers/
 
 fhir_analysis/*.ipynb
+fhir_analysis/config.ini
