@@ -31,10 +31,11 @@ config.read('config.ini')
 # Fill in identifiers
 
 EHR_OPS_PROJECT_ID = config['project']['EHR_OPS_PROJECT_ID']
-EXPORT_DATASET_ID = ""
+EXPORT_DATASET_ID = config['project']['DATASET1']
 
 # Add any other needed identifiers
-EXPORT_DATASET2_ID = ""
+EXPORT_DATASET2_ID = config['project']['DATASET2']
+CE_DATASET = config['project']['CE_DATASET']
 # -
 
 client = bigquery.Client(project=EHR_OPS_PROJECT_ID)
@@ -111,3 +112,37 @@ q3 = f'''
 
 results3 = client.query(q3).to_dataframe()
 results3
+
+
+#Description: Counts unique identifiers in one dv patient set
+q4 = f'''
+SELECT count(DISTINCT patientId) 
+FROM
+(SELECT
+  *, link.other, link.other.patientId
+FROM `{EHR_OPS_PROJECT_ID}.{EXPORT_DATASET2_ID}.Patient` p,
+UNNEST(p.link) AS link,
+UNNEST(p.identifier) AS identifier
+WHERE identifier.system = 'http://careevolution.com/fhiridentifiers#FhirPatientID'
+) p2
+WHERE patientId in (SELECT DISTINCT ParticipantID FROM `aou-ehr-ops-curation-prod.dv_loose_20230701_20231001.FhirBulkParticipantIdentifiersMapping`)
+'''
+
+results4 = client.query(q4).to_dataframe()
+results4
+
+#Description: Returns all ids that are no in the patient set of globally mapped ids
+q5 = f'''
+SELECT * FROM `{EHR_OPS_PROJECT_ID}.{CE_DATASET}.id_mismatch_analysis`
+'''
+
+results5 = client.query(q5).to_dataframe()
+results5
+
+#Description: Returns all info on mapped global id patients
+q6 = f'''
+SELECT * FROM `{EHR_OPS_PROJECT_ID}.{CE_DATASET}.global_ids_mapped_all_cols``
+'''
+
+results6 = client.query(q6).to_dataframe()
+results6
